@@ -726,10 +726,11 @@
   }
 }
 
+/* Imagen del espectro visible */
 .espectro-img {
   width: 100%;
   height: auto;
-  max-width: none;
+  max-width: 1000px;
   margin: 0 auto;
   display: block;
 }
