@@ -78,7 +78,7 @@
 .header-title {
   font-size: 3.5rem;
   font-weight: 900;
-  font-family: 'Eurostile Extended', 'Arial Black', 'Impact', sans-serif;
+  font-family: 'Poppins', 'Montserrat', 'Inter', sans-serif;;
   color: #FFFFFF;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
   letter-spacing: 0.2rem;
@@ -275,7 +275,7 @@
 
 .newton-image-container {
   flex: 0 0 45%;
-  animation: rotate-slow 20s linear infinite;
+
 }
 
 @keyframes rotate-slow {
