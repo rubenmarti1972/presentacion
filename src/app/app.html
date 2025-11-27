@@ -1,17 +1,17 @@
 <div class="presentation-container">
   <!-- Navigation Controls -->
   <div class="navigation">
-    <button class="nav-btn prev" (click)="prevSlide()" [disabled]="currentSlide() === 0">
+    <button class="nav-btn prev" (click)="prevSlide()" [disabled]="getCurrentSlideIndex() === 0">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
     <div class="slide-indicators">
-      @for (slide of [0, 1]; track slide) {
-        <button class="indicator" [class.active]="currentSlide() === slide" (click)="goToSlide(slide)"></button>
+      @for (slide of slides; track slide.id) {
+        <button class="indicator" [class.active]="isCurrentSlide(slide.id)" (click)="goToSlide(slide.id)"></button>
       }
     </div>
-    <button class="nav-btn next" (click)="nextSlide()" [disabled]="currentSlide() === totalSlides - 1">
+    <button class="nav-btn next" (click)="nextSlide()" [disabled]="getCurrentSlideIndex() === slides.length - 1">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -19,10 +19,9 @@
   </div>
 
   <!-- Slides -->
-  <div class="slides-wrapper" [style.transform]="'translateX(-' + currentSlide() * 50 + '%)'">
 
-    <!-- Slide 1: RGB y CMYK -->
-    <div class="slide">
+  <!-- Slide 1: RGB y CMYK -->
+  <div class="slide" [class.active]="isCurrentSlide('intro')" id="intro">
       <!-- Header -->
       <app-header></app-header>
 
@@ -61,13 +60,29 @@
       </div>
 
       <!-- Footer -->
-      <footer class="slide-footer">
-        <p>© {{ getCurrentYear() }} Ruben Martinez • {{ getCurrentMonth() }}</p>
-      </footer>
-    </div>
+      <app-footer></app-footer>
+  </div>
 
-    <!-- Slide 2: Newton y el Círculo Cromático -->
-    <div class="slide">
+  <!-- Slide 2: Actividad Círculo Cromático -->
+  <div class="slide" [class.active]="isCurrentSlide('circulo-cromatico')" id="circulo-cromatico">
+      <!-- Header -->
+      <app-header></app-header>
+
+      <!-- Content -->
+      <div class="slide-content">
+        <h2 class="slide-title">Actividad "Círculo cromático"</h2>
+        <!-- Aquí puedes agregar el contenido específico de esta diapositiva -->
+        <div class="activity-placeholder">
+          <p>Contenido de la actividad del círculo cromático...</p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <app-footer></app-footer>
+  </div>
+
+  <!-- Slide 3: Newton y el Círculo Cromático -->
+  <div class="slide" [class.active]="isCurrentSlide('newton')" id="newton">
       <!-- Header -->
       <app-header></app-header>
 
@@ -114,10 +129,6 @@
       </div>
 
       <!-- Footer -->
-      <footer class="slide-footer">
-        <p>© {{ getCurrentYear() }} Ruben Martinez • {{ getCurrentMonth() }}</p>
-      </footer>
-    </div>
-
+      <app-footer></app-footer>
   </div>
 </div>
