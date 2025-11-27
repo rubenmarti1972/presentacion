@@ -4,27 +4,68 @@
   background: transparent;
 }
 
+/* Conexiones (líneas/flechas) */
+.connection-line {
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 2;
+  fill: none;
+  transition: all 0.3s ease;
+}
+
+.connection-line.highlighted {
+  stroke: #FFD700;
+  stroke-width: 4;
+  filter: drop-shadow(0 0 8px #FFD700);
+}
+
+/* Círculos de colores */
 .color-circle {
-  transition: fill 0.1s ease-out;
+  stroke: #ffffff;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-.white-circle {
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+.color-circle:hover {
+  stroke-width: 3;
+  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.6));
+  transform: scale(1.1);
 }
 
+.color-circle.highlighted {
+  stroke: #FFD700;
+  stroke-width: 5;
+  filter: drop-shadow(0 0 16px #FFD700) drop-shadow(0 0 24px rgba(255, 215, 0, 0.6));
+  animation: pulse-glow 1s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 16px #FFD700) drop-shadow(0 0 24px rgba(255, 215, 0, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 24px #FFD700) drop-shadow(0 0 32px rgba(255, 215, 0, 0.8));
+  }
+}
+
+/* Etiquetas de texto */
 .label-text {
   fill: #ffffff;
   font-family: 'Arial', sans-serif;
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 2px;
-}
-
-.arrow-hue,
-.arrow-saturation {
   opacity: 0.9;
 }
 
+.label-hint {
+  font-size: 14px;
+  opacity: 0.7;
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* Host */
 :host {
   display: block;
   width: 100%;

@@ -4,9 +4,17 @@ import { CommonModule } from '@angular/common';
 interface ColorCircle {
   cx: number;
   cy: number;
+  color: string;
+  rowIndex: number;
+  colIndex: number;
   hue: number;
   saturation: number;
-  currentSaturation: number;
+  lightness: number;
+}
+
+interface Connection {
+  from: ColorCircle;
+  to: ColorCircle;
 }
 
 @Component({
@@ -16,21 +24,23 @@ interface ColorCircle {
   styleUrl: './color-triangle.css'
 })
 export class ColorTriangle implements OnInit, OnDestroy {
-  circles: ColorCircle[] = [];
+  circles: ColorCircle[][] = []; // Matriz de círculos por fila
+  connections: Connection[] = [];
+  selectedCircle: ColorCircle | null = null;
   animationId: number | null = null;
-  startTime: number = 0;
-  animationDuration: number = 3000; // 3 segundos
 
-  // Configuración del triángulo
-  rows = [7, 6, 5, 4];
-  circleRadius = 25;
-  spacing = 60;
-  svgWidth = 800;
+  // Configuración
+  circleRadius = 30;
+  spacing = 90;
+  svgWidth = 900;
   svgHeight = 600;
 
+  // Colores base (7 tonos del espectro)
+  baseHues = [0, 60, 120, 180, 240, 300, 330]; // Rojo, Amarillo, Verde, Cian, Azul, Magenta, Naranja
+
   ngOnInit() {
-    this.generateCircles();
-    this.startAnimation();
+    this.generatePyramid();
+    this.generateConnections();
   }
 
   ngOnDestroy() {
@@ -39,92 +49,130 @@ export class ColorTriangle implements OnInit, OnDestroy {
     }
   }
 
-  generateCircles() {
-    this.circles = [];
-    const maxCircles = this.rows[0];
+  generatePyramid() {
+    const rows = [7, 6, 5, 4]; // Base a cima
     const centerX = this.svgWidth / 2;
     const startY = 450;
 
-    this.rows.forEach((circleCount, rowIndex) => {
+    // Generar matriz de colores base por fila
+    const hueMatrix: number[][] = [];
+
+    // Fila 4 (base): colores puros
+    hueMatrix[3] = this.baseHues;
+
+    // Generar filas superiores interpolando los tonos
+    for (let row = 2; row >= 0; row--) {
+      hueMatrix[row] = [];
+      const prevRow = hueMatrix[row + 1];
+      const numCircles = rows[row];
+
+      for (let i = 0; i < numCircles; i++) {
+        // Cada círculo es el promedio de dos círculos de abajo
+        const hue1 = prevRow[i];
+        const hue2 = prevRow[i + 1];
+        // Promedio de tonos considerando el ciclo de 360°
+        let avgHue = (hue1 + hue2) / 2;
+        hueMatrix[row].push(avgHue);
+      }
+    }
+
+    // Crear círculos con posiciones y colores
+    this.circles = [];
+    rows.forEach((circleCount, rowIndex) => {
       const y = startY - (rowIndex * this.spacing);
-      // Saturación decrece hacia arriba (100% abajo, menos arriba)
-      const saturation = 100 - (rowIndex * 25);
+      const rowCircles: ColorCircle[] = [];
+
+      // Saturación: 100% en la base, disminuye hacia arriba
+      const saturation = 100 - (rowIndex * 25); // 100, 75, 50, 25
+      const lightness = 50 + (rowIndex * 10); // 50, 60, 70, 80
 
       for (let i = 0; i < circleCount; i++) {
         const totalWidth = (circleCount - 1) * this.spacing;
         const x = centerX - totalWidth / 2 + (i * this.spacing);
-        const hue = (i / (circleCount - 1 || 1)) * 360;
+        const hue = hueMatrix[rowIndex][i];
 
-        this.circles.push({
+        rowCircles.push({
           cx: x,
           cy: y,
+          color: `hsl(${hue}, ${saturation}%, ${lightness}%)`,
+          rowIndex: rowIndex,
+          colIndex: i,
           hue: hue,
           saturation: saturation,
-          currentSaturation: 0
+          lightness: lightness
         });
       }
+
+      this.circles.push(rowCircles);
     });
   }
 
-  startAnimation() {
-    this.startTime = performance.now();
-    this.animate();
-  }
+  generateConnections() {
+    this.connections = [];
 
-  animate = () => {
-    const currentTime = performance.now();
-    const elapsed = currentTime - this.startTime;
-    let t = Math.min(elapsed / this.animationDuration, 1);
+    // Conectar cada círculo (excepto la base) con los dos círculos de abajo que lo forman
+    for (let row = 0; row < this.circles.length - 1; row++) {
+      const currentRow = this.circles[row];
+      const belowRow = this.circles[row + 1];
 
-    // Función de easing suave
-    t = t * (2 - t); // easeOutQuad
-
-    // Actualizar saturación actual de cada círculo
-    this.circles.forEach(circle => {
-      circle.currentSaturation = circle.saturation * t;
-    });
-
-    if (elapsed < this.animationDuration) {
-      this.animationId = requestAnimationFrame(this.animate);
-    } else {
-      // Reiniciar animación en bucle
-      setTimeout(() => {
-        this.startTime = performance.now();
-        this.animate();
-      }, 1000);
+      currentRow.forEach((circle, i) => {
+        // Cada círculo se conecta con los círculos i e i+1 de la fila de abajo
+        this.connections.push({
+          from: belowRow[i],
+          to: circle
+        });
+        this.connections.push({
+          from: belowRow[i + 1],
+          to: circle
+        });
+      });
     }
   }
 
-  getColor(circle: ColorCircle): string {
-    return `hsl(${circle.hue}, ${circle.currentSaturation}%, 50%)`;
+  onCircleClick(circle: ColorCircle) {
+    this.selectedCircle = circle;
   }
 
-  // Posiciones para las flechas y textos
-  get arrowHueY(): number {
-    return 450 + 80;
+  isCircleHighlighted(circle: ColorCircle): boolean {
+    if (!this.selectedCircle) return false;
+
+    // Si es el círculo seleccionado
+    if (circle === this.selectedCircle) return true;
+
+    // Si es uno de los círculos que forman el seleccionado
+    if (this.selectedCircle.rowIndex > 0) {
+      const belowRow = this.circles[this.selectedCircle.rowIndex + 1];
+      if (!belowRow) return false;
+
+      return circle === belowRow[this.selectedCircle.colIndex] ||
+             circle === belowRow[this.selectedCircle.colIndex + 1];
+    }
+
+    return false;
   }
 
-  get arrowSaturationStartX(): number {
-    return this.svgWidth / 2 + 200;
+  isConnectionHighlighted(connection: Connection): boolean {
+    if (!this.selectedCircle) return false;
+    return connection.to === this.selectedCircle;
   }
 
-  get arrowSaturationStartY(): number {
-    return 450;
+  getCircleClass(circle: ColorCircle): string {
+    const classes = ['color-circle'];
+    if (this.isCircleHighlighted(circle)) {
+      classes.push('highlighted');
+    }
+    return classes.join(' ');
   }
 
-  get arrowSaturationEndX(): number {
-    return this.svgWidth / 2 - 50;
+  getConnectionClass(connection: Connection): string {
+    const classes = ['connection-line'];
+    if (this.isConnectionHighlighted(connection)) {
+      classes.push('highlighted');
+    }
+    return classes.join(' ');
   }
 
-  get arrowSaturationEndY(): number {
-    return 450 - (this.rows.length - 1) * this.spacing - 40;
-  }
-
-  get whiteCx(): number {
-    return this.svgWidth / 2;
-  }
-
-  get whiteCy(): number {
-    return 450 - (this.rows.length * this.spacing);
+  clearSelection() {
+    this.selectedCircle = null;
   }
 }

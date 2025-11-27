@@ -1,7 +1,8 @@
 <svg
   [attr.width]="svgWidth"
   [attr.height]="svgHeight"
-  class="color-triangle-svg">
+  class="color-triangle-svg"
+  (click)="clearSelection()">
 
   <!-- Definición de gradiente para fondo -->
   <defs>
@@ -10,74 +11,65 @@
       <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
     </linearGradient>
 
-    <!-- Marcadores para flechas -->
-    <marker id="arrowhead" markerWidth="10" markerHeight="10"
-            refX="9" refY="3" orient="auto">
-      <polygon points="0 0, 10 3, 0 6" fill="#ffffff" />
+    <!-- Marcador para flechas -->
+    <marker id="arrowhead" markerWidth="8" markerHeight="8"
+            refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="rgba(255, 255, 255, 0.4)" />
+    </marker>
+
+    <marker id="arrowheadHighlighted" markerWidth="8" markerHeight="8"
+            refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#FFD700" />
     </marker>
   </defs>
 
   <!-- Fondo -->
-  <rect width="100%" height="100%" fill="url(#bgGradient)" />
+  <rect width="100%" height="100%" fill="url(#bgGradient)" (click)="clearSelection()" />
+
+  <!-- Conexiones (flechas) -->
+  <g class="connections">
+    <line
+      *ngFor="let conn of connections"
+      [attr.x1]="conn.from.cx"
+      [attr.y1]="conn.from.cy"
+      [attr.x2]="conn.to.cx"
+      [attr.y2]="conn.to.cy"
+      [attr.class]="getConnectionClass(conn)"
+      [attr.marker-end]="isConnectionHighlighted(conn) ? 'url(#arrowheadHighlighted)' : 'url(#arrowhead)'"
+      (click)="$event.stopPropagation()"
+    />
+  </g>
 
   <!-- Círculos de colores -->
-  <circle
-    *ngFor="let circle of circles"
-    [attr.cx]="circle.cx"
-    [attr.cy]="circle.cy"
-    [attr.r]="circleRadius"
-    [attr.fill]="getColor(circle)"
-    stroke="#ffffff"
-    stroke-width="2"
-    class="color-circle"
-  />
+  <g class="circles">
+    <ng-container *ngFor="let row of circles">
+      <circle
+        *ngFor="let circle of row"
+        [attr.cx]="circle.cx"
+        [attr.cy]="circle.cy"
+        [attr.r]="circleRadius"
+        [attr.fill]="circle.color"
+        [attr.class]="getCircleClass(circle)"
+        (click)="onCircleClick(circle); $event.stopPropagation()"
+        style="cursor: pointer;"
+      />
+    </ng-container>
+  </g>
 
-  <!-- Círculo blanco superior -->
-  <circle
-    [attr.cx]="whiteCx"
-    [attr.cy]="whiteCy"
-    [attr.r]="circleRadius"
-    fill="#ffffff"
-    stroke="#ffffff"
-    stroke-width="2"
-    class="white-circle"
-  />
-
-  <!-- Flecha horizontal de TONO -->
-  <line
-    [attr.x1]="svgWidth / 2 - 200"
-    [attr.y1]="arrowHueY"
-    [attr.x2]="svgWidth / 2 + 200"
-    [attr.y2]="arrowHueY"
-    stroke="#ffffff"
-    stroke-width="2"
-    marker-end="url(#arrowhead)"
-    class="arrow-hue"
-  />
+  <!-- Etiquetas de texto -->
   <text
-    [attr.x]="svgWidth / 2"
-    [attr.y]="arrowHueY + 25"
+    x="50"
+    y="480"
     class="label-text"
-    text-anchor="middle">
-    TONO
+    text-anchor="start">
+    SATURACIÓN ↑
   </text>
 
-  <!-- Flecha diagonal de SATURACIÓN -->
-  <line
-    [attr.x1]="arrowSaturationStartX"
-    [attr.y1]="arrowSaturationStartY"
-    [attr.x2]="arrowSaturationEndX"
-    [attr.y2]="arrowSaturationEndY"
-    stroke="#ffffff"
-    stroke-width="2"
-    marker-end="url(#arrowhead)"
-    class="arrow-saturation"
-  />
   <text
-    [attr.x]="arrowSaturationStartX + 40"
-    [attr.y]="arrowSaturationStartY - 10"
-    class="label-text"
+    [attr.x]="svgWidth / 2"
+    y="520"
+    class="label-text label-hint"
     text-anchor="middle">
-    SATURACIÓN
+    (Haz clic en un círculo para ver su composición)
   </text>
 </svg>
