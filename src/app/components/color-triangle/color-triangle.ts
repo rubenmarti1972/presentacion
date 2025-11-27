@@ -50,20 +50,20 @@ export class ColorTriangle implements OnInit, OnDestroy {
   }
 
   generatePyramid() {
-    const rows = [7, 6, 5, 4]; // Base a cima
+    const rows = [7, 6, 5, 4]; // Base a cima (índices 0, 1, 2, 3)
     const centerX = this.svgWidth / 2;
     const startY = 450;
 
     // Generar matriz de colores base por fila
     const hueMatrix: number[][] = [];
 
-    // Fila 4 (base): colores puros
-    hueMatrix[3] = this.baseHues;
+    // Fila 0 (base): 7 colores puros
+    hueMatrix[0] = this.baseHues;
 
     // Generar filas superiores interpolando los tonos
-    for (let row = 2; row >= 0; row--) {
+    for (let row = 1; row < rows.length; row++) {
       hueMatrix[row] = [];
-      const prevRow = hueMatrix[row + 1];
+      const prevRow = hueMatrix[row - 1];
       const numCircles = rows[row];
 
       for (let i = 0; i < numCircles; i++) {
@@ -111,9 +111,9 @@ export class ColorTriangle implements OnInit, OnDestroy {
     this.connections = [];
 
     // Conectar cada círculo (excepto la base) con los dos círculos de abajo que lo forman
-    for (let row = 0; row < this.circles.length - 1; row++) {
-      const currentRow = this.circles[row];
-      const belowRow = this.circles[row + 1];
+    for (let row = 1; row < this.circles.length; row++) {
+      const currentRow = this.circles[row];      // Fila actual (superior)
+      const belowRow = this.circles[row - 1];    // Fila de abajo
 
       currentRow.forEach((circle, i) => {
         // Cada círculo se conecta con los círculos i e i+1 de la fila de abajo
@@ -141,7 +141,7 @@ export class ColorTriangle implements OnInit, OnDestroy {
 
     // Si es uno de los círculos que forman el seleccionado
     if (this.selectedCircle.rowIndex > 0) {
-      const belowRow = this.circles[this.selectedCircle.rowIndex + 1];
+      const belowRow = this.circles[this.selectedCircle.rowIndex - 1];
       if (!belowRow) return false;
 
       return circle === belowRow[this.selectedCircle.colIndex] ||
