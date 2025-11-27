@@ -168,22 +168,33 @@ export class ColorTriangle implements OnInit, OnDestroy {
   isCircleHighlighted(circle: ColorCircle): boolean {
     // Si es uno de los círculos seleccionados
     if (this.selectedCircles.includes(circle)) {
+      console.log('Círculo seleccionado:', circle.rowIndex, circle.colIndex);
       return true;
     }
 
     // Si es el círculo resultante de los dos seleccionados
     if (this.selectedCircles.length === 2) {
       const [c1, c2] = this.selectedCircles;
+      console.log('Verificando resultante para:', c1.rowIndex, c1.colIndex, 'y', c2.rowIndex, c2.colIndex);
+      console.log('Círculo actual:', circle.rowIndex, circle.colIndex);
 
       // Los seleccionados deben estar en la misma fila
-      if (c1.rowIndex !== c2.rowIndex) return false;
+      if (c1.rowIndex !== c2.rowIndex) {
+        console.log('No están en la misma fila');
+        return false;
+      }
 
       // El resultante está en la fila de arriba
-      if (circle.rowIndex !== c1.rowIndex + 1) return false;
+      if (circle.rowIndex !== c1.rowIndex + 1) {
+        console.log('No es la fila de arriba. Esperado:', c1.rowIndex + 1, 'Actual:', circle.rowIndex);
+        return false;
+      }
 
       // El índice del resultante corresponde al menor de los dos seleccionados
       const minCol = Math.min(c1.colIndex, c2.colIndex);
-      return circle.colIndex === minCol;
+      const isResult = circle.colIndex === minCol;
+      console.log('¿Es resultante? minCol:', minCol, 'circle.colIndex:', circle.colIndex, 'resultado:', isResult);
+      return isResult;
     }
 
     return false;
