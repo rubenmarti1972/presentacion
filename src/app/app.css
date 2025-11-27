@@ -722,10 +722,11 @@
   }
 }
 
+/* Imagen del espectro visible */
 .espectro-img {
   width: 150%;
   height: auto;
-  max-width: 1000px; /* Ajusta el tamaño máximo según sea necesario */
-  margin: 0 auto; /* Centra la imagen horizontalmente */
-  display: block; /* Asegura que el margen auto funcione correctamente */
+  max-width: 1000px;
+  margin: 0 auto;
+  display: block;
 }
