@@ -414,7 +414,6 @@
 .actividad-img{
   width: 60%;
   height: 60%;
-  mix-blend-mode: multiply;
 }
 
 .footer{
@@ -724,9 +723,10 @@
 }
 
 .espectro-img {
-  width: 100%;
+  width: 180%;
   height: auto;
-  max-width: 1400px; /* Ajusta el tamaño máximo según sea necesario */
+  max-width: 1800px; /* Ajusta el tamaño máximo según sea necesario */
   margin: 0 auto; /* Centra la imagen horizontalmente */
   display: block; /* Asegura que el margen auto funcione correctamente */
+  transform: scale(1.2);
 }
