@@ -1,0 +1,83 @@
+<svg
+  [attr.width]="svgWidth"
+  [attr.height]="svgHeight"
+  class="color-triangle-svg">
+
+  <!-- Definición de gradiente para fondo -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Marcadores para flechas -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="10"
+            refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#ffffff" />
+    </marker>
+  </defs>
+
+  <!-- Fondo -->
+  <rect width="100%" height="100%" fill="url(#bgGradient)" />
+
+  <!-- Círculos de colores -->
+  <circle
+    *ngFor="let circle of circles"
+    [attr.cx]="circle.cx"
+    [attr.cy]="circle.cy"
+    [attr.r]="circleRadius"
+    [attr.fill]="getColor(circle)"
+    stroke="#ffffff"
+    stroke-width="2"
+    class="color-circle"
+  />
+
+  <!-- Círculo blanco superior -->
+  <circle
+    [attr.cx]="whiteCx"
+    [attr.cy]="whiteCy"
+    [attr.r]="circleRadius"
+    fill="#ffffff"
+    stroke="#ffffff"
+    stroke-width="2"
+    class="white-circle"
+  />
+
+  <!-- Flecha horizontal de TONO -->
+  <line
+    [attr.x1]="svgWidth / 2 - 200"
+    [attr.y1]="arrowHueY"
+    [attr.x2]="svgWidth / 2 + 200"
+    [attr.y2]="arrowHueY"
+    stroke="#ffffff"
+    stroke-width="2"
+    marker-end="url(#arrowhead)"
+    class="arrow-hue"
+  />
+  <text
+    [attr.x]="svgWidth / 2"
+    [attr.y]="arrowHueY + 25"
+    class="label-text"
+    text-anchor="middle">
+    TONO
+  </text>
+
+  <!-- Flecha diagonal de SATURACIÓN -->
+  <line
+    [attr.x1]="arrowSaturationStartX"
+    [attr.y1]="arrowSaturationStartY"
+    [attr.x2]="arrowSaturationEndX"
+    [attr.y2]="arrowSaturationEndY"
+    stroke="#ffffff"
+    stroke-width="2"
+    marker-end="url(#arrowhead)"
+    class="arrow-saturation"
+  />
+  <text
+    [attr.x]="arrowSaturationStartX + 40"
+    [attr.y]="arrowSaturationStartY - 10"
+    class="label-text"
+    text-anchor="middle">
+    SATURACIÓN
+  </text>
+</svg>
