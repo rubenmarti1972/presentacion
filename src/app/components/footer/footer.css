@@ -4,6 +4,9 @@
   text-align: center;
   backdrop-filter: blur(10px);
   border-top: 2px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 500;
+  margin-bottom: 0;
 }
 
 .slide-footer p {
@@ -11,4 +14,7 @@
   font-size: 1.1rem;
   font-weight: 500;
   letter-spacing: 0.05rem;
+  margin: 0;
+  text-align: center;
+  width: 100%;
 }
