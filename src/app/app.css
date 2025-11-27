@@ -407,13 +407,17 @@
   padding: 3rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   text-align: center;
-  max-width: 100vh;
+  max-width: 1200px;
+  width: 90%;
   margin: 0 auto;
+  overflow: visible;
 }
 
 .actividad-img{
-  width: 60%;
-  height: 60%;
+  width: 80%;
+  height: auto;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .footer{
@@ -723,10 +727,9 @@
 }
 
 .espectro-img {
-  width: 180%;
+  width: 100%;
   height: auto;
-  max-width: 1800px; /* Ajusta el tamaño máximo según sea necesario */
-  margin: 0 auto; /* Centra la imagen horizontalmente */
-  display: block; /* Asegura que el margen auto funcione correctamente */
-  transform: scale(1.2);
+  max-width: none;
+  margin: 0 auto;
+  display: block;
 }
