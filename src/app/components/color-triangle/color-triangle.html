@@ -68,15 +68,16 @@
   />
 
   <!-- Etiquetas de texto -->
-  <!-- SATURACIÓN: vertical desde blanco hacia abajo -->
-  <text
-    x="30"
-    y="180"
-    class="label-text label-vertical"
-    text-anchor="middle"
-    writing-mode="tb">
-    SATURACIÓN ↓
-  </text>
+  <!-- SATURACIÓN: vertical a la izquierda -->
+  <g transform="translate(30, 250) rotate(-90)">
+    <text
+      x="0"
+      y="0"
+      class="label-text"
+      text-anchor="middle">
+      ↑ SATURACIÓN ↓
+    </text>
+  </g>
 
   <!-- TONO: horizontal en la base de izquierda a derecha -->
   <text
@@ -84,7 +85,7 @@
     y="510"
     class="label-text"
     text-anchor="start">
-    TONO →
+    ← TONO →
   </text>
 
   <!-- Instrucciones -->
