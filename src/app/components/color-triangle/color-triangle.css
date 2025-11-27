@@ -22,32 +22,28 @@
 .color-circle {
   stroke: #ffffff;
   stroke-width: 2;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .color-circle:hover {
-  stroke-width: 3;
+  stroke-width: 4;
   filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.6));
-  transform: scale(1.08);
 }
 
 .color-circle.highlighted {
   stroke: #FFD700;
-  stroke-width: 6;
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 20px #FFD700) drop-shadow(0 0 30px rgba(255, 215, 0, 0.7));
+  stroke-width: 8;
+  filter: drop-shadow(0 0 15px #FFD700) drop-shadow(0 0 25px rgba(255, 215, 0, 0.8));
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
   0%, 100% {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 20px #FFD700) drop-shadow(0 0 30px rgba(255, 215, 0, 0.7));
+    filter: drop-shadow(0 0 15px #FFD700) drop-shadow(0 0 25px rgba(255, 215, 0, 0.8));
   }
   50% {
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 28px #FFD700) drop-shadow(0 0 40px rgba(255, 215, 0, 0.9));
+    filter: drop-shadow(0 0 20px #FFD700) drop-shadow(0 0 35px rgba(255, 215, 0, 1));
   }
 }
 
@@ -72,11 +68,6 @@
   font-weight: bold;
   letter-spacing: 2px;
   opacity: 0.9;
-}
-
-.label-vertical {
-  writing-mode: tb;
-  glyph-orientation-vertical: 0;
 }
 
 .label-hint {
