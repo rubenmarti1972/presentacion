@@ -48,6 +48,19 @@
   }
 }
 
+/* Círculo blanco superior */
+.white-top-circle {
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.9));
+}
+
+.white-label {
+  fill: #ffffff;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
 /* Etiquetas de texto */
 .label-text {
   fill: #ffffff;
