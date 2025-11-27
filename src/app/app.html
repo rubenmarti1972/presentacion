@@ -3,17 +3,19 @@
   <div class="navigation">
     <button class="nav-btn prev" (click)="prevSlide()" [disabled]="getCurrentSlideIndex() === 0">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
       </svg>
     </button>
     <div class="slide-indicators">
       @for (slide of slides; track slide.id) {
-        <button class="indicator" [class.active]="isCurrentSlide(slide.id)" (click)="goToSlide(slide.id)"></button>
+      <button class="indicator" [class.active]="isCurrentSlide(slide.id)" (click)="goToSlide(slide.id)"></button>
       }
     </div>
     <button class="nav-btn next" (click)="nextSlide()" [disabled]="getCurrentSlideIndex() === slides.length - 1">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
       </svg>
     </button>
   </div>
@@ -22,122 +24,383 @@
 
   <!-- Slide 1: RGB y CMYK -->
   <div class="slide" [class.active]="isCurrentSlide('intro')" id="intro">
-      <!-- Header -->
-      <header class="slide-header">
-        <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
-        <h1 class="header-title">Color y proporciones</h1>
-      </header>
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
 
-      <!-- Content -->
-      <div class="slide-content">
-        <div class="color-systems">
-          <!-- RGB System -->
-          <div class="color-system">
-            <h2 class="system-title">RGB</h2>
-            <div class="rgb-container">
-              <div class="rgb-circles">
-                <div class="rgb-circle red"></div>
-                <div class="rgb-circle green"></div>
-                <div class="rgb-circle blue"></div>
-              </div>
-              <p class="system-subtitle">Sistema Aditivo</p>
-              <p class="system-description">Luz • Pantallas • Digital</p>
+    <!-- Content -->
+    <div class="slide-content">
+      <div class="color-systems">
+        <!-- RGB System -->
+        <div class="color-system">
+          <h2 class="system-title">RGB</h2>
+          <div class="rgb-container">
+            <div class="rgb-circles">
+              <div class="rgb-circle red"></div>
+              <div class="rgb-circle green"></div>
+              <div class="rgb-circle blue"></div>
             </div>
+            <p class="system-subtitle">Sistema Aditivo</p>
+            <p class="system-description">Luz • Pantallas • Digital</p>
           </div>
+        </div>
 
-          <!-- CMYK System -->
-          <div class="color-system">
-            <h2 class="system-title">CMYK</h2>
-            <div class="cmyk-container">
-              <div class="cmyk-circles">
-                <div class="cmyk-circle cyan"></div>
-                <div class="cmyk-circle magenta"></div>
-                <div class="cmyk-circle yellow"></div>
-                <div class="cmyk-circle black"></div>
-              </div>
-              <p class="system-subtitle">Sistema Sustractivo</p>
-              <p class="system-description">Tinta • Impresión • Físico</p>
+        <!-- CMYK System -->
+        <div class="color-system">
+          <h2 class="system-title">CMYK</h2>
+          <div class="cmyk-container">
+            <div class="cmyk-circles">
+              <div class="cmyk-circle cyan"></div>
+              <div class="cmyk-circle magenta"></div>
+              <div class="cmyk-circle yellow"></div>
+              <div class="cmyk-circle black"></div>
             </div>
+            <p class="system-subtitle">Sistema Sustractivo</p>
+            <p class="system-description">Tinta • Impresión • Físico</p>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Footer -->
-      <app-footer></app-footer>
+    <!-- Footer -->
+    <app-footer></app-footer>
   </div>
 
   <!-- Slide 2: Actividad Círculo Cromático -->
   <div class="slide" [class.active]="isCurrentSlide('circulo-cromatico')" id="circulo-cromatico">
-      <!-- Header -->
-      <header class="slide-header">
-        <img src="logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
-        <h1 class="header-title">Color y proporciones</h1>
-      </header>
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
 
-      <!-- Content -->
-      <div >
-        <h2 class="slide-title">Actividad "Círculo cromático"</h2>
-        <!-- Aquí puedes agregar el contenido específico de esta diapositiva -->
-        <div class="activity-placeholder">
-          <img src="../assets/actividad-circulo.png" alt="Actividad" class="">
-        </div>
+    <!-- Content -->
+    <div>
+      <h2 class="slide-title">Actividad "Círculo cromático"</h2>
+      <!-- Aquí puedes agregar el contenido específico de esta diapositiva -->
+      <div class="activity-circulo-placeholder">
+        <img src="assets/actividad-circulo.png" alt="Actividad" class="actividad-img">
       </div>
+    </div>
 
-      <!-- Footer -->
-      <app-footer></app-footer>
+    <!-- Footer -->
+    <app-footer class="footer"></app-footer>
   </div>
 
   <!-- Slide 3: Newton y el Círculo Cromático -->
   <div class="slide" [class.active]="isCurrentSlide('newton')" id="newton">
-      <!-- Header -->
-      <header class="slide-header">
-        <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
-        <h1 class="header-title">Color y proporciones</h1>
-      </header>
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
 
-      <!-- Content -->
-      <div class="slide-content slide-2-content">
-        <h2 class="slide-2-title">Newton y la Geometría del Círculo Cromático</h2>
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+      <h2 class="slide-2-title">Newton y la Geometría del Círculo Cromático</h2>
 
-        <div class="newton-content">
-          <!-- Left: Image -->
-          <div class="newton-image-container">
-            <img src="assets/circulo-cromatico.png" alt="Círculo Cromático" class="circulo-cromatico">
+      <div class="newton-content">
+        <!-- Left: Image -->
+        <div class="newton-image-container">
+          <img src="assets/circulo-cromatico.png" alt="Círculo Cromático" class="circulo-cromatico">
+        </div>
+
+        <!-- Right: Text -->
+        <div class="newton-text">
+          <div class="text-card-prisma">
+            <img src="assets/prisma.webp" alt="Prisma" class="prisma">
+
           </div>
 
-          <!-- Right: Text -->
-          <div class="newton-text">
-            <div class="text-card">
-              <h3>El Experimento del Prisma</h3>
-              <p>
-                Isaac Newton, al hacer pasar luz blanca por un prisma, observó que se descomponía
-                en un <strong>espectro continuo de colores</strong>: rojo, naranja, amarillo, verde,
-                azul, añil y violeta.
-              </p>
-            </div>
-
-            <div class="text-card">
-              <h3>El Círculo de Color</h3>
-              <p>
-                Newton decidió <strong>"cerrar" el espectro en un círculo</strong>, uniendo el rojo
-                extremo con el violeta extremo, demostrando que el color no es una línea que termina,
-                sino un <strong>ciclo continuo</strong>.
-              </p>
-            </div>
-
-            <div class="text-card highlight">
-              <h3>Significado</h3>
-              <p>
-                Esta representación geométrica revolucionó nuestra comprensión del color, estableciendo
-                las bases de la <strong>teoría del color moderna</strong> y sus aplicaciones en arte,
-                ciencia y tecnología.
-              </p>
-            </div>
+          <div class="text-card">
+            <h3>El Círculo de Color</h3>
+            <p>
+              Newton decidió <strong>"cerrar" el espectro en un círculo</strong>, uniendo el rojo
+              extremo con el violeta extremo, demostrando que el color no es una línea que termina,
+              sino un <strong>ciclo continuo</strong>.
+            </p>
+          </div>
+          <div class="text-card">
+            <h3>Significado</h3>
+            <p>
+              Esta representación geométrica revolucionó nuestra comprensión del color, estableciendo
+              las bases de la <strong>teoría del color moderna</strong> y sus aplicaciones en arte,
+              ciencia y tecnología.
+            </p>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Footer -->
-      <app-footer></app-footer>
+
+
+    <!-- Footer -->
+    <app-footer></app-footer>
   </div>
+
+   <!-- Slide 4: Teorema de la diagonal y el lado -->
+  <div class="slide" [class.active]="isCurrentSlide('espectro')" id="espectro">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+      <div class="activity-circulo-placeholder">
+        <img src="assets/espectro.png" alt="Actividad" class="espectro-img">
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+  <!-- Slide 5: Teorema de la diagonal y el lado -->
+  <div class="slide" [class.active]="isCurrentSlide('teorema-diagonal')" id="teorema-diagonal">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+      <h2 class="slide-2-title">La diagonal y el lado de un cuadrado</h2>
+
+      <div class="theorem-layout">
+        <!-- Columna izquierda: texto -->
+        <div class="theorem-text-column">
+          <div class="theorem-box">
+            <h3>Ejemplo 1</h3>
+            <p>
+              Dos magnitudes lineales <strong>AB</strong> y <strong>CD</strong> son conmensurables si existe una
+              magnitud <strong>MN</strong> que sirve de unidad de medida para ambas, es decir, existen números
+              naturales <strong>p</strong> y <strong>q</strong> tales que:
+            </p>
+
+            <p class="theorem-equation">
+              AB = p × MN &nbsp;&nbsp; y &nbsp;&nbsp; CD = q × MN
+            </p>
+
+            <p>
+              Se dice que una es tantas veces la otra. Por tanto, se puede establecer una proporción:
+            </p>
+
+            <p class="theorem-equation">
+              AB : CD :: p : q
+            </p>
+          </div>
+
+          <div class="theorem-box">
+            <h3>Teorema 1</h3>
+            <p class="theorem-statement">
+              La diagonal y el lado de un cuadrado son magnitudes <strong>inconmensurables</strong>.
+            </p><!--
+            <p>
+              Para demostrarlo, consideramos el cuadrado <strong>ABCD</strong>, con lado <strong>AB</strong> y
+              diagonal <strong>AC</strong>, y procedemos por <strong>contradicción</strong> suponiendo que existe
+              una unidad común <strong>MN</strong> para ambas magnitudes.
+            </p>
+
+            <p>
+              Suponemos entonces que existe una magnitud <strong>MN</strong> que sirve de unidad de medida
+              tanto para <strong>AB</strong> como para <strong>AC</strong>. Bajo esta suposición, existen
+              números naturales <strong>p</strong> y <strong>q</strong> tales que
+              <strong>AB = p · MN</strong> y <strong>AC = q · MN</strong>. De aquí se sigue que la razón entre
+              la diagonal y el lado es:
+            </p>
+
+            <p class="theorem-equation">
+              AC / AB = (q · MN) / (p · MN) = q / p,
+            </p>
+
+            <p>
+              es decir, un número racional.
+            </p>
+
+            <p>
+              Por otra parte, en el cuadrado <strong>ABCD</strong> el teorema de Pitágoras nos dice que:
+            </p>
+
+            <p class="theorem-equation">
+              AC² = AB² + BC² = AB² + AB² = 2 · AB².
+            </p>
+
+            <p>
+              Si dividimos entre <strong>AB²</strong>, obtenemos:
+            </p>
+
+            <p class="theorem-equation">
+              (AC / AB)² = 2 &nbsp;&nbsp; ⇒ &nbsp;&nbsp; AC / AB = √2.
+            </p>
+
+            <p>
+              Así, la misma razón <strong>AC / AB</strong> debería ser igual a <strong>q / p</strong>
+              (un número racional) y al mismo tiempo igual a <strong>√2</strong> (un número irracional).
+              Esta contradicción muestra que nuestra suposición inicial era falsa: no puede existir una
+              unidad común <strong>MN</strong> para <strong>AB</strong> y <strong>AC</strong>.
+            </p>
+
+            <p>
+              Por lo tanto, la diagonal <strong>AC</strong> y el lado <strong>AB</strong> del cuadrado son
+              magnitudes <strong>inconmensurables</strong>.
+            </p> -->
+          </div>
+        </div>
+
+        <!-- Columna derecha: figura -->
+        <div class="theorem-diagram-column">
+          <div class="diagram-card">
+            <h4>Figura 1. Demostración del teorema 1</h4>
+
+            <svg viewBox="0 0 200 200" class="square-diagram">
+              <!-- Cuadrado -->
+              <rect x="20" y="20" width="160" height="160" rx="4" ry="4" class="square-shape" />
+
+              <!-- Diagonal AC -->
+              <line x1="20" y1="20" x2="180" y2="180" class="square-diagonal" />
+
+              <!-- Puntos y etiquetas -->
+              <text x="16" y="190" class="square-label">D</text>
+              <text x="182" y="190" class="square-label">C</text>
+              <text x="16" y="16" class="square-label">A</text>
+              <text x="182" y="16" class="square-label">B</text>
+            </svg>
+
+            <p class="diagram-caption">
+              En el cuadrado <strong>ABCD</strong>, se comparan el lado <strong>AB</strong> y la diagonal
+              <strong>AC</strong> para estudiar su relación de medida.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+
+
+
+
+<!-- Slide 6: Demostración del Teorema 1 -->
+  <div class="slide" [class.active]="isCurrentSlide('demostracion')" id="demostracion">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+
+      <div class="theorem-layout">
+        <!-- Columna izquierda: texto -->
+        <div class="theorem-text-column">
+
+
+          <div class="theorem-box">
+            <h3>Teorema 1</h3>
+            <p class="theorem-statement">
+              La diagonal y el lado de un cuadrado son magnitudes <strong>inconmensurables</strong>.
+            </p>
+            <p>
+              Para demostrarlo, consideramos el cuadrado <strong>ABCD</strong>, con lado <strong>AB</strong> y
+              diagonal <strong>AC</strong>, y procedemos por <strong>contradicción</strong> suponiendo que existe
+              una unidad común <strong>MN</strong> para ambas magnitudes.
+            </p>
+
+            <p>
+              Suponemos entonces que existe una magnitud <strong>MN</strong> que sirve de unidad de medida
+              tanto para <strong>AB</strong> como para <strong>AC</strong>. Bajo esta suposición, existen
+              números naturales <strong>p</strong> y <strong>q</strong> tales que
+              <strong>AB = p · MN</strong> y <strong>AC = q · MN</strong>. De aquí se sigue que la razón entre
+              la diagonal y el lado es:
+            </p>
+
+            <p class="theorem-equation">
+              AC / AB = (q · MN) / (p · MN) = q / p,
+            </p>
+
+            <p>
+              es decir, un número racional.
+            </p>
+
+            <p>
+              Por otra parte, en el cuadrado <strong>ABCD</strong> el teorema de Pitágoras nos dice que:
+            </p>
+
+            <p class="theorem-equation">
+              AC² = AB² + BC² = AB² + AB² = 2 · AB².
+            </p>
+
+            <p>
+              Si dividimos entre <strong>AB²</strong>, obtenemos:
+            </p>
+
+            <p class="theorem-equation">
+              (AC / AB)² = 2 &nbsp;&nbsp; ⇒ &nbsp;&nbsp; AC / AB = √2.
+            </p>
+
+            <p>
+              Así, la misma razón <strong>AC / AB</strong> debería ser igual a <strong>q / p</strong>
+              (un número racional) y al mismo tiempo igual a <strong>√2</strong> (un número irracional).
+              Esta contradicción muestra que nuestra suposición inicial era falsa: no puede existir una
+              unidad común <strong>MN</strong> para <strong>AB</strong> y <strong>AC</strong>.
+            </p>
+
+            <p>
+              Por lo tanto, la diagonal <strong>AC</strong> y el lado <strong>AB</strong> del cuadrado son
+              magnitudes <strong>inconmensurables</strong>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Columna derecha: figura -->
+        <div class="theorem-diagram-column">
+          <div class="diagram-card">
+            <h4>Figura 1. Demostración del teorema 1</h4>
+
+            <svg viewBox="0 0 200 200" class="square-diagram">
+              <!-- Cuadrado -->
+              <rect x="20" y="20" width="160" height="160" rx="4" ry="4" class="square-shape" />
+
+              <!-- Diagonal AC -->
+              <line x1="20" y1="20" x2="180" y2="180" class="square-diagonal" />
+
+              <!-- Puntos y etiquetas -->
+              <text x="16" y="190" class="square-label">D</text>
+              <text x="182" y="190" class="square-label">C</text>
+              <text x="16" y="16" class="square-label">A</text>
+              <text x="182" y="16" class="square-label">B</text>
+            </svg>
+
+            <p class="diagram-caption">
+              En el cuadrado <strong>ABCD</strong>, se comparan el lado <strong>AB</strong> y la diagonal
+              <strong>AC</strong> para estudiar su relación de medida.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="theorem-citation">
+  <em>
+    Demostración clásica atribuida a la Escuela pitagórica y formalizada por Euclides (siglo III a. C.);
+    véase también Daniela Gasperini, 2013.
+  </em>
+</p>
+
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+
+
+
+
+
 </div>

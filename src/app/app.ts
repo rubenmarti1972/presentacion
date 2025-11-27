@@ -20,7 +20,11 @@ export class App implements OnInit {
   protected readonly slides: Slide[] = [
     { id: 'intro', title: 'RGB y CMYK' },
     { id: 'circulo-cromatico', title: 'Círculo Cromático' },
-    { id: 'newton', title: 'Newton y el Círculo Cromático' }
+    { id: 'newton', title: 'Newton y el Círculo Cromático' },
+    { id: 'espectro', title: 'Espectro de luz' },
+    { id: 'teorema-diagonal',  title: 'Inconmensurabilidad de la diagonal' },
+    { id: 'demostracion',  title: 'Demostración' }
+
   ];
 
   constructor() {
