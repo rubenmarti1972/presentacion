@@ -82,9 +82,10 @@ export class ColorTriangle implements OnInit, OnDestroy {
       const y = startY - (rowIndex * this.spacing);
       const rowCircles: ColorCircle[] = [];
 
-      // INVERTIDO: Saturación del BLANCO (arriba) a colores PUROS (abajo)
-      const saturation = rowIndex * 33; // 0, 33, 66, 100 (aprox)
-      const lightness = 90 - (rowIndex * 13); // 90, 77, 64, 51 (más claro arriba)
+      // Saturación: 100% en la BASE (abajo, rowIndex=0) → 0% en la CIMA (arriba, rowIndex=3)
+      const saturation = 100 - (rowIndex * 33); // 100, 67, 34, 1
+      // Lightness: 50% en la BASE (colores puros) → 90% en la CIMA (blanco)
+      const lightness = 50 + (rowIndex * 13); // 50, 63, 76, 89
 
       for (let i = 0; i < circleCount; i++) {
         const totalWidth = (circleCount - 1) * this.spacing;
