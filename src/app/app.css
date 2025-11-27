@@ -77,14 +77,11 @@
 
 .header-title {
   font-size: 3.5rem;
-  font-weight: 800;
-  color: white;
+  font-weight: 900;
+  font-family: 'Eurostile Extended', 'Arial Black', 'Impact', sans-serif;
+  color: #FFFFFF;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
   letter-spacing: 0.2rem;
-  background: linear-gradient(45deg, #fff, #e0f7ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 /* ===== Slide Content ===== */
