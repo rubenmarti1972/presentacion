@@ -1,32 +1,82 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, signal, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Header } from './components/header/header';
+import { Footer } from './components/footer/footer';
+
+interface Slide {
+  id: string;
+  title: string;
+}
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, Header],
+  imports: [CommonModule, Header, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected currentSlide = signal(0);
-  protected readonly totalSlides = 2;
+export class App implements OnInit {
+  protected currentSlideId = signal<string>('intro');
 
-  nextSlide() {
-    if (this.currentSlide() < this.totalSlides - 1) {
-      this.currentSlide.set(this.currentSlide() + 1);
+  protected readonly slides: Slide[] = [
+    { id: 'intro', title: 'RGB y CMYK' },
+    { id: 'circulo-cromatico', title: 'Círculo Cromático' },
+    { id: 'newton', title: 'Newton y el Círculo Cromático' }
+  ];
+
+  constructor() {
+    // Sync hash with currentSlideId
+    effect(() => {
+      const slideId = this.currentSlideId();
+      if (window.location.hash !== `#${slideId}`) {
+        window.location.hash = slideId;
+      }
+    });
+  }
+
+  ngOnInit() {
+    // Initialize from hash or default to first slide
+    const hash = window.location.hash.slice(1);
+    const slideExists = this.slides.some(s => s.id === hash);
+    if (hash && slideExists) {
+      this.currentSlideId.set(hash);
+    } else {
+      window.location.hash = this.slides[0].id;
+    }
+
+    // Listen to hash changes
+    window.addEventListener('hashchange', () => {
+      const newHash = window.location.hash.slice(1);
+      const slideExists = this.slides.some(s => s.id === newHash);
+      if (slideExists && newHash !== this.currentSlideId()) {
+        this.currentSlideId.set(newHash);
+      }
+    });
+  }
+
+  protected getCurrentSlideIndex(): number {
+    return this.slides.findIndex(s => s.id === this.currentSlideId());
+  }
+
+  protected nextSlide() {
+    const currentIndex = this.getCurrentSlideIndex();
+    if (currentIndex < this.slides.length - 1) {
+      this.currentSlideId.set(this.slides[currentIndex + 1].id);
     }
   }
 
-  prevSlide() {
-    if (this.currentSlide() > 0) {
-      this.currentSlide.set(this.currentSlide() - 1);
+  protected prevSlide() {
+    const currentIndex = this.getCurrentSlideIndex();
+    if (currentIndex > 0) {
+      this.currentSlideId.set(this.slides[currentIndex - 1].id);
     }
   }
 
-  goToSlide(index: number) {
-    this.currentSlide.set(index);
+  protected goToSlide(slideId: string) {
+    this.currentSlideId.set(slideId);
+  }
+
+  protected isCurrentSlide(slideId: string): boolean {
+    return this.currentSlideId() === slideId;
   }
 
   getCurrentYear(): number {
