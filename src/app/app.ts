@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
 import { ColorTriangle } from './components/color-triangle/color-triangle';
+import { ColorMixerGame } from './components/color-mixer-game/color-mixer-game';
 
 interface Slide {
   id: string;
@@ -11,7 +12,7 @@ interface Slide {
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, Header, Footer, ColorTriangle],
+  imports: [CommonModule, Header, Footer, ColorTriangle, ColorMixerGame],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -24,6 +25,7 @@ export class App implements OnInit {
     { id: 'newton', title: 'Newton y el Círculo Cromático' },
     { id: 'espectro', title: 'Espectro de luz' },
     { id: 'geometria-color', title: 'Geometría del Color' },
+    { id: 'juego-colores', title: 'Juego: Mezclador de Colores' },
     { id: 'teorema-diagonal',  title: 'Inconmensurabilidad de la diagonal' },
     { id: 'demostracion',  title: 'Demostración' }
 

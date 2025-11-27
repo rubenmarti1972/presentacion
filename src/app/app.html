@@ -178,7 +178,24 @@
     <app-footer></app-footer>
   </div>
 
-  <!-- Slide 6: Teorema de la diagonal y el lado -->
+  <!-- Slide 6: Juego Mezclador de Colores -->
+  <div class="slide" [class.active]="isCurrentSlide('juego-colores')" id="juego-colores">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="slide-content">
+      <app-color-mixer-game></app-color-mixer-game>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+
+  <!-- Slide 7: Teorema de la diagonal y el lado -->
   <div class="slide" [class.active]="isCurrentSlide('teorema-diagonal')" id="teorema-diagonal">
     <!-- Header -->
     <header class="slide-header">
@@ -306,7 +323,7 @@
 
 
 
-<!-- Slide 6: Demostración del Teorema 1 -->
+<!-- Slide 8: Demostración del Teorema 1 -->
   <div class="slide" [class.active]="isCurrentSlide('demostracion')" id="demostracion">
     <!-- Header -->
     <header class="slide-header">
