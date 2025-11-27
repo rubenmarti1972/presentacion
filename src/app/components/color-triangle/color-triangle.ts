@@ -26,7 +26,7 @@ interface Connection {
 export class ColorTriangle implements OnInit, OnDestroy {
   circles: ColorCircle[][] = []; // Matriz de círculos por fila
   connections: Connection[] = [];
-  selectedCircle: ColorCircle | null = null;
+  selectedCircles: ColorCircle[] = []; // Ahora se seleccionan DOS círculos
   animationId: number | null = null;
 
   // Configuración
@@ -82,9 +82,9 @@ export class ColorTriangle implements OnInit, OnDestroy {
       const y = startY - (rowIndex * this.spacing);
       const rowCircles: ColorCircle[] = [];
 
-      // Saturación: 100% en la base, disminuye hacia arriba
-      const saturation = 100 - (rowIndex * 25); // 100, 75, 50, 25
-      const lightness = 50 + (rowIndex * 10); // 50, 60, 70, 80
+      // INVERTIDO: Saturación del BLANCO (arriba) a colores PUROS (abajo)
+      const saturation = rowIndex * 33; // 0, 33, 66, 100 (aprox)
+      const lightness = 90 - (rowIndex * 13); // 90, 77, 64, 51 (más claro arriba)
 
       for (let i = 0; i < circleCount; i++) {
         const totalWidth = (circleCount - 1) * this.spacing;
@@ -130,30 +130,79 @@ export class ColorTriangle implements OnInit, OnDestroy {
   }
 
   onCircleClick(circle: ColorCircle) {
-    this.selectedCircle = circle;
+    // Si ya está seleccionado, deseleccionarlo
+    const index = this.selectedCircles.findIndex(c => c === circle);
+    if (index >= 0) {
+      this.selectedCircles.splice(index, 1);
+      return;
+    }
+
+    // Si ya hay 2 seleccionados, reiniciar
+    if (this.selectedCircles.length >= 2) {
+      this.selectedCircles = [circle];
+      return;
+    }
+
+    // Agregar a la selección
+    this.selectedCircles.push(circle);
+
+    // Si ahora hay 2, verificar que sean adyacentes en la misma fila
+    if (this.selectedCircles.length === 2) {
+      const [c1, c2] = this.selectedCircles;
+
+      // Deben estar en la misma fila
+      if (c1.rowIndex !== c2.rowIndex) {
+        this.selectedCircles = [circle];
+        return;
+      }
+
+      // Deben ser adyacentes
+      const diff = Math.abs(c1.colIndex - c2.colIndex);
+      if (diff !== 1) {
+        this.selectedCircles = [circle];
+      }
+    }
   }
 
   isCircleHighlighted(circle: ColorCircle): boolean {
-    if (!this.selectedCircle) return false;
+    // Si es uno de los círculos seleccionados
+    if (this.selectedCircles.includes(circle)) {
+      return true;
+    }
 
-    // Si es el círculo seleccionado
-    if (circle === this.selectedCircle) return true;
+    // Si es el círculo resultante de los dos seleccionados
+    if (this.selectedCircles.length === 2) {
+      const [c1, c2] = this.selectedCircles;
 
-    // Si es uno de los círculos que forman el seleccionado
-    if (this.selectedCircle.rowIndex > 0) {
-      const belowRow = this.circles[this.selectedCircle.rowIndex - 1];
-      if (!belowRow) return false;
+      // Los seleccionados deben estar en la misma fila
+      if (c1.rowIndex !== c2.rowIndex) return false;
 
-      return circle === belowRow[this.selectedCircle.colIndex] ||
-             circle === belowRow[this.selectedCircle.colIndex + 1];
+      // El resultante está en la fila de arriba
+      if (circle.rowIndex !== c1.rowIndex + 1) return false;
+
+      // El índice del resultante corresponde al menor de los dos seleccionados
+      const minCol = Math.min(c1.colIndex, c2.colIndex);
+      return circle.colIndex === minCol;
     }
 
     return false;
   }
 
   isConnectionHighlighted(connection: Connection): boolean {
-    if (!this.selectedCircle) return false;
-    return connection.to === this.selectedCircle;
+    if (this.selectedCircles.length !== 2) return false;
+
+    const [c1, c2] = this.selectedCircles;
+
+    // La conexión debe partir de uno de los seleccionados
+    const fromSelected = this.selectedCircles.includes(connection.from);
+    if (!fromSelected) return false;
+
+    // Y debe llegar al círculo resultante
+    const minCol = Math.min(c1.colIndex, c2.colIndex);
+    const resultRow = c1.rowIndex + 1;
+
+    return connection.to.rowIndex === resultRow &&
+           connection.to.colIndex === minCol;
   }
 
   getCircleClass(circle: ColorCircle): string {
@@ -173,6 +222,6 @@ export class ColorTriangle implements OnInit, OnDestroy {
   }
 
   clearSelection() {
-    this.selectedCircle = null;
+    this.selectedCircles = [];
   }
 }
