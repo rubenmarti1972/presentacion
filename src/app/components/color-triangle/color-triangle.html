@@ -66,26 +66,31 @@
     stroke-width="3"
     class="white-top-circle"
   />
-  <text
-    [attr.x]="svgWidth / 2"
-    y="100"
-    class="white-label"
-    text-anchor="middle">
-    Blanco
-  </text>
 
   <!-- Etiquetas de texto -->
+  <!-- SATURACIÓN: vertical desde blanco hacia abajo -->
   <text
-    x="50"
-    y="480"
-    class="label-text"
-    text-anchor="start">
+    x="30"
+    y="180"
+    class="label-text label-vertical"
+    text-anchor="middle"
+    writing-mode="tb">
     SATURACIÓN ↓
   </text>
 
+  <!-- TONO: horizontal en la base de izquierda a derecha -->
+  <text
+    x="50"
+    y="510"
+    class="label-text"
+    text-anchor="start">
+    TONO →
+  </text>
+
+  <!-- Instrucciones -->
   <text
     [attr.x]="svgWidth / 2"
-    y="520"
+    y="540"
     class="label-text label-hint"
     text-anchor="middle">
     (Haz clic en DOS colores adyacentes para ver qué color forman)
