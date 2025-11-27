@@ -140,7 +140,7 @@
     <app-footer></app-footer>
   </div>
 
-   <!-- Slide 4: Teorema de la diagonal y el lado -->
+   <!-- Slide 4: Espectro de luz -->
   <div class="slide" [class.active]="isCurrentSlide('espectro')" id="espectro">
     <!-- Header -->
     <header class="slide-header">
@@ -159,7 +159,26 @@
     <!-- Footer -->
     <app-footer></app-footer>
   </div>
-  <!-- Slide 5: Teorema de la diagonal y el lado -->
+
+  <!-- Slide 5: Geometría del Color -->
+  <div class="slide" [class.active]="isCurrentSlide('geometria-color')" id="geometria-color">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+      <h2 class="slide-2-title">Geometría del Color - Triángulo de Tono y Saturación</h2>
+      <app-color-triangle></app-color-triangle>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+
+  <!-- Slide 6: Teorema de la diagonal y el lado -->
   <div class="slide" [class.active]="isCurrentSlide('teorema-diagonal')" id="teorema-diagonal">
     <!-- Header -->
     <header class="slide-header">

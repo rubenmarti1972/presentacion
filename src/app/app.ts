@@ -2,6 +2,7 @@ import { Component, signal, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
+import { ColorTriangle } from './components/color-triangle/color-triangle';
 
 interface Slide {
   id: string;
@@ -10,7 +11,7 @@ interface Slide {
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, Header, Footer],
+  imports: [CommonModule, Header, Footer, ColorTriangle],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -22,6 +23,7 @@ export class App implements OnInit {
     { id: 'circulo-cromatico', title: 'Círculo Cromático' },
     { id: 'newton', title: 'Newton y el Círculo Cromático' },
     { id: 'espectro', title: 'Espectro de luz' },
+    { id: 'geometria-color', title: 'Geometría del Color' },
     { id: 'teorema-diagonal',  title: 'Inconmensurabilidad de la diagonal' },
     { id: 'demostracion',  title: 'Demostración' }
 
