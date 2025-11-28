@@ -457,11 +457,11 @@
 }
 
 @keyframes tiltPour {
-  0% { transform: translate(-6px, -14px) rotate(0deg); }
-  22% { transform: translate(-10px, -12px) rotate(-12deg); }
-  48% { transform: translate(-12px, -6px) rotate(-28deg); }
-  82% { transform: translate(-10px, -2px) rotate(-28deg); }
-  100% { transform: translate(-6px, -14px) rotate(0deg); }
+  0% { transform: translate(12px, -14px) rotate(0deg); }
+  22% { transform: translate(22px, -12px) rotate(-10deg); }
+  48% { transform: translate(34px, -6px) rotate(-26deg); }
+  82% { transform: translate(26px, -2px) rotate(-26deg); }
+  100% { transform: translate(12px, -14px) rotate(0deg); }
 }
 
 @keyframes liquidDrain {
@@ -472,11 +472,11 @@
 }
 
 @keyframes streamFlow {
-  0% { opacity: 0; transform: translate(-50%, -32px) scaleY(0); }
-  24% { opacity: 1; transform: translate(-50%, -8px) scaleY(0.45); }
-  55% { opacity: 1; transform: translate(-50%, 44px) scaleY(1); }
-  82% { opacity: 1; transform: translate(-50%, 68px) scaleY(1); }
-  100% { opacity: 0; transform: translate(-50%, 94px) scaleY(0.35); }
+  0% { opacity: 0; transform: translate(-54%, -32px) scaleY(0); }
+  24% { opacity: 1; transform: translate(-54%, -8px) scaleY(0.45); }
+  55% { opacity: 1; transform: translate(-54%, 44px) scaleY(1); }
+  82% { opacity: 1; transform: translate(-54%, 68px) scaleY(1); }
+  100% { opacity: 0; transform: translate(-54%, 94px) scaleY(0.35); }
 }
 
 @keyframes splashBloom {
