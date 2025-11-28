@@ -411,10 +411,10 @@
 
 .pour-stream {
   position: absolute;
-  top: 66px;
+  top: 54px;
   left: 50%;
   width: 14px;
-  height: 176px;
+  height: 164px;
   background: linear-gradient(180deg, rgba(255,255,255,0.65), var(--pour-color, #ff5722));
   border-radius: 20px;
   transform-origin: top center;
@@ -423,7 +423,7 @@
 
 .pour-splash {
   position: absolute;
-  bottom: 42px;
+  bottom: 54px;
   left: 50%;
   width: 180px;
   height: 180px;
@@ -472,11 +472,11 @@
 }
 
 @keyframes streamFlow {
-  0% { opacity: 0; transform: translate(-54%, -32px) scaleY(0); }
-  24% { opacity: 1; transform: translate(-54%, -8px) scaleY(0.45); }
-  55% { opacity: 1; transform: translate(-54%, 44px) scaleY(1); }
-  82% { opacity: 1; transform: translate(-54%, 68px) scaleY(1); }
-  100% { opacity: 0; transform: translate(-54%, 94px) scaleY(0.35); }
+  0% { opacity: 0; transform: translate(-54%, -30px) scaleY(0); }
+  24% { opacity: 1; transform: translate(-54%, -10px) scaleY(0.5); }
+  55% { opacity: 1; transform: translate(-54%, 30px) scaleY(1); }
+  82% { opacity: 1; transform: translate(-54%, 56px) scaleY(1); }
+  100% { opacity: 0; transform: translate(-54%, 76px) scaleY(0.45); }
 }
 
 @keyframes splashBloom {
@@ -494,6 +494,7 @@
   align-items: flex-end;
   justify-content: center;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+  transform: translateY(10px);
 }
 
 .flower-fill {
