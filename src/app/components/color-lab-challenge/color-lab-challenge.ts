@@ -215,17 +215,39 @@ export class ColorLabChallenge {
   protected getInicialMixedColor(): string {
     if (this.inicialSelectedBottles.length === 0) return 'rgb(240, 240, 240)';
 
-    const total = this.inicialSelectedBottles.reduce((sum, b) => sum + b.amount, 0);
-    let r = 0, g = 0, b = 0;
+    // Mezcla en un modelo tipo pintura (RYB) para que amarillo + azul resulte en verde
+    const totals = this.inicialSelectedBottles.reduce(
+      (acc, bottle) => {
+        const key = bottle.name.toLowerCase();
+        if (key.includes('rojo')) acc.red += bottle.amount;
+        if (key.includes('amarillo')) acc.yellow += bottle.amount;
+        if (key.includes('azul')) acc.blue += bottle.amount;
+        if (key.includes('blanco')) acc.white += bottle.amount;
+        return acc;
+      },
+      { red: 0, yellow: 0, blue: 0, white: 0 }
+    );
 
-    this.inicialSelectedBottles.forEach(bottle => {
-      const weight = bottle.amount / total;
-      r += bottle.rgb.r * weight;
-      g += bottle.rgb.g * weight;
-      b += bottle.rgb.b * weight;
-    });
+    const pigmentTotal = totals.red + totals.yellow + totals.blue;
+    if (pigmentTotal === 0) return 'rgb(240, 240, 240)';
 
-    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+    const r = totals.red / pigmentTotal;
+    const y = totals.yellow / pigmentTotal;
+    const b = totals.blue / pigmentTotal;
+
+    // Mezcla inspirada en RYB: prioriza verdes al combinar amarillo y azul
+    const mixedR = Math.min(1, r + y * 0.5);
+    const mixedG = Math.min(1, y + b * 0.7);
+    const mixedB = Math.min(1, b + r * 0.5);
+
+    // Atenuar o iluminar con blanco
+    const totalWithWhite = pigmentTotal + totals.white;
+    const whiteFactor = totalWithWhite > 0 ? totals.white / totalWithWhite : 0;
+    const finalR = mixedR * (1 - whiteFactor) + 1 * whiteFactor;
+    const finalG = mixedG * (1 - whiteFactor) + 1 * whiteFactor;
+    const finalB = mixedB * (1 - whiteFactor) + 1 * whiteFactor;
+
+    return `rgb(${Math.round(finalR * 255)}, ${Math.round(finalG * 255)}, ${Math.round(finalB * 255)})`;
   }
 
   protected getInicialTotalVolume(): number {
