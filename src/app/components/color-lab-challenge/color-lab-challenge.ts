@@ -46,10 +46,10 @@ export class ColorLabChallenge {
   protected readonly Math = Math;
 
   // Nivel actual
-  protected currentLevel = signal<'infantil' | 'secundaria' | 'universitario'>('infantil');
+  protected currentLevel = signal<'inicial' | 'intermedio' | 'avanzado'>('inicial');
 
-  // ========== NIVEL INFANTIL ==========
-  protected infantilMissions: Mission[] = [
+  // ========== NIVEL INICIAL ==========
+  protected inicialMissions: Mission[] = [
     {
       description: '¡Crea color NARANJA! Mezcla rojo y amarillo en partes iguales.',
       targetVolume: 200,
@@ -82,9 +82,9 @@ export class ColorLabChallenge {
     }
   ];
 
-  protected infantilCurrentMission = 0;
-  protected infantilSelectedBottles: ColorBottle[] = [];
-  protected infantilAvailableBottles: ColorBottle[] = [
+  protected inicialCurrentMission = 0;
+  protected inicialSelectedBottles: ColorBottle[] = [];
+  protected inicialAvailableBottles: ColorBottle[] = [
     { id: 'red-100', name: 'Rojo', color: 'rgb(255, 0, 0)', rgb: { r: 255, g: 0, b: 0 }, amount: 100 },
     { id: 'blue-100', name: 'Azul', color: 'rgb(0, 0, 255)', rgb: { r: 0, g: 0, b: 255 }, amount: 100 },
     { id: 'yellow-100', name: 'Amarillo', color: 'rgb(255, 255, 0)', rgb: { r: 255, g: 255, b: 0 }, amount: 100 },
@@ -93,11 +93,11 @@ export class ColorLabChallenge {
     { id: 'blue-200', name: 'Azul', color: 'rgb(0, 0, 255)', rgb: { r: 0, g: 0, b: 255 }, amount: 200 },
     { id: 'yellow-150', name: 'Amarillo', color: 'rgb(255, 255, 0)', rgb: { r: 255, g: 255, b: 0 }, amount: 150 }
   ];
-  protected infantilShowSuccess = false;
-  protected infantilHintLevel = 0;
+  protected inicialShowSuccess = false;
+  protected inicialHintLevel = 0;
 
   // ========== NIVEL SECUNDARIA ==========
-  protected secundariaOrders: Mission[] = [
+  protected intermedioOrders: Mission[] = [
     {
       description: 'Crear pintura MORADA para una habitación',
       targetVolume: 300,
@@ -142,23 +142,23 @@ export class ColorLabChallenge {
     }
   ];
 
-  protected secundariaCurrentOrder = 0;
-  protected secundariaMixAmounts: { [key: string]: number } = { red: 0, blue: 0, yellow: 0, white: 0 };
-  protected secundariaShowSuccess = false;
-  protected secundariaShowValidation = false;
-  protected secundariaValidationMessage = '';
-  protected secundariaValidationSuccess = false;
-  protected secundariaHintIndex = 0;
+  protected intermedioCurrentOrder = 0;
+  protected intermedioMixAmounts: { [key: string]: number } = { red: 0, blue: 0, yellow: 0, white: 0 };
+  protected intermedioShowSuccess = false;
+  protected intermedioShowValidation = false;
+  protected intermedioValidationMessage = '';
+  protected intermedioValidationSuccess = false;
+  protected intermedioHintIndex = 0;
 
   // ========== NIVEL UNIVERSITARIO ==========
-  protected universitarioInventory: { [key: string]: number } = {
+  protected avanzadoInventory: { [key: string]: number } = {
     red: 500,
     blue: 400,
     yellow: 300,
     white: 200
   };
 
-  protected universitarioOrders: Order[] = [
+  protected avanzadoOrders: Order[] = [
     {
       name: 'Morado Corporativo',
       description: 'Para branding de empresa',
@@ -194,31 +194,31 @@ export class ColorLabChallenge {
     }
   ];
 
-  protected universitarioActiveOrderIndex: number | null = null;
-  protected universitarioShowValidation = false;
-  protected universitarioValidationResult = { success: false, title: '', message: '' };
-  protected universitarioShowComplete = false;
+  protected avanzadoActiveOrderIndex: number | null = null;
+  protected avanzadoShowValidation = false;
+  protected avanzadoValidationResult = { success: false, title: '', message: '' };
+  protected avanzadoShowComplete = false;
 
   // ========== MÉTODOS NIVEL INFANTIL ==========
-  protected getInfantilMission(): Mission {
-    return this.infantilMissions[this.infantilCurrentMission];
+  protected getInicialMission(): Mission {
+    return this.inicialMissions[this.inicialCurrentMission];
   }
 
   protected addBottleToMixer(bottle: ColorBottle): void {
-    this.infantilSelectedBottles.push({ ...bottle });
+    this.inicialSelectedBottles.push({ ...bottle });
   }
 
-  protected clearInfantilMixer(): void {
-    this.infantilSelectedBottles = [];
+  protected clearInicialMixer(): void {
+    this.inicialSelectedBottles = [];
   }
 
-  protected getInfantilMixedColor(): string {
-    if (this.infantilSelectedBottles.length === 0) return 'rgb(240, 240, 240)';
+  protected getInicialMixedColor(): string {
+    if (this.inicialSelectedBottles.length === 0) return 'rgb(240, 240, 240)';
 
-    const total = this.infantilSelectedBottles.reduce((sum, b) => sum + b.amount, 0);
+    const total = this.inicialSelectedBottles.reduce((sum, b) => sum + b.amount, 0);
     let r = 0, g = 0, b = 0;
 
-    this.infantilSelectedBottles.forEach(bottle => {
+    this.inicialSelectedBottles.forEach(bottle => {
       const weight = bottle.amount / total;
       r += bottle.rgb.r * weight;
       g += bottle.rgb.g * weight;
@@ -228,13 +228,13 @@ export class ColorLabChallenge {
     return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
   }
 
-  protected getInfantilTotalVolume(): number {
-    return this.infantilSelectedBottles.reduce((sum, b) => sum + b.amount, 0);
+  protected getInicialTotalVolume(): number {
+    return this.inicialSelectedBottles.reduce((sum, b) => sum + b.amount, 0);
   }
 
-  protected checkInfantilSolution(): void {
-    const mission = this.getInfantilMission();
-    const total = this.getInfantilTotalVolume();
+  protected checkInicialSolution(): void {
+    const mission = this.getInicialMission();
+    const total = this.getInicialTotalVolume();
 
     // Verificar volumen
     if (total !== mission.targetVolume) {
@@ -244,16 +244,16 @@ export class ColorLabChallenge {
         html: `
           <p>El volumen total debe ser <strong>${mission.targetVolume}ml</strong></p>
           <p>Actualmente tienes <strong>${total}ml</strong></p>
-          <p style="margin-top: 1rem;">Estás en la <strong>Misión ${this.infantilCurrentMission + 1}</strong> de ${this.infantilMissions.length}</p>
+          <p style="margin-top: 1rem;">Estás en la <strong>Misión ${this.inicialCurrentMission + 1}</strong> de ${this.inicialMissions.length}</p>
         `,
         confirmButtonText: '¡Intentaré de nuevo!',
         confirmButtonColor: '#4CAF50',
-        showCancelButton: this.infantilCurrentMission > 0,
+        showCancelButton: this.inicialCurrentMission > 0,
         cancelButtonText: '← Misión anterior',
         footer: '<small>💡 Puedes pedir una pista si lo necesitas</small>'
       }).then((result) => {
         if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
-          this.prevInfantilMission();
+          this.prevInicialMission();
         }
       });
       return;
@@ -261,7 +261,7 @@ export class ColorLabChallenge {
 
     // Contar cantidades por color
     const amounts: { [key: string]: number } = {};
-    this.infantilSelectedBottles.forEach(bottle => {
+    this.inicialSelectedBottles.forEach(bottle => {
       const colorKey = bottle.name.toLowerCase().replace('í', 'i');
       amounts[colorKey] = (amounts[colorKey] || 0) + bottle.amount;
     });
@@ -286,7 +286,7 @@ export class ColorLabChallenge {
     }
 
     if (isCorrect) {
-      this.infantilShowSuccess = true;
+      this.inicialShowSuccess = true;
     } else {
       Swal.fire({
         icon: 'warning',
@@ -294,33 +294,33 @@ export class ColorLabChallenge {
         html: `
           <p>Las proporciones no son correctas 😔</p>
           <p>Revisa las cantidades de cada color</p>
-          <p style="margin-top: 1rem;">Estás en la <strong>Misión ${this.infantilCurrentMission + 1}</strong> de ${this.infantilMissions.length}</p>
+          <p style="margin-top: 1rem;">Estás en la <strong>Misión ${this.inicialCurrentMission + 1}</strong> de ${this.inicialMissions.length}</p>
         `,
         confirmButtonText: '¡Seguir intentando!',
         confirmButtonColor: '#FF9800',
-        showCancelButton: this.infantilCurrentMission > 0,
+        showCancelButton: this.inicialCurrentMission > 0,
         cancelButtonText: '← Misión anterior',
         footer: '<small>💡 Puedes pedir una pista si lo necesitas</small>'
       }).then((result) => {
         if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
-          this.prevInfantilMission();
+          this.prevInicialMission();
         }
       });
     }
   }
 
-  protected nextInfantilMission(): void {
-    this.infantilShowSuccess = false;
-    this.infantilCurrentMission++;
-    this.clearInfantilMixer();
-    this.infantilHintLevel = 0;
+  protected nextInicialMission(): void {
+    this.inicialShowSuccess = false;
+    this.inicialCurrentMission++;
+    this.clearInicialMixer();
+    this.inicialHintLevel = 0;
 
-    if (this.infantilCurrentMission >= this.infantilMissions.length) {
+    if (this.inicialCurrentMission >= this.inicialMissions.length) {
       Swal.fire({
         icon: 'success',
         title: '🎉 ¡Nivel Completado!',
         html: `
-          <p>¡Felicidades! Has completado todas las misiones del nivel infantil</p>
+          <p>¡Felicidades! Has completado todas las misiones del nivel inicial</p>
           <p>🎨 Dominaste las mezclas de colores 🎨</p>
         `,
         confirmButtonText: 'Reiniciar nivel',
@@ -329,39 +329,39 @@ export class ColorLabChallenge {
         cancelButtonText: 'Volver a la última misión'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.infantilCurrentMission = 0;
+          this.inicialCurrentMission = 0;
         } else {
-          this.infantilCurrentMission = this.infantilMissions.length - 1;
+          this.inicialCurrentMission = this.inicialMissions.length - 1;
         }
       });
     }
   }
 
-  protected prevInfantilMission(): void {
-    if (this.infantilCurrentMission > 0) {
-      this.infantilCurrentMission--;
-      this.clearInfantilMixer();
-      this.infantilHintLevel = 0;
+  protected prevInicialMission(): void {
+    if (this.inicialCurrentMission > 0) {
+      this.inicialCurrentMission--;
+      this.clearInicialMixer();
+      this.inicialHintLevel = 0;
     }
   }
 
-  protected showInfantilHint(): void {
-    const mission = this.getInfantilMission();
-    if (this.infantilHintLevel < mission.hints.length) {
+  protected showInicialHint(): void {
+    const mission = this.getInicialMission();
+    if (this.inicialHintLevel < mission.hints.length) {
       Swal.fire({
         icon: 'info',
         title: '💡 Pista',
         html: `
-          <p style="font-size: 1.1rem;">${mission.hints[this.infantilHintLevel]}</p>
+          <p style="font-size: 1.1rem;">${mission.hints[this.inicialHintLevel]}</p>
           <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
-            Misión ${this.infantilCurrentMission + 1} de ${this.infantilMissions.length}
-            • Pista ${this.infantilHintLevel + 1} de ${mission.hints.length}
+            Misión ${this.inicialCurrentMission + 1} de ${this.inicialMissions.length}
+            • Pista ${this.inicialHintLevel + 1} de ${mission.hints.length}
           </p>
         `,
         confirmButtonText: 'Entendido',
         confirmButtonColor: '#FF9800'
       });
-      this.infantilHintLevel++;
+      this.inicialHintLevel++;
     } else {
       Swal.fire({
         icon: 'warning',
@@ -374,16 +374,16 @@ export class ColorLabChallenge {
   }
 
   // ========== MÉTODOS NIVEL SECUNDARIA ==========
-  protected getSecundariaOrder(): Mission {
-    return this.secundariaOrders[this.secundariaCurrentOrder];
+  protected getIntermedioOrder(): Mission {
+    return this.intermedioOrders[this.intermedioCurrentOrder];
   }
 
-  protected getSecundariaTotalVolume(): number {
-    return Object.values(this.secundariaMixAmounts).reduce((sum, val) => sum + val, 0);
+  protected getIntermedioTotalVolume(): number {
+    return Object.values(this.intermedioMixAmounts).reduce((sum, val) => sum + val, 0);
   }
 
-  protected getSecundariaMixedColor(): string {
-    const total = this.getSecundariaTotalVolume();
+  protected getIntermedioMixedColor(): string {
+    const total = this.getIntermedioTotalVolume();
     if (total === 0) return 'rgb(240, 240, 240)';
 
     const colorMap: { [key: string]: { r: number; g: number; b: number } } = {
@@ -394,7 +394,7 @@ export class ColorLabChallenge {
     };
 
     let r = 0, g = 0, b = 0;
-    Object.entries(this.secundariaMixAmounts).forEach(([color, amount]) => {
+    Object.entries(this.intermedioMixAmounts).forEach(([color, amount]) => {
       if (amount > 0 && colorMap[color]) {
         const weight = amount / total;
         r += colorMap[color].r * weight;
@@ -406,32 +406,32 @@ export class ColorLabChallenge {
     return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
   }
 
-  protected adjustSecundariaAmount(color: string, delta: number): void {
-    this.secundariaMixAmounts[color] = Math.max(0, this.secundariaMixAmounts[color] + delta);
+  protected adjustIntermedioAmount(color: string, delta: number): void {
+    this.intermedioMixAmounts[color] = Math.max(0, this.intermedioMixAmounts[color] + delta);
   }
 
-  protected resetSecundaria(): void {
-    this.secundariaMixAmounts = { red: 0, blue: 0, yellow: 0, white: 0 };
-    this.secundariaShowValidation = false;
+  protected resetIntermedio(): void {
+    this.intermedioMixAmounts = { red: 0, blue: 0, yellow: 0, white: 0 };
+    this.intermedioShowValidation = false;
   }
 
-  protected validateSecundariaOrder(): void {
-    const order = this.getSecundariaOrder();
-    const total = this.getSecundariaTotalVolume();
+  protected validateIntermedioOrder(): void {
+    const order = this.getIntermedioOrder();
+    const total = this.getIntermedioTotalVolume();
     const tolerance = 5;
 
     // Verificar volumen
     if (Math.abs(total - order.targetVolume) > tolerance) {
-      this.secundariaValidationSuccess = false;
-      this.secundariaValidationMessage = `El volumen total debe ser ${order.targetVolume}ml. Tienes ${total}ml.`;
-      this.secundariaShowValidation = true;
+      this.intermedioValidationSuccess = false;
+      this.intermedioValidationMessage = `El volumen total debe ser ${order.targetVolume}ml. Tienes ${total}ml.`;
+      this.intermedioShowValidation = true;
       return;
     }
 
     // Verificar proporciones
     let isCorrect = true;
     for (const [color, required] of Object.entries(order.requiredBottles)) {
-      const actual = this.secundariaMixAmounts[color] || 0;
+      const actual = this.intermedioMixAmounts[color] || 0;
       if (Math.abs(actual - required) > tolerance) {
         isCorrect = false;
         break;
@@ -439,27 +439,27 @@ export class ColorLabChallenge {
     }
 
     if (isCorrect) {
-      this.secundariaValidationSuccess = true;
-      this.secundariaShowSuccess = true;
+      this.intermedioValidationSuccess = true;
+      this.intermedioShowSuccess = true;
     } else {
-      this.secundariaValidationSuccess = false;
-      this.secundariaValidationMessage = 'Las proporciones no son correctas. Revisa la relación entre los colores.';
-      this.secundariaShowValidation = true;
+      this.intermedioValidationSuccess = false;
+      this.intermedioValidationMessage = 'Las proporciones no son correctas. Revisa la relación entre los colores.';
+      this.intermedioShowValidation = true;
     }
   }
 
-  protected nextSecundariaOrder(): void {
-    this.secundariaShowSuccess = false;
-    this.secundariaCurrentOrder++;
-    this.resetSecundaria();
-    this.secundariaHintIndex = 0;
+  protected nextIntermedioOrder(): void {
+    this.intermedioShowSuccess = false;
+    this.intermedioCurrentOrder++;
+    this.resetIntermedio();
+    this.intermedioHintIndex = 0;
 
-    if (this.secundariaCurrentOrder >= this.secundariaOrders.length) {
+    if (this.intermedioCurrentOrder >= this.intermedioOrders.length) {
       Swal.fire({
         icon: 'success',
         title: '🎉 ¡Nivel Completado!',
         html: `
-          <p>¡Excelente trabajo! Has completado todos los pedidos del nivel secundaria</p>
+          <p>¡Excelente trabajo! Has completado todos los pedidos del nivel intermedio</p>
           <p>🏭 Dominaste las proporciones profesionales 🏭</p>
         `,
         confirmButtonText: 'Reiniciar nivel',
@@ -468,39 +468,39 @@ export class ColorLabChallenge {
         cancelButtonText: 'Volver al último pedido'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.secundariaCurrentOrder = 0;
+          this.intermedioCurrentOrder = 0;
         } else {
-          this.secundariaCurrentOrder = this.secundariaOrders.length - 1;
+          this.intermedioCurrentOrder = this.intermedioOrders.length - 1;
         }
       });
     }
   }
 
-  protected prevSecundariaOrder(): void {
-    if (this.secundariaCurrentOrder > 0) {
-      this.secundariaCurrentOrder--;
-      this.resetSecundaria();
-      this.secundariaHintIndex = 0;
+  protected prevIntermedioOrder(): void {
+    if (this.intermedioCurrentOrder > 0) {
+      this.intermedioCurrentOrder--;
+      this.resetIntermedio();
+      this.intermedioHintIndex = 0;
     }
   }
 
-  protected showSecundariaHint(): void {
-    const order = this.getSecundariaOrder();
-    if (this.secundariaHintIndex < order.hints.length) {
+  protected showIntermedioHint(): void {
+    const order = this.getIntermedioOrder();
+    if (this.intermedioHintIndex < order.hints.length) {
       Swal.fire({
         icon: 'info',
         title: '💡 Pista',
         html: `
-          <p style="font-size: 1.1rem;">${order.hints[this.secundariaHintIndex]}</p>
+          <p style="font-size: 1.1rem;">${order.hints[this.intermedioHintIndex]}</p>
           <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
-            Pedido ${this.secundariaCurrentOrder + 1} de ${this.secundariaOrders.length}
-            • Pista ${this.secundariaHintIndex + 1} de ${order.hints.length}
+            Pedido ${this.intermedioCurrentOrder + 1} de ${this.intermedioOrders.length}
+            • Pista ${this.intermedioHintIndex + 1} de ${order.hints.length}
           </p>
         `,
         confirmButtonText: 'Entendido',
         confirmButtonColor: '#FF9800'
       });
-      this.secundariaHintIndex++;
+      this.intermedioHintIndex++;
     } else {
       Swal.fire({
         icon: 'warning',
@@ -513,28 +513,28 @@ export class ColorLabChallenge {
   }
 
   // ========== MÉTODOS NIVEL UNIVERSITARIO ==========
-  protected getUniversitarioActiveOrder(): Order | null {
-    if (this.universitarioActiveOrderIndex === null) return null;
-    return this.universitarioOrders[this.universitarioActiveOrderIndex];
+  protected getAvanzadoActiveOrder(): Order | null {
+    if (this.avanzadoActiveOrderIndex === null) return null;
+    return this.avanzadoOrders[this.avanzadoActiveOrderIndex];
   }
 
-  protected selectUniversitarioOrder(index: number): void {
-    if (!this.universitarioOrders[index].completed) {
-      this.universitarioActiveOrderIndex = index;
+  protected selectAvanzadoOrder(index: number): void {
+    if (!this.avanzadoOrders[index].completed) {
+      this.avanzadoActiveOrderIndex = index;
     }
   }
 
-  protected getUniversitarioMixVolume(): number {
-    const order = this.getUniversitarioActiveOrder();
+  protected getAvanzadoMixVolume(): number {
+    const order = this.getAvanzadoActiveOrder();
     if (!order) return 0;
     return Object.values(order.mix).reduce((sum: number, val) => sum + (val || 0), 0);
   }
 
-  protected getUniversitarioMixColor(): string {
-    const order = this.getUniversitarioActiveOrder();
+  protected getAvanzadoMixColor(): string {
+    const order = this.getAvanzadoActiveOrder();
     if (!order) return 'rgb(240, 240, 240)';
 
-    const total = this.getUniversitarioMixVolume();
+    const total = this.getAvanzadoMixVolume();
     if (total === 0) return 'rgb(240, 240, 240)';
 
     const colorMap: { [key: string]: { r: number; g: number; b: number } } = {
@@ -557,8 +557,8 @@ export class ColorLabChallenge {
     return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
   }
 
-  protected adjustUniversitarioMix(color: string, delta: number): void {
-    const order = this.getUniversitarioActiveOrder();
+  protected adjustAvanzadoMix(color: string, delta: number): void {
+    const order = this.getAvanzadoActiveOrder();
     if (!order) return;
 
     if (!order.mix[color]) {
@@ -566,26 +566,26 @@ export class ColorLabChallenge {
     }
 
     const newValue = order.mix[color] + delta;
-    const available = this.universitarioInventory[color];
+    const available = this.avanzadoInventory[color];
 
     order.mix[color] = Math.max(0, Math.min(available, newValue));
   }
 
-  protected confirmUniversitarioOrder(): void {
-    const order = this.getUniversitarioActiveOrder();
+  protected confirmAvanzadoOrder(): void {
+    const order = this.getAvanzadoActiveOrder();
     if (!order) return;
 
     const tolerance = 5;
 
     // Verificar volumen
-    const total = this.getUniversitarioMixVolume();
+    const total = this.getAvanzadoMixVolume();
     if (Math.abs(total - order.volume) > tolerance) {
-      this.universitarioValidationResult = {
+      this.avanzadoValidationResult = {
         success: false,
         title: 'Volumen Incorrecto',
         message: `El volumen total debe ser ${order.volume}ml. Tienes ${total}ml.`
       };
-      this.universitarioShowValidation = true;
+      this.avanzadoShowValidation = true;
       return;
     }
 
@@ -603,68 +603,68 @@ export class ColorLabChallenge {
       // Deducir inventario
       Object.entries(order.mix).forEach(([color, amount]) => {
         if (amount > 0) {
-          this.universitarioInventory[color] -= amount;
+          this.avanzadoInventory[color] -= amount;
         }
       });
 
       order.completed = true;
-      this.universitarioValidationResult = {
+      this.avanzadoValidationResult = {
         success: true,
         title: '¡Pedido Completado!',
         message: `Has producido correctamente ${order.volume}ml de ${order.name}.`
       };
-      this.universitarioShowValidation = true;
+      this.avanzadoShowValidation = true;
 
       // Verificar si todos completados
-      const allCompleted = this.universitarioOrders.every(o => o.completed);
+      const allCompleted = this.avanzadoOrders.every(o => o.completed);
       if (allCompleted) {
         setTimeout(() => {
-          this.universitarioShowValidation = false;
-          this.universitarioShowComplete = true;
+          this.avanzadoShowValidation = false;
+          this.avanzadoShowComplete = true;
         }, 2000);
       }
     } else {
-      this.universitarioValidationResult = {
+      this.avanzadoValidationResult = {
         success: false,
         title: 'Proporciones Incorrectas',
         message: 'La mezcla no cumple con las proporciones requeridas. Revisa la relación entre colores.'
       };
-      this.universitarioShowValidation = true;
+      this.avanzadoShowValidation = true;
     }
   }
 
-  protected closeUniversitarioValidation(): void {
-    this.universitarioShowValidation = false;
-    if (this.universitarioValidationResult.success) {
-      this.universitarioActiveOrderIndex = null;
+  protected closeAvanzadoValidation(): void {
+    this.avanzadoShowValidation = false;
+    if (this.avanzadoValidationResult.success) {
+      this.avanzadoActiveOrderIndex = null;
     }
   }
 
-  protected getUniversitarioCompletedCount(): number {
-    return this.universitarioOrders.filter(o => o.completed).length;
+  protected getAvanzadoCompletedCount(): number {
+    return this.avanzadoOrders.filter(o => o.completed).length;
   }
 
-  protected getUniversitarioEfficiency(): number {
+  protected getAvanzadoEfficiency(): number {
     const totalCapacity = 500 + 400 + 300 + 200; // Inventario inicial
-    const totalUsed = (500 - this.universitarioInventory['red']) +
-                      (400 - this.universitarioInventory['blue']) +
-                      (300 - this.universitarioInventory['yellow']) +
-                      (200 - this.universitarioInventory['white']);
+    const totalUsed = (500 - this.avanzadoInventory['red']) +
+                      (400 - this.avanzadoInventory['blue']) +
+                      (300 - this.avanzadoInventory['yellow']) +
+                      (200 - this.avanzadoInventory['white']);
     return (totalUsed / totalCapacity) * 100;
   }
 
-  protected resetUniversitarioLevel(): void {
-    this.universitarioShowComplete = false;
-    this.universitarioInventory = { red: 500, blue: 400, yellow: 300, white: 200 };
-    this.universitarioOrders.forEach(o => {
+  protected resetAvanzadoLevel(): void {
+    this.avanzadoShowComplete = false;
+    this.avanzadoInventory = { red: 500, blue: 400, yellow: 300, white: 200 };
+    this.avanzadoOrders.forEach(o => {
       o.completed = false;
       o.mix = {};
     });
-    this.universitarioActiveOrderIndex = null;
+    this.avanzadoActiveOrderIndex = null;
   }
 
   // ========== NAVEGACIÓN DE NIVELES ==========
-  protected selectLevel(level: 'infantil' | 'secundaria' | 'universitario'): void {
+  protected selectLevel(level: 'inicial' | 'intermedio' | 'avanzado'): void {
     this.currentLevel.set(level);
   }
 }

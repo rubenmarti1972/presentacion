@@ -49,7 +49,7 @@
 }
 
 /* ========== NIVEL INFANTIL ========== */
-.infantil-level {
+.inicial-level {
   padding: 2rem;
   background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
   border-radius: 24px;
@@ -428,7 +428,7 @@
 }
 
 /* ========== NIVEL SECUNDARIA ========== */
-.secundaria-level {
+.intermedio-level {
   padding: 2rem;
   background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
   border-radius: 24px;
@@ -654,14 +654,14 @@
 }
 
 /* ========== NIVEL UNIVERSITARIO ========== */
-.universitario-level {
+.avanzado-level {
   padding: 2rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 24px;
   min-height: 600px;
 }
 
-.universitario-level .level-title {
+.avanzado-level .level-title {
   color: white;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }

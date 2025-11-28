@@ -3,32 +3,32 @@
   <div class="level-selector">
     <button
       class="level-btn"
-      [class.active]="currentLevel() === 'infantil'"
-      (click)="selectLevel('infantil')"
+      [class.active]="currentLevel() === 'inicial'"
+      (click)="selectLevel('inicial')"
     >
       <span class="level-icon">🎈</span>
-      <span class="level-name">Infantil</span>
+      <span class="level-name">Inicial</span>
     </button>
     <button
       class="level-btn"
-      [class.active]="currentLevel() === 'secundaria'"
-      (click)="selectLevel('secundaria')"
+      [class.active]="currentLevel() === 'intermedio'"
+      (click)="selectLevel('intermedio')"
     >
       <span class="level-icon">🎨</span>
-      <span class="level-name">Secundaria</span>
+      <span class="level-name">Intermedio</span>
     </button>
     <button
       class="level-btn"
-      [class.active]="currentLevel() === 'universitario'"
-      (click)="selectLevel('universitario')"
+      [class.active]="currentLevel() === 'avanzado'"
+      (click)="selectLevel('avanzado')"
     >
       <span class="level-icon">🔬</span>
-      <span class="level-name">Universitario</span>
+      <span class="level-name">Avanzado</span>
     </button>
   </div>
 
   <!-- NIVEL INFANTIL -->
-  <div *ngIf="currentLevel() === 'infantil'" class="infantil-level">
+  <div *ngIf="currentLevel() === 'inicial'" class="inicial-level">
     <div class="level-header-with-character">
       <div class="scientist-character">🧑‍🔬</div>
       <h2 class="level-title">🎈 Laboratorio de Colores Mágico</h2>
@@ -37,31 +37,31 @@
     <div class="mission-card">
       <div class="mission-header">
         <span class="mission-icon">🎯</span>
-        <h3>Misión {{ infantilCurrentMission + 1 }}</h3>
-        <button class="hint-btn" (click)="showInfantilHint()">💡 Pista</button>
+        <h3>Misión {{ inicialCurrentMission + 1 }}</h3>
+        <button class="hint-btn" (click)="showInicialHint()">💡 Pista</button>
       </div>
-      <p class="mission-text">{{ getInfantilMission().description }}</p>
+      <p class="mission-text">{{ getInicialMission().description }}</p>
 
       <div class="target-display">
         <span>Color objetivo:</span>
-        <div class="color-preview" [style.backgroundColor]="getInfantilMission().targetColor"></div>
-        <span>{{ getInfantilMission().targetVolume }}ml</span>
+        <div class="color-preview" [style.backgroundColor]="getInicialMission().targetColor"></div>
+        <span>{{ getInicialMission().targetVolume }}ml</span>
       </div>
 
       <!-- Navegación de misiones -->
       <div class="mission-navigation">
         <button
           class="nav-mission-btn"
-          [disabled]="infantilCurrentMission === 0"
-          (click)="prevInfantilMission()"
+          [disabled]="inicialCurrentMission === 0"
+          (click)="prevInicialMission()"
         >
           ← Anterior
         </button>
-        <span class="mission-progress">Misión {{ infantilCurrentMission + 1 }} de {{ infantilMissions.length }}</span>
+        <span class="mission-progress">Misión {{ inicialCurrentMission + 1 }} de {{ inicialMissions.length }}</span>
         <button
           class="nav-mission-btn"
-          [disabled]="infantilCurrentMission === infantilMissions.length - 1"
-          (click)="nextInfantilMission()"
+          [disabled]="inicialCurrentMission === inicialMissions.length - 1"
+          (click)="nextInicialMission()"
         >
           Siguiente →
         </button>
@@ -73,7 +73,7 @@
         <h4>Botes Disponibles (toca para agregar)</h4>
         <div class="bottles-grid">
           <div
-            *ngFor="let bottle of infantilAvailableBottles"
+            *ngFor="let bottle of inicialAvailableBottles"
             class="bottle"
             (click)="addBottleToMixer(bottle)"
           >
@@ -87,73 +87,73 @@
       <div class="mixer-section">
         <div class="mixer">
           <div class="mixer-top">Mezcladora</div>
-          <div class="mixer-content" [style.backgroundColor]="getInfantilMixedColor()">
-            <div *ngIf="infantilSelectedBottles.length === 0" class="mixer-empty">
+          <div class="mixer-content" [style.backgroundColor]="getInicialMixedColor()">
+            <div *ngIf="inicialSelectedBottles.length === 0" class="mixer-empty">
               👆 Toca los botes para mezclar
             </div>
-            <div *ngIf="infantilSelectedBottles.length > 0" class="mixer-bottles">
-              <div *ngFor="let bottle of infantilSelectedBottles" class="mixer-bottle-item">
+            <div *ngIf="inicialSelectedBottles.length > 0" class="mixer-bottles">
+              <div *ngFor="let bottle of inicialSelectedBottles" class="mixer-bottle-item">
                 <span [style.color]="bottle.color">●</span>
                 {{ bottle.name }} ({{ bottle.amount }}ml)
               </div>
             </div>
           </div>
           <div class="mixer-total">
-            Total: {{ getInfantilTotalVolume() }}ml / {{ getInfantilMission().targetVolume }}ml
+            Total: {{ getInicialTotalVolume() }}ml / {{ getInicialMission().targetVolume }}ml
           </div>
         </div>
 
         <div class="action-buttons">
-          <button class="btn-clear" (click)="clearInfantilMixer()" [disabled]="infantilSelectedBottles.length === 0">
+          <button class="btn-clear" (click)="clearInicialMixer()" [disabled]="inicialSelectedBottles.length === 0">
             🗑️ Vaciar
           </button>
-          <button class="btn-check" (click)="checkInfantilSolution()" [disabled]="infantilSelectedBottles.length === 0">
+          <button class="btn-check" (click)="checkInicialSolution()" [disabled]="inicialSelectedBottles.length === 0">
             ✨ ¡Verificar!
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Modal de Éxito Infantil -->
-    <div *ngIf="infantilShowSuccess" class="modal-overlay" (click)="nextInfantilMission()">
+    <!-- Modal de Éxito Inicial -->
+    <div *ngIf="inicialShowSuccess" class="modal-overlay" (click)="nextInicialMission()">
       <div class="success-modal" (click)="$event.stopPropagation()">
         <div class="success-icon">🎉</div>
         <h2>¡Perfecto!</h2>
-        <p>{{ getInfantilMission().successMessage }}</p>
-        <div class="result-color" [style.backgroundColor]="getInfantilMixedColor()"></div>
-        <button class="btn-next" (click)="nextInfantilMission()">
-          {{ infantilCurrentMission < infantilMissions.length - 1 ? 'Siguiente Misión →' : '🏆 ¡Completado!' }}
+        <p>{{ getInicialMission().successMessage }}</p>
+        <div class="result-color" [style.backgroundColor]="getInicialMixedColor()"></div>
+        <button class="btn-next" (click)="nextInicialMission()">
+          {{ inicialCurrentMission < inicialMissions.length - 1 ? 'Siguiente Misión →' : '🏆 ¡Completado!' }}
         </button>
       </div>
     </div>
   </div>
 
   <!-- NIVEL SECUNDARIA -->
-  <div *ngIf="currentLevel() === 'secundaria'" class="secundaria-level">
+  <div *ngIf="currentLevel() === 'intermedio'" class="intermedio-level">
     <h2 class="level-title">🎨 Fábrica de Pintura Profesional</h2>
 
     <div class="order-card">
       <div class="order-header">
         <span class="order-icon">📋</span>
-        <h3>Pedido {{ secundariaCurrentOrder + 1 }}</h3>
-        <button class="hint-btn" (click)="showSecundariaHint()">💡 Pista</button>
+        <h3>Pedido {{ intermedioCurrentOrder + 1 }}</h3>
+        <button class="hint-btn" (click)="showIntermedioHint()">💡 Pista</button>
       </div>
 
       <div class="order-details">
-        <p class="order-description">{{ getSecundariaOrder().description }}</p>
+        <p class="order-description">{{ getIntermedioOrder().description }}</p>
 
         <div class="order-specs">
           <div class="spec-item">
             <span class="spec-label">Volumen:</span>
-            <span class="spec-value">{{ getSecundariaOrder().targetVolume }}ml</span>
+            <span class="spec-value">{{ getIntermedioOrder().targetVolume }}ml</span>
           </div>
           <div class="spec-item">
             <span class="spec-label">Proporción:</span>
-            <span class="spec-value">{{ getSecundariaOrder().targetRatio }}</span>
+            <span class="spec-value">{{ getIntermedioOrder().targetRatio }}</span>
           </div>
           <div class="spec-item">
             <span class="spec-label">Color:</span>
-            <div class="target-color" [style.backgroundColor]="getSecundariaOrder().targetColor"></div>
+            <div class="target-color" [style.backgroundColor]="getIntermedioOrder().targetColor"></div>
           </div>
         </div>
 
@@ -161,16 +161,16 @@
         <div class="mission-navigation">
           <button
             class="nav-mission-btn"
-            [disabled]="secundariaCurrentOrder === 0"
-            (click)="prevSecundariaOrder()"
+            [disabled]="intermedioCurrentOrder === 0"
+            (click)="prevIntermedioOrder()"
           >
             ← Anterior
           </button>
-          <span class="mission-progress">Pedido {{ secundariaCurrentOrder + 1 }} de {{ secundariaOrders.length }}</span>
+          <span class="mission-progress">Pedido {{ intermedioCurrentOrder + 1 }} de {{ intermedioOrders.length }}</span>
           <button
             class="nav-mission-btn"
-            [disabled]="secundariaCurrentOrder === secundariaOrders.length - 1"
-            (click)="nextSecundariaOrder()"
+            [disabled]="intermedioCurrentOrder === intermedioOrders.length - 1"
+            (click)="nextIntermedioOrder()"
           >
             Siguiente →
           </button>
@@ -195,16 +195,16 @@
           </div>
 
           <div class="dispenser-controls">
-            <button class="control-btn" (click)="adjustSecundariaAmount(color, -10)">-10</button>
-            <button class="control-btn" (click)="adjustSecundariaAmount(color, -1)">-1</button>
+            <button class="control-btn" (click)="adjustIntermedioAmount(color, -10)">-10</button>
+            <button class="control-btn" (click)="adjustIntermedioAmount(color, -1)">-1</button>
             <input
-              [(ngModel)]="secundariaMixAmounts[color]"
+              [(ngModel)]="intermedioMixAmounts[color]"
               type="number"
               min="0"
               class="amount-input"
             />
-            <button class="control-btn" (click)="adjustSecundariaAmount(color, 1)">+1</button>
-            <button class="control-btn" (click)="adjustSecundariaAmount(color, 10)">+10</button>
+            <button class="control-btn" (click)="adjustIntermedioAmount(color, 1)">+1</button>
+            <button class="control-btn" (click)="adjustIntermedioAmount(color, 10)">+10</button>
           </div>
           <div class="dispenser-unit">ml</div>
         </div>
@@ -216,50 +216,50 @@
         <div class="tank-container">
           <div
             class="tank-liquid"
-            [style.backgroundColor]="getSecundariaMixedColor()"
-            [style.height.%]="Math.min(100, (getSecundariaTotalVolume() / getSecundariaOrder().targetVolume) * 100)"
+            [style.backgroundColor]="getIntermedioMixedColor()"
+            [style.height.%]="Math.min(100, (getIntermedioTotalVolume() / getIntermedioOrder().targetVolume) * 100)"
           ></div>
         </div>
 
         <div class="tank-info">
           <div class="info-row">
             <span>Volumen:</span>
-            <span class="info-value" [class.correct]="getSecundariaTotalVolume() === getSecundariaOrder().targetVolume">
-              {{ getSecundariaTotalVolume() }}ml / {{ getSecundariaOrder().targetVolume }}ml
+            <span class="info-value" [class.correct]="getIntermedioTotalVolume() === getIntermedioOrder().targetVolume">
+              {{ getIntermedioTotalVolume() }}ml / {{ getIntermedioOrder().targetVolume }}ml
             </span>
           </div>
         </div>
 
-        <div *ngIf="secundariaShowValidation" class="validation-feedback">
+        <div *ngIf="intermedioShowValidation" class="validation-feedback">
           <div class="feedback-icon">⚠️</div>
-          <div class="feedback-text">{{ secundariaValidationMessage }}</div>
+          <div class="feedback-text">{{ intermedioValidationMessage }}</div>
         </div>
 
         <div class="action-buttons">
-          <button class="btn-reset" (click)="resetSecundaria()">🔄 Reiniciar</button>
-          <button class="btn-validate" (click)="validateSecundariaOrder()" [disabled]="getSecundariaTotalVolume() === 0">
+          <button class="btn-reset" (click)="resetIntermedio()">🔄 Reiniciar</button>
+          <button class="btn-validate" (click)="validateIntermedioOrder()" [disabled]="getIntermedioTotalVolume() === 0">
             ✓ Validar
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Modal de Éxito Secundaria -->
-    <div *ngIf="secundariaShowSuccess" class="modal-overlay" (click)="nextSecundariaOrder()">
+    <!-- Modal de Éxito Intermedio -->
+    <div *ngIf="intermedioShowSuccess" class="modal-overlay" (click)="nextIntermedioOrder()">
       <div class="success-modal" (click)="$event.stopPropagation()">
         <div class="success-icon">🎉</div>
         <h2>¡Pedido Completado!</h2>
-        <p>{{ getSecundariaOrder().successMessage }}</p>
-        <div class="result-color" [style.backgroundColor]="getSecundariaMixedColor()"></div>
-        <button class="btn-next" (click)="nextSecundariaOrder()">
-          {{ secundariaCurrentOrder < secundariaOrders.length - 1 ? 'Siguiente Pedido →' : '🏆 ¡Completado!' }}
+        <p>{{ getIntermedioOrder().successMessage }}</p>
+        <div class="result-color" [style.backgroundColor]="getIntermedioMixedColor()"></div>
+        <button class="btn-next" (click)="nextIntermedioOrder()">
+          {{ intermedioCurrentOrder < intermedioOrders.length - 1 ? 'Siguiente Pedido →' : '🏆 ¡Completado!' }}
         </button>
       </div>
     </div>
   </div>
 
   <!-- NIVEL UNIVERSITARIO -->
-  <div *ngIf="currentLevel() === 'universitario'" class="universitario-level">
+  <div *ngIf="currentLevel() === 'avanzado'" class="avanzado-level">
     <h2 class="level-title">🔬 Optimización de Producción</h2>
 
     <!-- Inventario -->
@@ -276,7 +276,7 @@
             <span class="item-name">{{ item.name }}</span>
             <div class="item-color" [style.backgroundColor]="item.color"></div>
           </div>
-          <div class="item-amount">{{ universitarioInventory[item.id] }}ml</div>
+          <div class="item-amount">{{ avanzadoInventory[item.id] }}ml</div>
         </div>
       </div>
     </div>
@@ -286,11 +286,11 @@
       <h3>📋 Pedidos</h3>
       <div class="orders-list">
         <div
-          *ngFor="let order of universitarioOrders; let i = index"
+          *ngFor="let order of avanzadoOrders; let i = index"
           class="order-item"
           [class.completed]="order.completed"
-          [class.active]="universitarioActiveOrderIndex === i"
-          (click)="selectUniversitarioOrder(i)"
+          [class.active]="avanzadoActiveOrderIndex === i"
+          (click)="selectAvanzadoOrder(i)"
         >
           <div class="order-status">
             <span>{{ order.completed ? '✓' : '○' }}</span>
@@ -305,10 +305,10 @@
     </div>
 
     <!-- Workspace -->
-    <div *ngIf="getUniversitarioActiveOrder() as order" class="workspace">
+    <div *ngIf="getAvanzadoActiveOrder() as order" class="workspace">
       <div class="workspace-header">
         <h3>🎨 {{ order.name }}</h3>
-        <button class="btn-cancel" (click)="universitarioActiveOrderIndex = null">✕</button>
+        <button class="btn-cancel" (click)="avanzadoActiveOrderIndex = null">✕</button>
       </div>
 
       <div class="workspace-content">
@@ -340,22 +340,22 @@
               </div>
 
               <div class="config-controls">
-                <button class="adj-btn" (click)="adjustUniversitarioMix(colorId, -10)">-10</button>
-                <button class="adj-btn" (click)="adjustUniversitarioMix(colorId, -1)">-1</button>
+                <button class="adj-btn" (click)="adjustAvanzadoMix(colorId, -10)">-10</button>
+                <button class="adj-btn" (click)="adjustAvanzadoMix(colorId, -1)">-1</button>
                 <input
                   [(ngModel)]="order.mix[colorId]"
                   type="number"
                   min="0"
-                  [max]="universitarioInventory[colorId]"
+                  [max]="avanzadoInventory[colorId]"
                   class="mix-input"
                 />
-                <button class="adj-btn" (click)="adjustUniversitarioMix(colorId, 1)">+1</button>
-                <button class="adj-btn" (click)="adjustUniversitarioMix(colorId, 10)">+10</button>
+                <button class="adj-btn" (click)="adjustAvanzadoMix(colorId, 1)">+1</button>
+                <button class="adj-btn" (click)="adjustAvanzadoMix(colorId, 10)">+10</button>
                 <span class="unit">ml</span>
               </div>
 
               <div class="available-indicator">
-                Disponible: {{ universitarioInventory[colorId] }}ml
+                Disponible: {{ avanzadoInventory[colorId] }}ml
               </div>
             </div>
           </div>
@@ -363,21 +363,21 @@
           <div class="mix-summary">
             <div class="summary-item">
               <span>Volumen:</span>
-              <span class="summary-value" [class.correct]="getUniversitarioMixVolume() === order.volume">
-                {{ getUniversitarioMixVolume() }}ml / {{ order.volume }}ml
+              <span class="summary-value" [class.correct]="getAvanzadoMixVolume() === order.volume">
+                {{ getAvanzadoMixVolume() }}ml / {{ order.volume }}ml
               </span>
             </div>
 
             <div class="summary-preview">
               <span>Vista previa:</span>
-              <div class="preview-color" [style.backgroundColor]="getUniversitarioMixColor()"></div>
+              <div class="preview-color" [style.backgroundColor]="getAvanzadoMixColor()"></div>
             </div>
           </div>
 
           <button
             class="btn-confirm"
-            (click)="confirmUniversitarioOrder()"
-            [disabled]="getUniversitarioMixVolume() === 0"
+            (click)="confirmAvanzadoOrder()"
+            [disabled]="getAvanzadoMixVolume() === 0"
           >
             ✓ Confirmar
           </button>
@@ -385,40 +385,40 @@
       </div>
     </div>
 
-    <div *ngIf="!getUniversitarioActiveOrder()" class="no-order-message">
+    <div *ngIf="!getAvanzadoActiveOrder()" class="no-order-message">
       <div class="message-icon">👈</div>
       <p>Selecciona un pedido para comenzar</p>
     </div>
 
     <!-- Modal de Validación -->
-    <div *ngIf="universitarioShowValidation" class="modal-overlay" (click)="closeUniversitarioValidation()">
-      <div class="validation-modal" [class.success]="universitarioValidationResult.success" (click)="$event.stopPropagation()">
-        <div class="validation-icon">{{ universitarioValidationResult.success ? '✓' : '✗' }}</div>
-        <h3>{{ universitarioValidationResult.title }}</h3>
-        <p>{{ universitarioValidationResult.message }}</p>
-        <button class="btn-close-modal" (click)="closeUniversitarioValidation()">
-          {{ universitarioValidationResult.success ? 'Continuar' : 'Reintentar' }}
+    <div *ngIf="avanzadoShowValidation" class="modal-overlay" (click)="closeAvanzadoValidation()">
+      <div class="validation-modal" [class.success]="avanzadoValidationResult.success" (click)="$event.stopPropagation()">
+        <div class="validation-icon">{{ avanzadoValidationResult.success ? '✓' : '✗' }}</div>
+        <h3>{{ avanzadoValidationResult.title }}</h3>
+        <p>{{ avanzadoValidationResult.message }}</p>
+        <button class="btn-close-modal" (click)="closeAvanzadoValidation()">
+          {{ avanzadoValidationResult.success ? 'Continuar' : 'Reintentar' }}
         </button>
       </div>
     </div>
 
     <!-- Modal de Completado -->
-    <div *ngIf="universitarioShowComplete" class="modal-overlay" (click)="resetUniversitarioLevel()">
+    <div *ngIf="avanzadoShowComplete" class="modal-overlay" (click)="resetAvanzadoLevel()">
       <div class="challenge-complete-modal" (click)="$event.stopPropagation()">
         <div class="complete-icon">🏆</div>
         <h2>¡Desafío Completado!</h2>
         <p>Has optimizado exitosamente todos los pedidos.</p>
         <div class="efficiency-stats">
           <div class="stat-item">
-            <div class="stat-value">{{ getUniversitarioCompletedCount() }}</div>
+            <div class="stat-value">{{ getAvanzadoCompletedCount() }}</div>
             <div class="stat-label">Pedidos</div>
           </div>
           <div class="stat-item">
-            <div class="stat-value">{{ Math.round(getUniversitarioEfficiency()) }}%</div>
+            <div class="stat-value">{{ Math.round(getAvanzadoEfficiency()) }}%</div>
             <div class="stat-label">Eficiencia</div>
           </div>
         </div>
-        <button class="btn-next-challenge" (click)="resetUniversitarioLevel()">🎉 Reiniciar</button>
+        <button class="btn-next-challenge" (click)="resetAvanzadoLevel()">🎉 Reiniciar</button>
       </div>
     </div>
   </div>
