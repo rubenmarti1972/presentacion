@@ -411,10 +411,10 @@
 
 .pour-stream {
   position: absolute;
-  top: 54px;
+  top: 50px;
   left: 50%;
   width: 14px;
-  height: 164px;
+  height: 184px;
   background: linear-gradient(180deg, rgba(255,255,255,0.65), var(--pour-color, #ff5722));
   border-radius: 20px;
   transform-origin: top center;
@@ -457,11 +457,11 @@
 }
 
 @keyframes tiltPour {
-  0% { transform: translate(12px, -14px) rotate(0deg); }
-  22% { transform: translate(22px, -12px) rotate(-10deg); }
-  48% { transform: translate(34px, -6px) rotate(-26deg); }
-  82% { transform: translate(26px, -2px) rotate(-26deg); }
-  100% { transform: translate(12px, -14px) rotate(0deg); }
+  0% { transform: translate(14px, -14px) rotate(0deg); }
+  22% { transform: translate(30px, -10px) rotate(-16deg); }
+  48% { transform: translate(48px, -2px) rotate(-34deg); }
+  82% { transform: translate(38px, 0px) rotate(-34deg); }
+  100% { transform: translate(14px, -14px) rotate(0deg); }
 }
 
 @keyframes liquidDrain {
@@ -472,18 +472,18 @@
 }
 
 @keyframes streamFlow {
-  0% { opacity: 0; transform: translate(-54%, -30px) scaleY(0); }
-  24% { opacity: 1; transform: translate(-54%, -10px) scaleY(0.5); }
-  55% { opacity: 1; transform: translate(-54%, 30px) scaleY(1); }
-  82% { opacity: 1; transform: translate(-54%, 56px) scaleY(1); }
-  100% { opacity: 0; transform: translate(-54%, 76px) scaleY(0.45); }
+  0% { opacity: 0; transform: translate(-52%, -26px) scaleY(0); }
+  24% { opacity: 1; transform: translate(-52%, -4px) scaleY(0.55); }
+  55% { opacity: 1; transform: translate(-52%, 48px) scaleY(1); }
+  82% { opacity: 1; transform: translate(-52%, 78px) scaleY(1); }
+  100% { opacity: 0; transform: translate(-52%, 108px) scaleY(0.45); }
 }
 
 @keyframes splashBloom {
-  0% { opacity: 0; transform: translate(-50%, 16px) scale(0.55); }
-  26% { opacity: 0.95; transform: translate(-50%, 6px) scale(0.85); }
-  62% { opacity: 0.85; transform: translate(-50%, 0) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -6px) scale(1.05); }
+  0% { opacity: 0; transform: translate(-50%, 28px) scale(0.55); }
+  26% { opacity: 0.95; transform: translate(-50%, 16px) scale(0.88); }
+  62% { opacity: 0.85; transform: translate(-50%, 8px) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, 2px) scale(1.05); }
 }
 
 .flower-mixer {
@@ -494,7 +494,7 @@
   align-items: flex-end;
   justify-content: center;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
-  transform: translateY(10px);
+  transform: translateY(34px);
 }
 
 .flower-fill {
