@@ -526,10 +526,10 @@ export class ColorLabChallenge {
 
   protected getUniversitarioEfficiency(): number {
     const totalCapacity = 500 + 400 + 300 + 200; // Inventario inicial
-    const totalUsed = (500 - this.universitarioInventory.red) +
-                      (400 - this.universitarioInventory.blue) +
-                      (300 - this.universitarioInventory.yellow) +
-                      (200 - this.universitarioInventory.white);
+    const totalUsed = (500 - this.universitarioInventory['red']) +
+                      (400 - this.universitarioInventory['blue']) +
+                      (300 - this.universitarioInventory['yellow']) +
+                      (200 - this.universitarioInventory['white']);
     return (totalUsed / totalCapacity) * 100;
   }
 
