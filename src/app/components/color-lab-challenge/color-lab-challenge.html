@@ -1,0 +1,384 @@
+<div class="color-lab-container">
+  <!-- Selector de Nivel -->
+  <div class="level-selector">
+    <button
+      class="level-btn"
+      [class.active]="currentLevel() === 'infantil'"
+      (click)="selectLevel('infantil')"
+    >
+      <span class="level-icon">🎈</span>
+      <span class="level-name">Infantil</span>
+    </button>
+    <button
+      class="level-btn"
+      [class.active]="currentLevel() === 'secundaria'"
+      (click)="selectLevel('secundaria')"
+    >
+      <span class="level-icon">🎨</span>
+      <span class="level-name">Secundaria</span>
+    </button>
+    <button
+      class="level-btn"
+      [class.active]="currentLevel() === 'universitario'"
+      (click)="selectLevel('universitario')"
+    >
+      <span class="level-icon">🔬</span>
+      <span class="level-name">Universitario</span>
+    </button>
+  </div>
+
+  <!-- NIVEL INFANTIL -->
+  <div *ngIf="currentLevel() === 'infantil'" class="infantil-level">
+    <h2 class="level-title">🎈 Laboratorio de Colores Mágico</h2>
+
+    <div class="mission-card">
+      <div class="mission-header">
+        <span class="mission-icon">🎯</span>
+        <h3>Misión {{ infantilCurrentMission + 1 }}</h3>
+        <button class="hint-btn" (click)="showInfantilHint()">💡 Pista</button>
+      </div>
+      <p class="mission-text">{{ getInfantilMission().description }}</p>
+
+      <div class="target-display">
+        <span>Color objetivo:</span>
+        <div class="color-preview" [style.backgroundColor]="getInfantilMission().targetColor"></div>
+        <span>{{ getInfantilMission().targetVolume }}ml</span>
+      </div>
+    </div>
+
+    <div class="work-area">
+      <div class="bottles-section">
+        <h4>Botes Disponibles (toca para agregar)</h4>
+        <div class="bottles-grid">
+          <div
+            *ngFor="let bottle of infantilAvailableBottles"
+            class="bottle"
+            (click)="addBottleToMixer(bottle)"
+          >
+            <div class="bottle-liquid" [style.backgroundColor]="bottle.color"></div>
+            <div class="bottle-label">{{ bottle.name }}</div>
+            <div class="bottle-amount">{{ bottle.amount }}ml</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mixer-section">
+        <div class="mixer">
+          <div class="mixer-top">Mezcladora</div>
+          <div class="mixer-content" [style.backgroundColor]="getInfantilMixedColor()">
+            <div *ngIf="infantilSelectedBottles.length === 0" class="mixer-empty">
+              👆 Toca los botes para mezclar
+            </div>
+            <div *ngIf="infantilSelectedBottles.length > 0" class="mixer-bottles">
+              <div *ngFor="let bottle of infantilSelectedBottles" class="mixer-bottle-item">
+                <span [style.color]="bottle.color">●</span>
+                {{ bottle.name }} ({{ bottle.amount }}ml)
+              </div>
+            </div>
+          </div>
+          <div class="mixer-total">
+            Total: {{ getInfantilTotalVolume() }}ml / {{ getInfantilMission().targetVolume }}ml
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn-clear" (click)="clearInfantilMixer()" [disabled]="infantilSelectedBottles.length === 0">
+            🗑️ Vaciar
+          </button>
+          <button class="btn-check" (click)="checkInfantilSolution()" [disabled]="infantilSelectedBottles.length === 0">
+            ✨ ¡Verificar!
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Éxito Infantil -->
+    <div *ngIf="infantilShowSuccess" class="modal-overlay" (click)="nextInfantilMission()">
+      <div class="success-modal" (click)="$event.stopPropagation()">
+        <div class="success-icon">🎉</div>
+        <h2>¡Perfecto!</h2>
+        <p>{{ getInfantilMission().successMessage }}</p>
+        <div class="result-color" [style.backgroundColor]="getInfantilMixedColor()"></div>
+        <button class="btn-next" (click)="nextInfantilMission()">
+          {{ infantilCurrentMission < infantilMissions.length - 1 ? 'Siguiente Misión →' : '🏆 ¡Completado!' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NIVEL SECUNDARIA -->
+  <div *ngIf="currentLevel() === 'secundaria'" class="secundaria-level">
+    <h2 class="level-title">🎨 Fábrica de Pintura Profesional</h2>
+
+    <div class="order-card">
+      <div class="order-header">
+        <span class="order-icon">📋</span>
+        <h3>Pedido {{ secundariaCurrentOrder + 1 }}</h3>
+        <button class="hint-btn" (click)="showSecundariaHint()">💡 Pista</button>
+      </div>
+
+      <div class="order-details">
+        <p class="order-description">{{ getSecundariaOrder().description }}</p>
+
+        <div class="order-specs">
+          <div class="spec-item">
+            <span class="spec-label">Volumen:</span>
+            <span class="spec-value">{{ getSecundariaOrder().targetVolume }}ml</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Proporción:</span>
+            <span class="spec-value">{{ getSecundariaOrder().targetRatio }}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Color:</span>
+            <div class="target-color" [style.backgroundColor]="getSecundariaOrder().targetColor"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="factory-area">
+      <div class="dispensers-panel">
+        <h4>Dispensadores</h4>
+
+        <div class="dispenser" *ngFor="let color of ['red', 'blue', 'yellow']">
+          <div class="dispenser-header">
+            <span class="dispenser-name">
+              {{ color === 'red' ? 'Rojo' : color === 'blue' ? 'Azul' : 'Amarillo' }}
+            </span>
+            <div class="dispenser-color" [style.backgroundColor]="
+              color === 'red' ? 'rgb(255, 0, 0)' :
+              color === 'blue' ? 'rgb(0, 0, 255)' :
+              'rgb(255, 255, 0)'
+            "></div>
+          </div>
+
+          <div class="dispenser-controls">
+            <button class="control-btn" (click)="adjustSecundariaAmount(color, -10)">-10</button>
+            <button class="control-btn" (click)="adjustSecundariaAmount(color, -1)">-1</button>
+            <input
+              [(ngModel)]="secundariaMixAmounts[color]"
+              type="number"
+              min="0"
+              class="amount-input"
+            />
+            <button class="control-btn" (click)="adjustSecundariaAmount(color, 1)">+1</button>
+            <button class="control-btn" (click)="adjustSecundariaAmount(color, 10)">+10</button>
+          </div>
+          <div class="dispenser-unit">ml</div>
+        </div>
+      </div>
+
+      <div class="mix-tank-panel">
+        <div class="tank-label">Tanque de Mezcla</div>
+
+        <div class="tank-container">
+          <div
+            class="tank-liquid"
+            [style.backgroundColor]="getSecundariaMixedColor()"
+            [style.height.%]="Math.min(100, (getSecundariaTotalVolume() / getSecundariaOrder().targetVolume) * 100)"
+          ></div>
+        </div>
+
+        <div class="tank-info">
+          <div class="info-row">
+            <span>Volumen:</span>
+            <span class="info-value" [class.correct]="getSecundariaTotalVolume() === getSecundariaOrder().targetVolume">
+              {{ getSecundariaTotalVolume() }}ml / {{ getSecundariaOrder().targetVolume }}ml
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="secundariaShowValidation" class="validation-feedback">
+          <div class="feedback-icon">⚠️</div>
+          <div class="feedback-text">{{ secundariaValidationMessage }}</div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn-reset" (click)="resetSecundaria()">🔄 Reiniciar</button>
+          <button class="btn-validate" (click)="validateSecundariaOrder()" [disabled]="getSecundariaTotalVolume() === 0">
+            ✓ Validar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Éxito Secundaria -->
+    <div *ngIf="secundariaShowSuccess" class="modal-overlay" (click)="nextSecundariaOrder()">
+      <div class="success-modal" (click)="$event.stopPropagation()">
+        <div class="success-icon">🎉</div>
+        <h2>¡Pedido Completado!</h2>
+        <p>{{ getSecundariaOrder().successMessage }}</p>
+        <div class="result-color" [style.backgroundColor]="getSecundariaMixedColor()"></div>
+        <button class="btn-next" (click)="nextSecundariaOrder()">
+          {{ secundariaCurrentOrder < secundariaOrders.length - 1 ? 'Siguiente Pedido →' : '🏆 ¡Completado!' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NIVEL UNIVERSITARIO -->
+  <div *ngIf="currentLevel() === 'universitario'" class="universitario-level">
+    <h2 class="level-title">🔬 Optimización de Producción</h2>
+
+    <!-- Inventario -->
+    <div class="inventory-panel">
+      <h3>📦 Inventario</h3>
+      <div class="inventory-grid">
+        <div class="inventory-item" *ngFor="let item of [
+          {id: 'red', name: 'Rojo', color: 'rgb(255, 0, 0)'},
+          {id: 'blue', name: 'Azul', color: 'rgb(0, 0, 255)'},
+          {id: 'yellow', name: 'Amarillo', color: 'rgb(255, 255, 0)'},
+          {id: 'white', name: 'Blanco', color: 'rgb(255, 255, 255)'}
+        ]">
+          <div class="item-header">
+            <span class="item-name">{{ item.name }}</span>
+            <div class="item-color" [style.backgroundColor]="item.color"></div>
+          </div>
+          <div class="item-amount">{{ universitarioInventory[item.id] }}ml</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de Pedidos -->
+    <div class="orders-panel">
+      <h3>📋 Pedidos</h3>
+      <div class="orders-list">
+        <div
+          *ngFor="let order of universitarioOrders; let i = index"
+          class="order-item"
+          [class.completed]="order.completed"
+          [class.active]="universitarioActiveOrderIndex === i"
+          (click)="selectUniversitarioOrder(i)"
+        >
+          <div class="order-status">
+            <span>{{ order.completed ? '✓' : '○' }}</span>
+          </div>
+          <div class="order-content">
+            <div class="order-title">{{ order.name }}</div>
+            <div class="order-specs-small">{{ order.volume }}ml | {{ order.ratio }}</div>
+            <div class="order-color-preview" [style.backgroundColor]="order.targetColor"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workspace -->
+    <div *ngIf="getUniversitarioActiveOrder() as order" class="workspace">
+      <div class="workspace-header">
+        <h3>🎨 {{ order.name }}</h3>
+        <button class="btn-cancel" (click)="universitarioActiveOrderIndex = null">✕</button>
+      </div>
+
+      <div class="workspace-content">
+        <div class="order-details-box">
+          <div class="detail-row">
+            <span class="detail-label">Descripción:</span>
+            <span class="detail-value">{{ order.description }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Volumen:</span>
+            <span class="detail-value">{{ order.volume }}ml</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Proporción:</span>
+            <span class="detail-value">{{ order.ratio }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Color:</span>
+            <div class="detail-color" [style.backgroundColor]="order.targetColor"></div>
+          </div>
+        </div>
+
+        <div class="mix-configuration">
+          <h4>Configurar Mezcla</h4>
+          <div class="config-inputs">
+            <div class="config-row" *ngFor="let colorId of ['red', 'blue', 'yellow']">
+              <div class="config-label">
+                <span>{{ colorId === 'red' ? 'Rojo' : colorId === 'blue' ? 'Azul' : 'Amarillo' }}</span>
+              </div>
+
+              <div class="config-controls">
+                <button class="adj-btn" (click)="adjustUniversitarioMix(colorId, -10)">-10</button>
+                <button class="adj-btn" (click)="adjustUniversitarioMix(colorId, -1)">-1</button>
+                <input
+                  [(ngModel)]="order.mix[colorId]"
+                  type="number"
+                  min="0"
+                  [max]="universitarioInventory[colorId]"
+                  class="mix-input"
+                />
+                <button class="adj-btn" (click)="adjustUniversitarioMix(colorId, 1)">+1</button>
+                <button class="adj-btn" (click)="adjustUniversitarioMix(colorId, 10)">+10</button>
+                <span class="unit">ml</span>
+              </div>
+
+              <div class="available-indicator">
+                Disponible: {{ universitarioInventory[colorId] }}ml
+              </div>
+            </div>
+          </div>
+
+          <div class="mix-summary">
+            <div class="summary-item">
+              <span>Volumen:</span>
+              <span class="summary-value" [class.correct]="getUniversitarioMixVolume() === order.volume">
+                {{ getUniversitarioMixVolume() }}ml / {{ order.volume }}ml
+              </span>
+            </div>
+
+            <div class="summary-preview">
+              <span>Vista previa:</span>
+              <div class="preview-color" [style.backgroundColor]="getUniversitarioMixColor()"></div>
+            </div>
+          </div>
+
+          <button
+            class="btn-confirm"
+            (click)="confirmUniversitarioOrder()"
+            [disabled]="getUniversitarioMixVolume() === 0"
+          >
+            ✓ Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!getUniversitarioActiveOrder()" class="no-order-message">
+      <div class="message-icon">👈</div>
+      <p>Selecciona un pedido para comenzar</p>
+    </div>
+
+    <!-- Modal de Validación -->
+    <div *ngIf="universitarioShowValidation" class="modal-overlay" (click)="closeUniversitarioValidation()">
+      <div class="validation-modal" [class.success]="universitarioValidationResult.success" (click)="$event.stopPropagation()">
+        <div class="validation-icon">{{ universitarioValidationResult.success ? '✓' : '✗' }}</div>
+        <h3>{{ universitarioValidationResult.title }}</h3>
+        <p>{{ universitarioValidationResult.message }}</p>
+        <button class="btn-close-modal" (click)="closeUniversitarioValidation()">
+          {{ universitarioValidationResult.success ? 'Continuar' : 'Reintentar' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal de Completado -->
+    <div *ngIf="universitarioShowComplete" class="modal-overlay" (click)="resetUniversitarioLevel()">
+      <div class="challenge-complete-modal" (click)="$event.stopPropagation()">
+        <div class="complete-icon">🏆</div>
+        <h2>¡Desafío Completado!</h2>
+        <p>Has optimizado exitosamente todos los pedidos.</p>
+        <div class="efficiency-stats">
+          <div class="stat-item">
+            <div class="stat-value">{{ getUniversitarioCompletedCount() }}</div>
+            <div class="stat-label">Pedidos</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{ Math.round(getUniversitarioEfficiency()) }}%</div>
+            <div class="stat-label">Eficiencia</div>
+          </div>
+        </div>
+        <button class="btn-next-challenge" (click)="resetUniversitarioLevel()">🎉 Reiniciar</button>
+      </div>
+    </div>
+  </div>
+</div>

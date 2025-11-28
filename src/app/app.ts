@@ -4,6 +4,7 @@ import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
 import { ColorTriangle } from './components/color-triangle/color-triangle';
 import { ProportionsColorGame } from './components/proportions-color-game/proportions-color-game';
+import { ColorLabChallenge } from './components/color-lab-challenge/color-lab-challenge';
 
 interface Slide {
   id: string;
@@ -12,7 +13,7 @@ interface Slide {
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, Header, Footer, ColorTriangle, ProportionsColorGame],
+  imports: [CommonModule, Header, Footer, ColorTriangle, ProportionsColorGame, ColorLabChallenge],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -26,6 +27,7 @@ export class App implements OnInit {
     { id: 'espectro', title: 'Espectro de luz' },
     { id: 'geometria-color', title: 'Geometría del Color' },
     { id: 'juego-colores', title: 'Juego: Proporciones y Colores' },
+    { id: 'laboratorio-colores', title: 'Laboratorio de Mezcla de Colores' },
     { id: 'teorema-diagonal',  title: 'Inconmensurabilidad de la diagonal' },
     { id: 'demostracion',  title: 'Demostración' }
 
