@@ -1,6 +1,6 @@
 .color-lab-container {
   width: 100%;
-  max-width: 1400px;
+  max-width: min(95vw, 1700px);
   margin: 0 auto;
   padding: 2rem;
 }
@@ -204,12 +204,16 @@
 
 .bottle {
   background: white;
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 14px;
+  padding: 1rem 0.75rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
   border: 3px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .bottle:hover {
@@ -218,12 +222,55 @@
   box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
 }
 
+.bottle-graphic {
+  width: 90px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.bottle-neck {
+  width: 32px;
+  height: 16px;
+  background: linear-gradient(180deg, #f3f3f3 0%, #e0e0e0 100%);
+  border-radius: 8px 8px 4px 4px;
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.bottle-body {
+  width: 90px;
+  height: 110px;
+  position: relative;
+  border-radius: 24px 24px 18px 18px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(235,235,235,0.8) 100%);
+  border: 3px solid #d6d6d6;
+  overflow: hidden;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.bottle-body::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  width: 16px;
+  height: 70%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.1) 100%);
+  border-radius: 10px;
+  filter: blur(1px);
+}
+
 .bottle-liquid {
-  width: 100%;
-  height: 80px;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
-  border: 2px solid #ddd;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72%;
+  border-radius: 20px 20px 14px 14px;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .bottle-label {
@@ -266,8 +313,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
   transition: background-color 0.5s ease;
   border: 3px solid #ddd;
+  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.85), rgba(240,240,240,0.95));
 }
 
 .mixer-empty {
@@ -286,6 +335,46 @@
   background: rgba(255,255,255,0.3);
   border-radius: 8px;
   font-weight: 600;
+}
+
+.flower-mixer {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+
+.flower-fill {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 0;
+  border-radius: 24px;
+  transition: height 0.5s ease, background-color 0.3s ease;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><path fill='black' d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><path fill='black' d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/></svg>");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.flower-outline {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23333' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'><path d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/></svg>");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+  opacity: 0.85;
 }
 
 .mixer-total {
