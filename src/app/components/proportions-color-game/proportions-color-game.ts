@@ -310,12 +310,16 @@ export class ProportionsColorGame {
     this.resetLevel();
   }
 
-  protected getSegmentStyle(index: number, totalSegments: number, color: string, percentage: number): any {
-    const startAngle = index === 0 ? 0 : this.level1Target.slice(0, index).reduce((sum, p) => sum + p.percentage, 0) * 3.6;
-    const angle = percentage * 3.6;
+  protected getPieChartStyle(): string {
+    let angle = 0;
+    const gradientParts: string[] = [];
 
-    return {
-      'background': `conic-gradient(from ${startAngle}deg, ${color} 0deg ${angle}deg, transparent ${angle}deg)`
-    };
+    this.level1Target.forEach(segment => {
+      const segmentAngle = segment.percentage * 3.6;
+      gradientParts.push(`${segment.color} ${angle}deg ${angle + segmentAngle}deg`);
+      angle += segmentAngle;
+    });
+
+    return `conic-gradient(${gradientParts.join(', ')})`;
   }
 }
