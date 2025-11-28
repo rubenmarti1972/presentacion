@@ -49,6 +49,11 @@ export class ColorLabChallenge {
     this.applyUniformTargets();
   }
 
+  private pouringStartTimeout: ReturnType<typeof setTimeout> | null = null;
+  private pouringEndTimeout: ReturnType<typeof setTimeout> | null = null;
+  protected pouringBottle: ColorBottle | null = null;
+  protected pouringActive = false;
+
   private hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
     const c = (1 - Math.abs(2 * l - 1)) * s;
     const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
@@ -298,10 +303,33 @@ export class ColorLabChallenge {
 
   protected addBottleToMixer(bottle: ColorBottle): void {
     this.inicialSelectedBottles.push({ ...bottle });
+    this.playPourAnimation(bottle);
   }
 
   protected clearInicialMixer(): void {
     this.inicialSelectedBottles = [];
+  }
+
+  private playPourAnimation(bottle: ColorBottle): void {
+    this.pouringBottle = { ...bottle };
+    this.pouringActive = false;
+
+    if (this.pouringStartTimeout) {
+      clearTimeout(this.pouringStartTimeout);
+    }
+
+    if (this.pouringEndTimeout) {
+      clearTimeout(this.pouringEndTimeout);
+    }
+
+    this.pouringStartTimeout = setTimeout(() => {
+      this.pouringActive = true;
+    }, 10);
+
+    this.pouringEndTimeout = setTimeout(() => {
+      this.pouringActive = false;
+      this.pouringBottle = null;
+    }, 1400);
   }
 
   protected getInicialMixedColor(): string {

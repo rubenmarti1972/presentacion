@@ -93,6 +93,22 @@
         <div class="mixer">
           <div class="mixer-top">Mezcladora</div>
           <div class="mixer-content">
+            <div
+              class="pour-animation"
+              *ngIf="pouringBottle"
+              [class.active]="pouringActive"
+              [style.--pour-color]="pouringBottle?.color"
+            >
+              <div class="pour-bottle">
+                <div class="pour-neck"></div>
+                <div class="pour-body">
+                  <div class="pour-liquid"></div>
+                </div>
+                <div class="pour-cap"></div>
+              </div>
+              <div class="pour-stream"></div>
+              <div class="pour-splash"></div>
+            </div>
             <div class="flower-mixer">
               <div
                 class="flower-fill"
