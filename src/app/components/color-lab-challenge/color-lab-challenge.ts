@@ -329,7 +329,7 @@ export class ColorLabChallenge {
     this.pouringEndTimeout = setTimeout(() => {
       this.pouringActive = false;
       this.pouringBottle = null;
-    }, 1400);
+    }, 1800);
   }
 
   protected getInicialMixedColor(): string {

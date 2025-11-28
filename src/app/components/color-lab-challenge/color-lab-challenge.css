@@ -351,17 +351,17 @@
 
 .pour-animation.active {
   opacity: 1;
-  animation: pourScene 1.2s ease forwards;
+  animation: pourScene 1.6s ease forwards;
 }
 
 .pour-bottle {
   position: absolute;
-  top: -10px;
-  right: 60px;
-  width: 82px;
-  height: 150px;
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
-  transform-origin: 20% 25%;
+  top: -16px;
+  left: 50%;
+  width: 86px;
+  height: 158px;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+  transform-origin: 50% 26%;
 }
 
 .pour-cap {
@@ -411,10 +411,10 @@
 
 .pour-stream {
   position: absolute;
-  top: 55px;
-  right: 60px;
-  width: 12px;
-  height: 160px;
+  top: 66px;
+  left: 50%;
+  width: 14px;
+  height: 176px;
   background: linear-gradient(180deg, rgba(255,255,255,0.65), var(--pour-color, #ff5722));
   border-radius: 20px;
   transform-origin: top center;
@@ -423,29 +423,30 @@
 
 .pour-splash {
   position: absolute;
-  bottom: 44px;
-  width: 160px;
-  height: 160px;
+  bottom: 42px;
+  left: 50%;
+  width: 180px;
+  height: 180px;
   background: radial-gradient(circle at 50% 55%, rgba(255,255,255,0.9) 0 25%, var(--pour-color, #ff5722) 30% 70%, transparent 80%);
   filter: blur(1px);
   opacity: 0;
-  transform: scale(0.65);
+  transform: translateX(-50%) scale(0.65);
 }
 
 .pour-animation.active .pour-bottle {
-  animation: tiltPour 1.15s ease forwards;
+  animation: tiltPour 1.5s ease forwards;
 }
 
 .pour-animation.active .pour-liquid {
-  animation: liquidDrain 1.15s ease forwards;
+  animation: liquidDrain 1.5s ease forwards;
 }
 
 .pour-animation.active .pour-stream {
-  animation: streamFlow 1.05s ease forwards;
+  animation: streamFlow 1.4s ease forwards;
 }
 
 .pour-animation.active .pour-splash {
-  animation: splashBloom 1s ease-out forwards;
+  animation: splashBloom 1.35s ease-out forwards;
 }
 
 @keyframes pourScene {
@@ -456,11 +457,11 @@
 }
 
 @keyframes tiltPour {
-  0% { transform: translate(70px, -18px) rotate(0deg); }
-  20% { transform: translate(34px, -18px) rotate(-10deg); }
-  40% { transform: translate(10px, -10px) rotate(-30deg); }
-  80% { transform: translate(10px, -6px) rotate(-30deg); }
-  100% { transform: translate(70px, -18px) rotate(0deg); }
+  0% { transform: translate(-6px, -14px) rotate(0deg); }
+  22% { transform: translate(-10px, -12px) rotate(-12deg); }
+  48% { transform: translate(-12px, -6px) rotate(-28deg); }
+  82% { transform: translate(-10px, -2px) rotate(-28deg); }
+  100% { transform: translate(-6px, -14px) rotate(0deg); }
 }
 
 @keyframes liquidDrain {
@@ -471,18 +472,18 @@
 }
 
 @keyframes streamFlow {
-  0% { opacity: 0; transform: translate(18px, -22px) scaleY(0); }
-  20% { opacity: 1; transform: translate(18px, 2px) scaleY(0.35); }
-  50% { opacity: 1; transform: translate(18px, 36px) scaleY(1); }
-  80% { opacity: 1; transform: translate(18px, 48px) scaleY(1); }
-  100% { opacity: 0; transform: translate(18px, 62px) scaleY(0.3); }
+  0% { opacity: 0; transform: translate(-50%, -32px) scaleY(0); }
+  24% { opacity: 1; transform: translate(-50%, -8px) scaleY(0.45); }
+  55% { opacity: 1; transform: translate(-50%, 44px) scaleY(1); }
+  82% { opacity: 1; transform: translate(-50%, 68px) scaleY(1); }
+  100% { opacity: 0; transform: translate(-50%, 94px) scaleY(0.35); }
 }
 
 @keyframes splashBloom {
-  0% { opacity: 0; transform: translateY(18px) scale(0.55); }
-  25% { opacity: 0.95; transform: translateY(8px) scale(0.85); }
-  60% { opacity: 0.85; transform: translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateY(-4px) scale(1.05); }
+  0% { opacity: 0; transform: translate(-50%, 16px) scale(0.55); }
+  26% { opacity: 0.95; transform: translate(-50%, 6px) scale(0.85); }
+  62% { opacity: 0.85; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -6px) scale(1.05); }
 }
 
 .flower-mixer {
