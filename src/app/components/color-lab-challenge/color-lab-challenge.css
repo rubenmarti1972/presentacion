@@ -352,12 +352,12 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 190px;
+  width: 200px;
   height: 0;
   border-radius: 24px;
   transition: height 0.5s ease, background-color 0.3s ease;
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><path fill='black' d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/><circle cx='100' cy='100' r='18'/></svg>");
-  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><path fill='black' d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/><circle cx='100' cy='100' r='18'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><path fill='black' d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><path fill='black' d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/></svg>");
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: contain;
@@ -369,7 +369,7 @@
 .flower-outline {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23333' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'><path d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/><circle cx='100' cy='100' r='18'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23333' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'><path d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/></svg>");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
