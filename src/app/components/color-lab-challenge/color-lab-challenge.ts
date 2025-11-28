@@ -54,32 +54,44 @@ export class ColorLabChallenge {
   protected pouringBottle: ColorBottle | null = null;
   protected pouringActive = false;
 
-  private hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
-    const c = (1 - Math.abs(2 * l - 1)) * s;
-    const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
-    const m = l - c / 2;
+  private cubicInterpolate(t: number, A: number, B: number): number {
+    const weight = t * t * (3.0 - 2.0 * t);
+    return A + weight * (B - A);
+  }
 
-    let r1 = 0, g1 = 0, b1 = 0;
+  private getRYBtoRGB(iR: number, iY: number, iB: number): { r: number; g: number; b: number } {
+    // Normalizar inputs a rango 0-1
+    const R = iR / 255.0;
+    const Y = iY / 255.0;
+    const B = iB / 255.0;
 
-    if (h >= 0 && h < 60) {
-      r1 = c; g1 = x; b1 = 0;
-    } else if (h >= 60 && h < 120) {
-      r1 = x; g1 = c; b1 = 0;
-    } else if (h >= 120 && h < 180) {
-      r1 = 0; g1 = c; b1 = x;
-    } else if (h >= 180 && h < 240) {
-      r1 = 0; g1 = x; b1 = c;
-    } else if (h >= 240 && h < 300) {
-      r1 = x; g1 = 0; b1 = c;
-    } else {
-      r1 = c; g1 = 0; b1 = x;
-    }
+    // Matriz de mapeo RYB → RGB usando interpolación cúbica
+    // Basado en "Paint Inspired Color Mixing" (Gossett & Chen, 2004)
+    const x0 = this.cubicInterpolate(B, 1.0, 0.163);
+    const x1 = this.cubicInterpolate(B, 1.0, 0.0);
+    const x2 = this.cubicInterpolate(B, 1.0, 0.5);
+    const x3 = this.cubicInterpolate(B, 1.0, 0.2);
+    const y0 = this.cubicInterpolate(B, 1.0, 0.373);
+    const y1 = this.cubicInterpolate(B, 1.0, 0.66);
+    const y2 = this.cubicInterpolate(B, 0.0, 0.094);
+    const y3 = this.cubicInterpolate(B, 0.5, 0.0);
+    const z0 = this.cubicInterpolate(B, 0.2, 1.0);
+    const z1 = this.cubicInterpolate(B, 0.094, 1.0);
+    const z2 = this.cubicInterpolate(B, 0.0, 0.5);
+    const z3 = this.cubicInterpolate(B, 0.0, 0.0);
 
-    return {
-      r: Math.round((r1 + m) * 255),
-      g: Math.round((g1 + m) * 255),
-      b: Math.round((b1 + m) * 255)
-    };
+    const r0 = this.cubicInterpolate(Y, x0, x1);
+    const r1 = this.cubicInterpolate(Y, x2, x3);
+    const g0 = this.cubicInterpolate(Y, y0, y1);
+    const g1 = this.cubicInterpolate(Y, y2, y3);
+    const b0 = this.cubicInterpolate(Y, z0, z1);
+    const b1 = this.cubicInterpolate(Y, z2, z3);
+
+    const r = Math.round(255 * this.cubicInterpolate(R, r0, r1));
+    const g = Math.round(255 * this.cubicInterpolate(R, g0, g1));
+    const b = Math.round(255 * this.cubicInterpolate(R, b0, b1));
+
+    return { r, g, b };
   }
 
   private mixPigments(amounts: { red?: number; yellow?: number; blue?: number; white?: number }): { r: number; g: number; b: number } {
@@ -88,33 +100,35 @@ export class ColorLabChallenge {
     const blue = Math.max(0, amounts.blue || 0);
     const white = Math.max(0, amounts.white || 0);
 
-    const pigmentTotal = red + yellow + blue;
-    const totalWithWhite = pigmentTotal + white;
+    const total = red + yellow + blue + white;
 
-    if (pigmentTotal === 0) {
-      const neutral = white > 0 ? 255 : 240;
-      return { r: neutral, g: neutral, b: neutral };
+    if (total === 0) {
+      return { r: 240, g: 240, b: 240 };
     }
 
-    // RYB wheel angles to get artist-friendly hues
-    const degToRad = Math.PI / 180;
-    const redAngle = 0 * degToRad;
-    const yellowAngle = 90 * degToRad;
-    const blueAngle = 220 * degToRad;
+    // Si solo hay blanco, devolver blanco
+    const rybTotal = red + yellow + blue;
+    if (rybTotal === 0 && white > 0) {
+      return { r: 255, g: 255, b: 255 };
+    }
 
-    const x = red * Math.cos(redAngle) + yellow * Math.cos(yellowAngle) + blue * Math.cos(blueAngle);
-    const y = red * Math.sin(redAngle) + yellow * Math.sin(yellowAngle) + blue * Math.sin(blueAngle);
+    // Normalizar colores RYB a rango 0-255
+    const rNorm = (red / rybTotal) * 255;
+    const yNorm = (yellow / rybTotal) * 255;
+    const bNorm = (blue / rybTotal) * 255;
 
-    let hue = (Math.atan2(y, x) * 180) / Math.PI;
-    if (hue < 0) hue += 360;
+    // Obtener color mezclado usando mapeo RYB → RGB
+    const mixed = this.getRYBtoRGB(rNorm, yNorm, bNorm);
 
-    const whiteRatio = totalWithWhite > 0 ? white / totalWithWhite : 0;
-    const pigmentRatio = 1 - whiteRatio;
+    // Aplicar blanco (aclarado)
+    if (white > 0) {
+      const whiteRatio = white / total;
+      mixed.r = Math.round(mixed.r + (255 - mixed.r) * whiteRatio);
+      mixed.g = Math.round(mixed.g + (255 - mixed.g) * whiteRatio);
+      mixed.b = Math.round(mixed.b + (255 - mixed.b) * whiteRatio);
+    }
 
-    const saturation = Math.min(1, Math.max(0, 0.92 - 0.42 * whiteRatio));
-    const lightness = Math.min(1, Math.max(0, 0.47 + 0.38 * whiteRatio));
-
-    return this.hslToRgb(hue, saturation * pigmentRatio + 0.25 * whiteRatio, lightness);
+    return mixed;
   }
 
   private mixPigmentsToCss(amounts: { red?: number; yellow?: number; blue?: number; white?: number }): string {
