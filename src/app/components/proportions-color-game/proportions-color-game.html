@@ -1,0 +1,256 @@
+<div class="game-container">
+  <div class="game-header">
+    <h2>Juego de Proporciones y Colores</h2>
+    <div class="level-selector">
+      @for (level of levels; track level.number) {
+        <button
+          class="level-btn"
+          [class.active]="currentLevel() === level.number"
+          (click)="goToLevel(level.number)">
+          Nivel {{ level.number }}: {{ level.name }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- NIVEL 1: SELECCIÓN MÚLTIPLE -->
+  @if (currentLevel() === 1) {
+    <div class="level-content">
+      <div class="level-description">
+        <h3>{{ levels[0].name }}</h3>
+        <p>{{ levels[0].description }}</p>
+      </div>
+
+      <div class="visual-container">
+        <h4>Observa estas proporciones:</h4>
+        <div class="pie-chart">
+          @for (segment of level1Target; track $index; let i = $index) {
+            <div class="pie-segment"
+                 [style.background]="'conic-gradient(from ' +
+                   (i === 0 ? 0 : level1Target.slice(0, i).reduce((sum, p) => sum + p.percentage, 0) * 3.6) + 'deg, ' +
+                   segment.color + ' 0deg, ' +
+                   segment.color + ' ' + (segment.percentage * 3.6) + 'deg, transparent ' +
+                   (segment.percentage * 3.6) + 'deg)'">
+            </div>
+          }
+        </div>
+
+        <div class="legend">
+          @for (segment of level1Target; track $index) {
+            <div class="legend-item">
+              <div class="color-box" [style.background-color]="segment.color"></div>
+              <span>{{ segment.colorName }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="question-container">
+        <h4>¿Qué proporciones tiene este círculo?</h4>
+        <div class="options">
+          @for (option of level1Options; track option) {
+            <label class="option-label">
+              <input
+                type="radio"
+                name="level1"
+                [value]="option"
+                [(ngModel)]="level1SelectedAnswer"
+                (change)="level1Feedback = ''">
+              <span>{{ option }}</span>
+            </label>
+          }
+        </div>
+
+        <button class="check-btn" (click)="checkLevel1Answer()" [disabled]="!level1SelectedAnswer">
+          Verificar Respuesta
+        </button>
+
+        @if (level1Feedback) {
+          <div class="feedback" [class.correct]="level1IsCorrect" [class.incorrect]="!level1IsCorrect">
+            {{ level1Feedback }}
+          </div>
+        }
+
+        @if (level1IsCorrect) {
+          <div class="navigation-btns">
+            <button class="next-btn" (click)="nextFromLevel1()">
+              Siguiente Nivel →
+            </button>
+            <button class="reset-btn" (click)="resetLevel()">
+              Nuevo Ejercicio
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- NIVEL 2: SLIDERS -->
+  @if (currentLevel() === 2) {
+    <div class="level-content">
+      <div class="level-description">
+        <h3>{{ levels[1].name }}</h3>
+        <p>{{ levels[1].description }}</p>
+      </div>
+
+      <div class="comparison-container">
+        <div class="target-side">
+          <h4>Objetivo:</h4>
+          <div class="bar-chart">
+            @for (segment of level2Target; track $index) {
+              <div class="bar-row">
+                <div class="bar-label">{{ segment.colorName }}</div>
+                <div class="bar-container">
+                  <div class="bar-fill"
+                       [style.width.%]="segment.percentage"
+                       [style.background-color]="segment.color">
+                  </div>
+                  <span class="bar-percentage">{{ segment.percentage }}%</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="player-side">
+          <h4>Tu intento:</h4>
+          <div class="bar-chart">
+            @for (segment of getLevel2PlayerPercentages(); track $index) {
+              <div class="bar-row">
+                <div class="bar-label">{{ segment.colorName }}</div>
+                <div class="bar-container">
+                  <div class="bar-fill"
+                       [style.width.%]="segment.percentage"
+                       [style.background-color]="segment.color">
+                  </div>
+                  <span class="bar-percentage">{{ segment.percentage }}%</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-container">
+        <h4>Ajusta las proporciones:</h4>
+        @for (segment of level2Target; track $index) {
+          <div class="slider-control">
+            <label>{{ segment.colorName }}</label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              [(ngModel)]="level2PlayerProportions[segment.colorName]"
+              (input)="updateLevel2()"
+              [style.accent-color]="segment.color">
+            <span>{{ level2PlayerProportions[segment.colorName] }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="feedback" [class.excellent]="level2Error < 5" [class.close]="level2Error >= 5 && level2Error < 15">
+        {{ level2Feedback }}
+      </div>
+
+      @if (level2Error < 5) {
+        <div class="navigation-btns">
+          <button class="next-btn" (click)="nextFromLevel2()">
+            Siguiente Nivel →
+          </button>
+          <button class="reset-btn" (click)="resetLevel()">
+            Nuevo Ejercicio
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- NIVEL 3: AVANZADO -->
+  @if (currentLevel() === 3) {
+    <div class="level-content">
+      <div class="level-description">
+        <h3>{{ levels[2].name }}</h3>
+        <p>{{ levels[2].description }}</p>
+      </div>
+
+      <div class="comparison-container">
+        <div class="target-side">
+          <h4>Objetivo:</h4>
+          <div class="bar-chart">
+            @for (segment of level3Target; track $index) {
+              <div class="bar-row">
+                <div class="bar-label">{{ segment.colorName }}</div>
+                <div class="bar-container">
+                  <div class="bar-fill"
+                       [style.width.%]="segment.percentage"
+                       [style.background-color]="segment.color">
+                  </div>
+                  <span class="bar-percentage">{{ segment.percentage }}%</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="player-side">
+          <h4>Tu intento:</h4>
+          <div class="bar-chart">
+            @for (segment of getLevel3PlayerPercentages(); track $index) {
+              <div class="bar-row">
+                <div class="bar-label">{{ segment.colorName }}</div>
+                <div class="bar-container">
+                  <div class="bar-fill"
+                       [style.width.%]="segment.percentage"
+                       [style.background-color]="segment.color">
+                  </div>
+                  <span class="bar-percentage">{{ segment.percentage }}%</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-container">
+        <h4>Ajusta las proporciones:</h4>
+        @for (segment of level3Target; track $index) {
+          <div class="slider-control">
+            <label>{{ segment.colorName }}</label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              [(ngModel)]="level3PlayerProportions[segment.colorName]"
+              (input)="updateLevel3()"
+              [style.accent-color]="segment.color">
+            <span>{{ level3PlayerProportions[segment.colorName] }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="feedback" [class.excellent]="level3Error < 8" [class.close]="level3Error >= 8 && level3Error < 20">
+        {{ level3Feedback }}
+      </div>
+
+      @if (level3Error < 8) {
+        <div class="navigation-btns">
+          <button class="reset-btn" (click)="resetLevel()">
+            Nuevo Ejercicio
+          </button>
+          <button class="reset-btn" (click)="goToLevel(1)">
+            Volver al Inicio
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Celebración -->
+  @if (showCelebration) {
+    <div class="celebration">
+      <div class="celebration-content">
+        🎉 ¡Excelente! 🎉
+      </div>
+    </div>
+  }
+</div>
