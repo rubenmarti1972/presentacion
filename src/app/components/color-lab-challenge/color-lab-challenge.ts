@@ -88,6 +88,7 @@ export class ColorLabChallenge {
     { id: 'blue-100', name: 'Azul', color: 'rgb(0, 0, 255)', rgb: { r: 0, g: 0, b: 255 }, amount: 100 },
     { id: 'yellow-100', name: 'Amarillo', color: 'rgb(255, 255, 0)', rgb: { r: 255, g: 255, b: 0 }, amount: 100 },
     { id: 'red-150', name: 'Rojo', color: 'rgb(255, 0, 0)', rgb: { r: 255, g: 0, b: 0 }, amount: 150 },
+    { id: 'blue-150', name: 'Azul', color: 'rgb(0, 0, 255)', rgb: { r: 0, g: 0, b: 255 }, amount: 150 },
     { id: 'blue-200', name: 'Azul', color: 'rgb(0, 0, 255)', rgb: { r: 0, g: 0, b: 255 }, amount: 200 },
     { id: 'yellow-150', name: 'Amarillo', color: 'rgb(255, 255, 0)', rgb: { r: 255, g: 255, b: 0 }, amount: 150 }
   ];
