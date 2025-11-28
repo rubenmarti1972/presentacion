@@ -23,16 +23,7 @@
 
       <div class="visual-container">
         <h4>Observa estas proporciones:</h4>
-        <div class="pie-chart">
-          @for (segment of level1Target; track $index; let i = $index) {
-            <div class="pie-segment"
-                 [style.background]="'conic-gradient(from ' +
-                   (i === 0 ? 0 : level1Target.slice(0, i).reduce((sum, p) => sum + p.percentage, 0) * 3.6) + 'deg, ' +
-                   segment.color + ' 0deg, ' +
-                   segment.color + ' ' + (segment.percentage * 3.6) + 'deg, transparent ' +
-                   (segment.percentage * 3.6) + 'deg)'">
-            </div>
-          }
+        <div class="pie-chart" [style.background]="getPieChartStyle()">
         </div>
 
         <div class="legend">
