@@ -56,11 +56,31 @@
   min-height: 600px;
 }
 
+.level-header-with-character {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.scientist-character {
+  font-size: 4rem;
+  animation: wave 2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
 .level-title {
   text-align: center;
   color: #333;
   font-size: 2rem;
-  margin-bottom: 2rem;
+  margin: 0;
 }
 
 .mission-card {
@@ -122,6 +142,45 @@
   border-radius: 8px;
   border: 2px solid #333;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.mission-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e0e0e0;
+}
+
+.nav-mission-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.nav-mission-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.nav-mission-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.mission-progress {
+  font-weight: 600;
+  color: #666;
+  font-size: 1rem;
 }
 
 .work-area {

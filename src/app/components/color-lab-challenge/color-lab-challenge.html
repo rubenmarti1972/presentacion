@@ -29,7 +29,10 @@
 
   <!-- NIVEL INFANTIL -->
   <div *ngIf="currentLevel() === 'infantil'" class="infantil-level">
-    <h2 class="level-title">🎈 Laboratorio de Colores Mágico</h2>
+    <div class="level-header-with-character">
+      <div class="scientist-character">🧑‍🔬</div>
+      <h2 class="level-title">🎈 Laboratorio de Colores Mágico</h2>
+    </div>
 
     <div class="mission-card">
       <div class="mission-header">
@@ -43,6 +46,25 @@
         <span>Color objetivo:</span>
         <div class="color-preview" [style.backgroundColor]="getInfantilMission().targetColor"></div>
         <span>{{ getInfantilMission().targetVolume }}ml</span>
+      </div>
+
+      <!-- Navegación de misiones -->
+      <div class="mission-navigation">
+        <button
+          class="nav-mission-btn"
+          [disabled]="infantilCurrentMission === 0"
+          (click)="prevInfantilMission()"
+        >
+          ← Anterior
+        </button>
+        <span class="mission-progress">Misión {{ infantilCurrentMission + 1 }} de {{ infantilMissions.length }}</span>
+        <button
+          class="nav-mission-btn"
+          [disabled]="infantilCurrentMission === infantilMissions.length - 1"
+          (click)="nextInfantilMission()"
+        >
+          Siguiente →
+        </button>
       </div>
     </div>
 
@@ -133,6 +155,25 @@
             <span class="spec-label">Color:</span>
             <div class="target-color" [style.backgroundColor]="getSecundariaOrder().targetColor"></div>
           </div>
+        </div>
+
+        <!-- Navegación de pedidos -->
+        <div class="mission-navigation">
+          <button
+            class="nav-mission-btn"
+            [disabled]="secundariaCurrentOrder === 0"
+            (click)="prevSecundariaOrder()"
+          >
+            ← Anterior
+          </button>
+          <span class="mission-progress">Pedido {{ secundariaCurrentOrder + 1 }} de {{ secundariaOrders.length }}</span>
+          <button
+            class="nav-mission-btn"
+            [disabled]="secundariaCurrentOrder === secundariaOrders.length - 1"
+            (click)="nextSecundariaOrder()"
+          >
+            Siguiente →
+          </button>
         </div>
       </div>
     </div>
