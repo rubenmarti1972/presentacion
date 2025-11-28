@@ -291,9 +291,38 @@
   <div *ngIf="currentLevel() === 'avanzado'" class="avanzado-level">
     <h2 class="level-title">🔬 Optimización de Producción</h2>
 
+    <!-- Panel de Instrucciones -->
+    <div class="challenge-instructions">
+      <div class="instructions-header">
+        <span class="instructions-icon">💡</span>
+        <h3>El Desafío</h3>
+      </div>
+      <div class="instructions-content">
+        <p class="instructions-main">
+          <strong>¡Atención!</strong> Este es un reto de optimización de recursos. Tienes un
+          <strong>inventario limitado de colores</strong> y debes completar <strong>todos los pedidos</strong>
+          sin quedarte sin materiales.
+        </p>
+        <div class="instructions-points">
+          <div class="point-item">
+            <span class="point-icon">⚠️</span>
+            <span><strong>El inventario es compartido:</strong> Los colores que uses en un pedido NO se regeneran</span>
+          </div>
+          <div class="point-item">
+            <span class="point-icon">🎯</span>
+            <span><strong>Objetivo:</strong> Completar los 3 pedidos usando solo el inventario inicial disponible</span>
+          </div>
+          <div class="point-item">
+            <span class="point-icon">🧮</span>
+            <span><strong>Estrategia:</strong> Calcula cuidadosamente las cantidades para no desperdiciar recursos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Inventario -->
     <div class="inventory-panel">
-      <h3>📦 Inventario</h3>
+      <h3>📦 Inventario (Limitado - ¡Úsalo sabiamente!)</h3>
       <div class="inventory-grid">
         <div class="inventory-item" *ngFor="let item of [
           {id: 'red', name: 'Rojo', color: 'rgb(255, 0, 0)'},

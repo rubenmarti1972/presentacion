@@ -258,7 +258,7 @@ export class ColorLabChallenge {
   protected avanzadoOrders: Order[] = [
     {
       name: 'Morado Corporativo',
-      description: 'Para branding de empresa',
+      description: 'Cliente requiere 300ml de pintura morada. Proporción 2:3 de Rojo:Azul',
       volume: 300,
       ratio: '2:3 (R:B)',
       targetColor: 'rgb(138, 43, 226)',
@@ -269,7 +269,7 @@ export class ColorLabChallenge {
     },
     {
       name: 'Verde Naturaleza',
-      description: 'Campaña ambiental',
+      description: 'Campaña ambiental necesita 250ml de verde. Proporción 1:1 de Amarillo:Azul',
       volume: 250,
       ratio: '1:1 (A:B)',
       targetColor: 'rgb(50, 205, 50)',
@@ -280,7 +280,7 @@ export class ColorLabChallenge {
     },
     {
       name: 'Naranja Intenso',
-      description: 'Señalización',
+      description: 'Señalización vial requiere 350ml de naranja. Proporción 3:2 de Rojo:Amarillo',
       volume: 350,
       ratio: '3:2 (R:A)',
       targetColor: 'rgb(255, 140, 0)',
