@@ -45,6 +45,10 @@ export class ColorLabChallenge {
   // Hacer Math disponible en el template
   protected readonly Math = Math;
 
+  constructor() {
+    this.applyUniformTargets();
+  }
+
   private hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
     const c = (1 - Math.abs(2 * l - 1)) * s;
     const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
@@ -111,6 +115,26 @@ export class ColorLabChallenge {
   private mixPigmentsToCss(amounts: { red?: number; yellow?: number; blue?: number; white?: number }): string {
     const { r, g, b } = this.mixPigments(amounts);
     return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  private applyUniformTargets(): void {
+    const applyTargets = (target: { targetRGB: { r: number; g: number; b: number }; targetColor: string }, amounts: { red?: number; yellow?: number; blue?: number; white?: number }) => {
+      const rgb = this.mixPigments(amounts);
+      target.targetRGB = rgb;
+      target.targetColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    };
+
+    this.inicialMissions.forEach(mission => {
+      applyTargets(mission, mission.requiredBottles);
+    });
+
+    this.intermedioOrders.forEach(order => {
+      applyTargets(order, order.requiredBottles);
+    });
+
+    this.avanzadoOrders.forEach(order => {
+      applyTargets(order, order.requiredMix);
+    });
   }
 
   // Nivel actual
