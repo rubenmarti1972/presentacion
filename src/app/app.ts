@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
 import { ColorTriangle } from './components/color-triangle/color-triangle';
-import { ColorMixerGame } from './components/color-mixer-game/color-mixer-game';
 import { ProportionsColorGame } from './components/proportions-color-game/proportions-color-game';
 
 interface Slide {
@@ -13,7 +12,7 @@ interface Slide {
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, Header, Footer, ColorTriangle, ColorMixerGame, ProportionsColorGame],
+  imports: [CommonModule, Header, Footer, ColorTriangle, ProportionsColorGame],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
