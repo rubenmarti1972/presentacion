@@ -45,6 +45,103 @@ export class ColorLabChallenge {
   // Hacer Math disponible en el template
   protected readonly Math = Math;
 
+  constructor() {
+    this.applyUniformTargets();
+  }
+
+  private pouringStartTimeout: ReturnType<typeof setTimeout> | null = null;
+  private pouringEndTimeout: ReturnType<typeof setTimeout> | null = null;
+  protected pouringBottle: ColorBottle | null = null;
+  protected pouringActive = false;
+
+  private hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
+    const c = (1 - Math.abs(2 * l - 1)) * s;
+    const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+    const m = l - c / 2;
+
+    let r1 = 0, g1 = 0, b1 = 0;
+
+    if (h >= 0 && h < 60) {
+      r1 = c; g1 = x; b1 = 0;
+    } else if (h >= 60 && h < 120) {
+      r1 = x; g1 = c; b1 = 0;
+    } else if (h >= 120 && h < 180) {
+      r1 = 0; g1 = c; b1 = x;
+    } else if (h >= 180 && h < 240) {
+      r1 = 0; g1 = x; b1 = c;
+    } else if (h >= 240 && h < 300) {
+      r1 = x; g1 = 0; b1 = c;
+    } else {
+      r1 = c; g1 = 0; b1 = x;
+    }
+
+    return {
+      r: Math.round((r1 + m) * 255),
+      g: Math.round((g1 + m) * 255),
+      b: Math.round((b1 + m) * 255)
+    };
+  }
+
+  private mixPigments(amounts: { red?: number; yellow?: number; blue?: number; white?: number }): { r: number; g: number; b: number } {
+    const red = Math.max(0, amounts.red || 0);
+    const yellow = Math.max(0, amounts.yellow || 0);
+    const blue = Math.max(0, amounts.blue || 0);
+    const white = Math.max(0, amounts.white || 0);
+
+    const pigmentTotal = red + yellow + blue;
+    const totalWithWhite = pigmentTotal + white;
+
+    if (pigmentTotal === 0) {
+      const neutral = white > 0 ? 255 : 240;
+      return { r: neutral, g: neutral, b: neutral };
+    }
+
+    // RYB wheel angles to get artist-friendly hues
+    const degToRad = Math.PI / 180;
+    const redAngle = 0 * degToRad;
+    const yellowAngle = 90 * degToRad;
+    const blueAngle = 220 * degToRad;
+
+    const x = red * Math.cos(redAngle) + yellow * Math.cos(yellowAngle) + blue * Math.cos(blueAngle);
+    const y = red * Math.sin(redAngle) + yellow * Math.sin(yellowAngle) + blue * Math.sin(blueAngle);
+
+    let hue = (Math.atan2(y, x) * 180) / Math.PI;
+    if (hue < 0) hue += 360;
+
+    const whiteRatio = totalWithWhite > 0 ? white / totalWithWhite : 0;
+    const pigmentRatio = 1 - whiteRatio;
+
+    const saturation = Math.min(1, Math.max(0, 0.92 - 0.42 * whiteRatio));
+    const lightness = Math.min(1, Math.max(0, 0.47 + 0.38 * whiteRatio));
+
+    return this.hslToRgb(hue, saturation * pigmentRatio + 0.25 * whiteRatio, lightness);
+  }
+
+  private mixPigmentsToCss(amounts: { red?: number; yellow?: number; blue?: number; white?: number }): string {
+    const { r, g, b } = this.mixPigments(amounts);
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  private applyUniformTargets(): void {
+    const applyTargets = (target: { targetRGB: { r: number; g: number; b: number }; targetColor: string }, amounts: { red?: number; yellow?: number; blue?: number; white?: number }) => {
+      const rgb = this.mixPigments(amounts);
+      target.targetRGB = rgb;
+      target.targetColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    };
+
+    this.inicialMissions.forEach(mission => {
+      applyTargets(mission, mission.requiredBottles);
+    });
+
+    this.intermedioOrders.forEach(order => {
+      applyTargets(order, order.requiredBottles);
+    });
+
+    this.avanzadoOrders.forEach(order => {
+      applyTargets(order, order.requiredMix);
+    });
+  }
+
   // Nivel actual
   protected currentLevel = signal<'inicial' | 'intermedio' | 'avanzado'>('inicial');
 
@@ -206,26 +303,51 @@ export class ColorLabChallenge {
 
   protected addBottleToMixer(bottle: ColorBottle): void {
     this.inicialSelectedBottles.push({ ...bottle });
+    this.playPourAnimation(bottle);
   }
 
   protected clearInicialMixer(): void {
     this.inicialSelectedBottles = [];
   }
 
+  private playPourAnimation(bottle: ColorBottle): void {
+    this.pouringBottle = { ...bottle };
+    this.pouringActive = false;
+
+    if (this.pouringStartTimeout) {
+      clearTimeout(this.pouringStartTimeout);
+    }
+
+    if (this.pouringEndTimeout) {
+      clearTimeout(this.pouringEndTimeout);
+    }
+
+    this.pouringStartTimeout = setTimeout(() => {
+      this.pouringActive = true;
+    }, 10);
+
+    this.pouringEndTimeout = setTimeout(() => {
+      this.pouringActive = false;
+      this.pouringBottle = null;
+    }, 1400);
+  }
+
   protected getInicialMixedColor(): string {
     if (this.inicialSelectedBottles.length === 0) return 'rgb(240, 240, 240)';
 
-    const total = this.inicialSelectedBottles.reduce((sum, b) => sum + b.amount, 0);
-    let r = 0, g = 0, b = 0;
+    const totals = this.inicialSelectedBottles.reduce(
+      (acc, bottle) => {
+        const key = bottle.name.toLowerCase();
+        if (key.includes('rojo')) acc.red += bottle.amount;
+        if (key.includes('amarillo')) acc.yellow += bottle.amount;
+        if (key.includes('azul')) acc.blue += bottle.amount;
+        if (key.includes('blanco')) acc.white += bottle.amount;
+        return acc;
+      },
+      { red: 0, yellow: 0, blue: 0, white: 0 }
+    );
 
-    this.inicialSelectedBottles.forEach(bottle => {
-      const weight = bottle.amount / total;
-      r += bottle.rgb.r * weight;
-      g += bottle.rgb.g * weight;
-      b += bottle.rgb.b * weight;
-    });
-
-    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+    return this.mixPigmentsToCss(totals);
   }
 
   protected getInicialTotalVolume(): number {
@@ -386,24 +508,7 @@ export class ColorLabChallenge {
     const total = this.getIntermedioTotalVolume();
     if (total === 0) return 'rgb(240, 240, 240)';
 
-    const colorMap: { [key: string]: { r: number; g: number; b: number } } = {
-      red: { r: 255, g: 0, b: 0 },
-      blue: { r: 0, g: 0, b: 255 },
-      yellow: { r: 255, g: 255, b: 0 },
-      white: { r: 255, g: 255, b: 255 }
-    };
-
-    let r = 0, g = 0, b = 0;
-    Object.entries(this.intermedioMixAmounts).forEach(([color, amount]) => {
-      if (amount > 0 && colorMap[color]) {
-        const weight = amount / total;
-        r += colorMap[color].r * weight;
-        g += colorMap[color].g * weight;
-        b += colorMap[color].b * weight;
-      }
-    });
-
-    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+    return this.mixPigmentsToCss(this.intermedioMixAmounts);
   }
 
   protected adjustIntermedioAmount(color: string, delta: number): void {
@@ -537,24 +642,7 @@ export class ColorLabChallenge {
     const total = this.getAvanzadoMixVolume();
     if (total === 0) return 'rgb(240, 240, 240)';
 
-    const colorMap: { [key: string]: { r: number; g: number; b: number } } = {
-      red: { r: 255, g: 0, b: 0 },
-      blue: { r: 0, g: 0, b: 255 },
-      yellow: { r: 255, g: 255, b: 0 },
-      white: { r: 255, g: 255, b: 255 }
-    };
-
-    let r = 0, g = 0, b = 0;
-    Object.entries(order.mix).forEach(([color, amount]) => {
-      if (amount > 0 && colorMap[color]) {
-        const weight = amount / total;
-        r += colorMap[color].r * weight;
-        g += colorMap[color].g * weight;
-        b += colorMap[color].b * weight;
-      }
-    });
-
-    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+    return this.mixPigmentsToCss(order.mix);
   }
 
   protected adjustAvanzadoMix(color: string, delta: number): void {
