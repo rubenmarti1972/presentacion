@@ -1,6 +1,6 @@
 .color-lab-container {
   width: 100%;
-  max-width: 1400px;
+  max-width: min(95vw, 1700px);
   margin: 0 auto;
   padding: 2rem;
 }
@@ -204,12 +204,16 @@
 
 .bottle {
   background: white;
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 14px;
+  padding: 1rem 0.75rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
   border: 3px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .bottle:hover {
@@ -218,12 +222,55 @@
   box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
 }
 
+.bottle-graphic {
+  width: 90px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.bottle-neck {
+  width: 32px;
+  height: 16px;
+  background: linear-gradient(180deg, #f3f3f3 0%, #e0e0e0 100%);
+  border-radius: 8px 8px 4px 4px;
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.bottle-body {
+  width: 90px;
+  height: 110px;
+  position: relative;
+  border-radius: 24px 24px 18px 18px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(235,235,235,0.8) 100%);
+  border: 3px solid #d6d6d6;
+  overflow: hidden;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.bottle-body::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  width: 16px;
+  height: 70%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.1) 100%);
+  border-radius: 10px;
+  filter: blur(1px);
+}
+
 .bottle-liquid {
-  width: 100%;
-  height: 80px;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
-  border: 2px solid #ddd;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72%;
+  border-radius: 20px 20px 14px 14px;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .bottle-label {
@@ -266,8 +313,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
   transition: background-color 0.5s ease;
   border: 3px solid #ddd;
+  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.85), rgba(240,240,240,0.95));
+  position: relative;
+  overflow: hidden;
 }
 
 .mixer-empty {
@@ -286,6 +337,194 @@
   background: rgba(255,255,255,0.3);
   border-radius: 8px;
   font-weight: 600;
+}
+
+.pour-animation {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  opacity: 0;
+}
+
+.pour-animation.active {
+  opacity: 1;
+  animation: pourScene 1.6s ease forwards;
+}
+
+.pour-bottle {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 86px;
+  height: 158px;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+  transform-origin: 50% 26%;
+}
+
+.pour-cap {
+  position: absolute;
+  top: -8px;
+  left: 26px;
+  width: 30px;
+  height: 16px;
+  background: linear-gradient(135deg, #d9d9d9 0%, #c2c2c2 100%);
+  border-radius: 10px 10px 6px 6px;
+  border: 2px solid #b0b0b0;
+}
+
+.pour-neck {
+  position: absolute;
+  top: 6px;
+  left: 32px;
+  width: 20px;
+  height: 28px;
+  background: #f6f6f6;
+  border: 2px solid #cfcfcf;
+  border-radius: 6px;
+}
+
+.pour-body {
+  position: absolute;
+  bottom: 0;
+  left: 6px;
+  right: 6px;
+  height: 130px;
+  background: linear-gradient(180deg, #fafafa 0%, #f1f1f1 50%, #ebebeb 100%);
+  border: 2px solid #cfcfcf;
+  border-radius: 18px 18px 16px 16px;
+  overflow: hidden;
+}
+
+.pour-liquid {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  height: 58%;
+  background: var(--pour-color, #ff5722);
+  border-radius: 14px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+.pour-stream {
+  position: absolute;
+  top: 54px;
+  left: 50%;
+  width: 14px;
+  height: 164px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.65), var(--pour-color, #ff5722));
+  border-radius: 20px;
+  transform-origin: top center;
+  opacity: 0;
+}
+
+.pour-splash {
+  position: absolute;
+  bottom: 54px;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle at 50% 55%, rgba(255,255,255,0.9) 0 25%, var(--pour-color, #ff5722) 30% 70%, transparent 80%);
+  filter: blur(1px);
+  opacity: 0;
+  transform: translateX(-50%) scale(0.65);
+}
+
+.pour-animation.active .pour-bottle {
+  animation: tiltPour 1.5s ease forwards;
+}
+
+.pour-animation.active .pour-liquid {
+  animation: liquidDrain 1.5s ease forwards;
+}
+
+.pour-animation.active .pour-stream {
+  animation: streamFlow 1.4s ease forwards;
+}
+
+.pour-animation.active .pour-splash {
+  animation: splashBloom 1.35s ease-out forwards;
+}
+
+@keyframes pourScene {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes tiltPour {
+  0% { transform: translate(12px, -14px) rotate(0deg); }
+  22% { transform: translate(22px, -12px) rotate(-10deg); }
+  48% { transform: translate(34px, -6px) rotate(-26deg); }
+  82% { transform: translate(26px, -2px) rotate(-26deg); }
+  100% { transform: translate(12px, -14px) rotate(0deg); }
+}
+
+@keyframes liquidDrain {
+  0% { height: 58%; }
+  40% { height: 45%; }
+  80% { height: 22%; }
+  100% { height: 22%; }
+}
+
+@keyframes streamFlow {
+  0% { opacity: 0; transform: translate(-54%, -30px) scaleY(0); }
+  24% { opacity: 1; transform: translate(-54%, -10px) scaleY(0.5); }
+  55% { opacity: 1; transform: translate(-54%, 30px) scaleY(1); }
+  82% { opacity: 1; transform: translate(-54%, 56px) scaleY(1); }
+  100% { opacity: 0; transform: translate(-54%, 76px) scaleY(0.45); }
+}
+
+@keyframes splashBloom {
+  0% { opacity: 0; transform: translate(-50%, 16px) scale(0.55); }
+  26% { opacity: 0.95; transform: translate(-50%, 6px) scale(0.85); }
+  62% { opacity: 0.85; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -6px) scale(1.05); }
+}
+
+.flower-mixer {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+  transform: translateY(10px);
+}
+
+.flower-fill {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 0;
+  border-radius: 24px;
+  transition: height 0.5s ease, background-color 0.3s ease;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><path fill='black' d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><path fill='black' d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/></svg>");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.flower-outline {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23333' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'><path d='M100 12c-17 0-31 14-31 31 0 5 1 9 3 13-4-2-9-3-13-3-17 0-31 14-31 31s14 31 31 31c5 0 9-1 13-3-2 4-3 9-3 13 0 17 14 31 31 31s31-14 31-31c0-5-1-9-3-13 4 2 9 3 13 3 17 0 31-14 31-31s-14-31-31-31c-5 0-9 1-13 3 2-4 3-9 3-13 0-17-14-31-31-31z'/></svg>");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+  opacity: 0.85;
 }
 
 .mixer-total {
