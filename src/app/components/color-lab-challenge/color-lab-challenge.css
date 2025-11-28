@@ -1,6 +1,6 @@
 .color-lab-container {
   width: 100%;
-  max-width: 1400px;
+  max-width: min(95vw, 1700px);
   margin: 0 auto;
   padding: 2rem;
 }
