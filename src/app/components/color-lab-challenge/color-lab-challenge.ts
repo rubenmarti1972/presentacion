@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 interface ColorBottle {
   id: string;
@@ -237,7 +238,24 @@ export class ColorLabChallenge {
 
     // Verificar volumen
     if (total !== mission.targetVolume) {
-      alert(`El volumen total debe ser ${mission.targetVolume}ml. Tienes ${total}ml.`);
+      Swal.fire({
+        icon: 'error',
+        title: '¡Ups! Volumen incorrecto',
+        html: `
+          <p>El volumen total debe ser <strong>${mission.targetVolume}ml</strong></p>
+          <p>Actualmente tienes <strong>${total}ml</strong></p>
+          <p style="margin-top: 1rem;">Estás en la <strong>Misión ${this.infantilCurrentMission + 1}</strong> de ${this.infantilMissions.length}</p>
+        `,
+        confirmButtonText: '¡Intentaré de nuevo!',
+        confirmButtonColor: '#4CAF50',
+        showCancelButton: this.infantilCurrentMission > 0,
+        cancelButtonText: '← Misión anterior',
+        footer: '<small>💡 Puedes pedir una pista si lo necesitas</small>'
+      }).then((result) => {
+        if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+          this.prevInfantilMission();
+        }
+      });
       return;
     }
 
@@ -270,7 +288,24 @@ export class ColorLabChallenge {
     if (isCorrect) {
       this.infantilShowSuccess = true;
     } else {
-      alert('Las proporciones no son correctas. Revisa las cantidades de cada color.');
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Casi lo logras!',
+        html: `
+          <p>Las proporciones no son correctas 😔</p>
+          <p>Revisa las cantidades de cada color</p>
+          <p style="margin-top: 1rem;">Estás en la <strong>Misión ${this.infantilCurrentMission + 1}</strong> de ${this.infantilMissions.length}</p>
+        `,
+        confirmButtonText: '¡Seguir intentando!',
+        confirmButtonColor: '#FF9800',
+        showCancelButton: this.infantilCurrentMission > 0,
+        cancelButtonText: '← Misión anterior',
+        footer: '<small>💡 Puedes pedir una pista si lo necesitas</small>'
+      }).then((result) => {
+        if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+          this.prevInfantilMission();
+        }
+      });
     }
   }
 
@@ -281,18 +316,60 @@ export class ColorLabChallenge {
     this.infantilHintLevel = 0;
 
     if (this.infantilCurrentMission >= this.infantilMissions.length) {
-      alert('¡Felicidades! Has completado el nivel infantil.');
-      this.infantilCurrentMission = 0;
+      Swal.fire({
+        icon: 'success',
+        title: '🎉 ¡Nivel Completado!',
+        html: `
+          <p>¡Felicidades! Has completado todas las misiones del nivel infantil</p>
+          <p>🎨 Dominaste las mezclas de colores 🎨</p>
+        `,
+        confirmButtonText: 'Reiniciar nivel',
+        confirmButtonColor: '#4CAF50',
+        showCancelButton: true,
+        cancelButtonText: 'Volver a la última misión'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.infantilCurrentMission = 0;
+        } else {
+          this.infantilCurrentMission = this.infantilMissions.length - 1;
+        }
+      });
+    }
+  }
+
+  protected prevInfantilMission(): void {
+    if (this.infantilCurrentMission > 0) {
+      this.infantilCurrentMission--;
+      this.clearInfantilMixer();
+      this.infantilHintLevel = 0;
     }
   }
 
   protected showInfantilHint(): void {
     const mission = this.getInfantilMission();
     if (this.infantilHintLevel < mission.hints.length) {
-      alert(mission.hints[this.infantilHintLevel]);
+      Swal.fire({
+        icon: 'info',
+        title: '💡 Pista',
+        html: `
+          <p style="font-size: 1.1rem;">${mission.hints[this.infantilHintLevel]}</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+            Misión ${this.infantilCurrentMission + 1} de ${this.infantilMissions.length}
+            • Pista ${this.infantilHintLevel + 1} de ${mission.hints.length}
+          </p>
+        `,
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#FF9800'
+      });
       this.infantilHintLevel++;
     } else {
-      alert('Ya has usado todas las pistas.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'No hay más pistas',
+        text: 'Ya has usado todas las pistas disponibles para esta misión',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#FF9800'
+      });
     }
   }
 
@@ -378,18 +455,60 @@ export class ColorLabChallenge {
     this.secundariaHintIndex = 0;
 
     if (this.secundariaCurrentOrder >= this.secundariaOrders.length) {
-      alert('¡Felicidades! Has completado el nivel secundaria.');
-      this.secundariaCurrentOrder = 0;
+      Swal.fire({
+        icon: 'success',
+        title: '🎉 ¡Nivel Completado!',
+        html: `
+          <p>¡Excelente trabajo! Has completado todos los pedidos del nivel secundaria</p>
+          <p>🏭 Dominaste las proporciones profesionales 🏭</p>
+        `,
+        confirmButtonText: 'Reiniciar nivel',
+        confirmButtonColor: '#4CAF50',
+        showCancelButton: true,
+        cancelButtonText: 'Volver al último pedido'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.secundariaCurrentOrder = 0;
+        } else {
+          this.secundariaCurrentOrder = this.secundariaOrders.length - 1;
+        }
+      });
+    }
+  }
+
+  protected prevSecundariaOrder(): void {
+    if (this.secundariaCurrentOrder > 0) {
+      this.secundariaCurrentOrder--;
+      this.resetSecundaria();
+      this.secundariaHintIndex = 0;
     }
   }
 
   protected showSecundariaHint(): void {
     const order = this.getSecundariaOrder();
     if (this.secundariaHintIndex < order.hints.length) {
-      alert(order.hints[this.secundariaHintIndex]);
+      Swal.fire({
+        icon: 'info',
+        title: '💡 Pista',
+        html: `
+          <p style="font-size: 1.1rem;">${order.hints[this.secundariaHintIndex]}</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+            Pedido ${this.secundariaCurrentOrder + 1} de ${this.secundariaOrders.length}
+            • Pista ${this.secundariaHintIndex + 1} de ${order.hints.length}
+          </p>
+        `,
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#FF9800'
+      });
       this.secundariaHintIndex++;
     } else {
-      alert('Ya has usado todas las pistas.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'No hay más pistas',
+        text: 'Ya has usado todas las pistas disponibles para este pedido',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#FF9800'
+      });
     }
   }
 
