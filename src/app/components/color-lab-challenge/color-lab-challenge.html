@@ -77,7 +77,12 @@
             class="bottle"
             (click)="addBottleToMixer(bottle)"
           >
-            <div class="bottle-liquid" [style.backgroundColor]="bottle.color"></div>
+            <div class="bottle-graphic">
+              <div class="bottle-neck"></div>
+              <div class="bottle-body">
+                <div class="bottle-liquid" [style.backgroundColor]="bottle.color"></div>
+              </div>
+            </div>
             <div class="bottle-label">{{ bottle.name }}</div>
             <div class="bottle-amount">{{ bottle.amount }}ml</div>
           </div>
@@ -87,7 +92,15 @@
       <div class="mixer-section">
         <div class="mixer">
           <div class="mixer-top">Mezcladora</div>
-          <div class="mixer-content" [style.backgroundColor]="getInicialMixedColor()">
+          <div class="mixer-content">
+            <div class="flower-mixer">
+              <div
+                class="flower-fill"
+                [style.backgroundColor]="getInicialMixedColor()"
+                [style.height.%]="Math.min(100, (getInicialTotalVolume() / getInicialMission().targetVolume) * 100)"
+              ></div>
+              <div class="flower-outline"></div>
+            </div>
             <div *ngIf="inicialSelectedBottles.length === 0" class="mixer-empty">
               👆 Toca los botes para mezclar
             </div>
