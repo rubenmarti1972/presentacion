@@ -35,10 +35,12 @@ export class App implements OnInit {
     { id: 'historical-20th', title: 'Modelos del Siglo XX' },
     { id: 'macadam', title: 'Elipses de MacAdam (1942)' },
     { id: 'juego-colores', title: 'Laboratorio de Mezcla de Colores' },
-    { id: 'teorema-diagonal', title: 'Inconmensurabilidad de la diagonal' },
-    { id: 'demostracion', title: 'Demostración' },
     { id: 'cantoral-dimensiones', title: 'Construcción Social del Conocimiento Matemático' },
-    { id: 'preguntas-generadoras', title: 'Preguntas Generadoras' }
+    { id: 'preguntas-representaciones', title: 'Preguntas sobre Representaciones Mentales' },
+    { id: 'preguntas-ensenanza', title: 'Preguntas sobre Enseñanza' },
+    { id: 'preguntas-funcion-social', title: 'Preguntas sobre Función Social' },
+    { id: 'teorema-diagonal', title: 'Inconmensurabilidad de la diagonal' },
+    { id: 'demostracion', title: 'Demostración' }
   ];
 
   constructor() {
