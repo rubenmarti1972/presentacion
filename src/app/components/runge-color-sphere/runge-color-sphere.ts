@@ -42,8 +42,8 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
   // Inicializa escena, cámara y renderer
   private initScene(): void {
     const container = this.canvasContainer.nativeElement;
-    const width = container.clientWidth;
-    const height = container.clientHeight || 400;
+    const width = container.clientWidth || 400;
+    const height = container.clientHeight || 300;
 
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x020617);

@@ -1447,22 +1447,218 @@
 }
 
 /* ========== Responsive ========== */
+@media (max-width: 1024px) {
+  .color-lab-container {
+    padding: 1rem;
+  }
+
+  .level-title {
+    font-size: 1.3rem;
+  }
+
+  .work-area,
+  .factory-area {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .bottles-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mixer {
+    max-width: 100%;
+  }
+
+  .orders-panel {
+    grid-column: 1 / -1;
+  }
+
+  .workspace {
+    padding: 1rem;
+  }
+
+  .challenge-selector {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .challenge-btn {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
+  .color-lab-container {
+    padding: 0.5rem;
+  }
+
+  .level-selector {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .level-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.6rem 1rem;
+  }
+
+  .level-name {
+    font-size: 0.85rem;
+  }
+
+  .level-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
   .work-area,
   .factory-area,
   .workspace-content {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .bottles-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
   }
 
-  .level-selector {
-    flex-direction: column;
+  .bottle {
+    padding: 0.5rem;
+  }
+
+  .bottle-graphic {
+    width: 60px;
+    height: 80px;
+  }
+
+  .mixer-section {
+    padding: 1rem;
+  }
+
+  .mixer {
+    max-width: 100%;
+  }
+
+  .flower-mixer {
+    width: 150px;
+    height: 150px;
   }
 
   .efficiency-stats {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .inventory-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .orders-list {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace {
+    padding: 0.75rem;
+  }
+
+  .config-inputs {
+    gap: 0.75rem;
+  }
+
+  .config-controls {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .adj-btn {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .mix-input {
+    width: 60px;
+    font-size: 0.9rem;
+  }
+
+  .mission-card,
+  .order-card {
+    padding: 1rem;
+  }
+
+  .mission-text,
+  .order-description {
+    font-size: 0.9rem;
+  }
+
+  .hint-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .challenge-instructions {
+    padding: 1rem;
+  }
+
+  .instructions-main {
+    font-size: 0.9rem;
+  }
+
+  .point-item {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .level-selector {
+    flex-direction: column;
+  }
+
+  .level-btn {
+    width: 100%;
+  }
+
+  .level-title {
+    font-size: 1rem;
+  }
+
+  .bottles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mixer-total {
+    font-size: 0.85rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .btn-clear,
+  .btn-check,
+  .btn-reset,
+  .btn-validate {
+    width: 100%;
+  }
+
+  .inventory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .config-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .config-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .available-indicator {
+    text-align: center;
   }
 }
