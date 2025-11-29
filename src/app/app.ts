@@ -1,15 +1,10 @@
 import { Component, signal, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
 import { ColorTriangle } from './components/color-triangle/color-triangle';
 import { ColorLabChallenge } from './components/color-lab-challenge/color-lab-challenge';
-import { RungeColorSphere } from './components/runge-color-sphere/runge-color-sphere';
-import { MaxwellTriangle } from './components/maxwell-triangle/maxwell-triangle';
-import { BensonCube } from './components/benson-cube/benson-cube';
-import { OstwaldCone } from './components/ostwald-cone/ostwald-cone';
-import { HelmholtzDiagram } from './components/helmholtz-diagram/helmholtz-diagram';
-import { CieXYZ } from './components/cie-xyz/cie-xyz';
+import { HistoricalModels19th } from './components/historical-models-19th/historical-models-19th';
+import { HistoricalModels20th } from './components/historical-models-20th/historical-models-20th';
 import { MacadamEllipses } from './components/macadam-ellipses/macadam-ellipses';
 
 interface Slide {
@@ -20,8 +15,8 @@ interface Slide {
 @Component({
   selector: 'app-root',
   imports: [
-    CommonModule, Header, Footer, ColorTriangle, ColorLabChallenge, RungeColorSphere,
-    MaxwellTriangle, BensonCube, OstwaldCone, HelmholtzDiagram, CieXYZ, MacadamEllipses
+    CommonModule, Footer, ColorTriangle, ColorLabChallenge,
+    HistoricalModels19th, HistoricalModels20th, MacadamEllipses
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
@@ -35,12 +30,8 @@ export class App implements OnInit {
     { id: 'newton', title: 'Newton y el Círculo Cromático' },
     { id: 'espectro', title: 'Espectro de luz' },
     { id: 'geometria-color', title: 'Geometría del Color' },
-    { id: 'runge-sphere', title: 'Esfera de Color de Runge (1810)' },
-    { id: 'maxwell', title: 'Triángulo de Color de Maxwell (1855)' },
-    { id: 'benson', title: 'Cubo de Color de Benson (1868)' },
-    { id: 'ostwald', title: 'Doble Cono de Ostwald (1916)' },
-    { id: 'helmholtz', title: 'Diagrama de Helmholtz' },
-    { id: 'cie-xyz', title: 'Espacio de Color CIE XYZ (1931)' },
+    { id: 'historical-19th', title: 'Modelos del Siglo XIX' },
+    { id: 'historical-20th', title: 'Modelos del Siglo XX' },
     { id: 'macadam', title: 'Elipses de MacAdam (1942)' },
     { id: 'juego-colores', title: 'Laboratorio de Mezcla de Colores' },
     { id: 'teorema-diagonal',  title: 'Inconmensurabilidad de la diagonal' },

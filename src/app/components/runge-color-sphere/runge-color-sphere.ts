@@ -46,7 +46,7 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
     const height = container.clientHeight || 400;
 
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x111111);
+    this.scene.background = new THREE.Color(0x020617);
 
     this.camera = new THREE.PerspectiveCamera(
       45,
@@ -54,17 +54,17 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
       0.1,
       100
     );
-    this.camera.position.set(0, 0, 3);
+    this.camera.position.set(0, 0, 3.5);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(width, height);
     container.appendChild(this.renderer.domElement);
 
-    // Luces suaves para que se vea más bonito
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    // Luces más intensas para mejor visibilidad
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     this.scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
     directionalLight.position.set(3, 5, 5);
     this.scene.add(directionalLight);
 
@@ -103,7 +103,7 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
 
       // Saturación: máxima en el ecuador, mínima en polos
       const r = Math.sqrt(x * x + y * y); // [0,1] en esfera unitaria
-      const s = r;
+      const s = Math.pow(r, 0.7); // curva suavizada para mejor visibilidad
 
       const { r: rr, g: gg, b: bb } = this.hslToRgb(h, s, l);
 
@@ -116,7 +116,8 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
 
     const material = new THREE.MeshPhongMaterial({
       vertexColors: true,
-      shininess: 20
+      shininess: 30,
+      specular: new THREE.Color(0x444444)
     });
 
     this.sphere = new THREE.Mesh(geometry, material);
