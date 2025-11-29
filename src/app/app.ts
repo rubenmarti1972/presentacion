@@ -36,9 +36,10 @@ export class App implements OnInit {
     { id: 'macadam', title: 'Elipses de MacAdam (1942)' },
     { id: 'juego-colores', title: 'Laboratorio de Mezcla de Colores' },
     { id: 'cantoral-dimensiones', title: 'Construcción Social del Conocimiento Matemático' },
-    { id: 'preguntas-representaciones', title: 'Preguntas sobre Representaciones Mentales' },
-    { id: 'preguntas-ensenanza', title: 'Preguntas sobre Enseñanza' },
-    { id: 'preguntas-funcion-social', title: 'Preguntas sobre Función Social' },
+    { id: 'preguntas-epistemologica', title: 'Dimensión Epistemológica' },
+    { id: 'preguntas-cognitiva', title: 'Dimensión Cognitiva' },
+    { id: 'preguntas-didactica', title: 'Dimensión Didáctica' },
+    { id: 'preguntas-social', title: 'Dimensión Social' },
     { id: 'teorema-diagonal', title: 'Inconmensurabilidad de la diagonal' },
     { id: 'demostracion', title: 'Demostración' }
   ];
