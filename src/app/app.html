@@ -178,8 +178,8 @@
     <app-footer></app-footer>
   </div>
 
-  <!-- Slide 6: Esfera de Color de Runge -->
-  <div class="slide" [class.active]="isCurrentSlide('runge-sphere')" id="runge-sphere">
+  <!-- Slide 6: Modelos Históricos del Siglo XIX -->
+  <div class="slide" [class.active]="isCurrentSlide('historical-19th')" id="historical-19th">
     <!-- Header -->
     <header class="slide-header">
       <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
@@ -188,16 +188,15 @@
 
     <!-- Content -->
     <div class="slide-content slide-2-content">
-      <h2 class="slide-2-title">Esfera de Color de Philipp Otto Runge (1810)</h2>
-      <app-runge-color-sphere></app-runge-color-sphere>
+      <app-historical-models-19th></app-historical-models-19th>
     </div>
 
     <!-- Footer -->
     <app-footer></app-footer>
   </div>
 
-  <!-- Slide 7: Maxwell Triangle -->
-  <div class="slide" [class.active]="isCurrentSlide('maxwell')" id="maxwell">
+  <!-- Slide 7: Modelos Históricos del Siglo XX -->
+  <div class="slide" [class.active]="isCurrentSlide('historical-20th')" id="historical-20th">
     <!-- Header -->
     <header class="slide-header">
       <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
@@ -206,87 +205,14 @@
 
     <!-- Content -->
     <div class="slide-content slide-2-content">
-      <h2 class="slide-2-title">Triángulo de Color de James Clerk Maxwell (1855)</h2>
-      <app-maxwell-triangle></app-maxwell-triangle>
+      <app-historical-models-20th></app-historical-models-20th>
     </div>
 
     <!-- Footer -->
     <app-footer></app-footer>
   </div>
 
-  <!-- Slide 8: Benson Cube -->
-  <div class="slide" [class.active]="isCurrentSlide('benson')" id="benson">
-    <!-- Header -->
-    <header class="slide-header">
-      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
-      <h1 class="header-title">Color y proporciones</h1>
-    </header>
-
-    <!-- Content -->
-    <div class="slide-content slide-2-content">
-      <h2 class="slide-2-title">Cubo de Color de William Benson (1868)</h2>
-      <app-benson-cube></app-benson-cube>
-    </div>
-
-    <!-- Footer -->
-    <app-footer></app-footer>
-  </div>
-
-  <!-- Slide 9: Ostwald Cone -->
-  <div class="slide" [class.active]="isCurrentSlide('ostwald')" id="ostwald">
-    <!-- Header -->
-    <header class="slide-header">
-      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
-      <h1 class="header-title">Color y proporciones</h1>
-    </header>
-
-    <!-- Content -->
-    <div class="slide-content slide-2-content">
-      <h2 class="slide-2-title">Doble Cono de Wilhelm Ostwald (1916)</h2>
-      <app-ostwald-cone></app-ostwald-cone>
-    </div>
-
-    <!-- Footer -->
-    <app-footer></app-footer>
-  </div>
-
-  <!-- Slide 10: Helmholtz Diagram -->
-  <div class="slide" [class.active]="isCurrentSlide('helmholtz')" id="helmholtz">
-    <!-- Header -->
-    <header class="slide-header">
-      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
-      <h1 class="header-title">Color y proporciones</h1>
-    </header>
-
-    <!-- Content -->
-    <div class="slide-content slide-2-content">
-      <h2 class="slide-2-title">Diagrama de Color de Hermann von Helmholtz</h2>
-      <app-helmholtz-diagram></app-helmholtz-diagram>
-    </div>
-
-    <!-- Footer -->
-    <app-footer></app-footer>
-  </div>
-
-  <!-- Slide 11: CIE XYZ -->
-  <div class="slide" [class.active]="isCurrentSlide('cie-xyz')" id="cie-xyz">
-    <!-- Header -->
-    <header class="slide-header">
-      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
-      <h1 class="header-title">Color y proporciones</h1>
-    </header>
-
-    <!-- Content -->
-    <div class="slide-content slide-2-content">
-      <h2 class="slide-2-title">Espacio de Color CIE XYZ (1931)</h2>
-      <app-cie-xyz></app-cie-xyz>
-    </div>
-
-    <!-- Footer -->
-    <app-footer></app-footer>
-  </div>
-
-  <!-- Slide 12: MacAdam Ellipses -->
+  <!-- Slide 8: MacAdam Ellipses -->
   <div class="slide" [class.active]="isCurrentSlide('macadam')" id="macadam">
     <!-- Header -->
     <header class="slide-header">
@@ -304,7 +230,7 @@
     <app-footer></app-footer>
   </div>
 
-  <!-- Slide 13: Laboratorio de Mezcla de Colores -->
+  <!-- Slide 9: Laboratorio de Mezcla de Colores -->
   <div class="slide" [class.active]="isCurrentSlide('juego-colores')" id="juego-colores">
     <!-- Header -->
     <header class="slide-header">
@@ -321,7 +247,7 @@
     <app-footer></app-footer>
   </div>
 
-  <!-- Slide 8: Teorema de la diagonal y el lado -->
+  <!-- Slide 10: Teorema de la diagonal y el lado -->
   <div class="slide" [class.active]="isCurrentSlide('teorema-diagonal')" id="teorema-diagonal">
     <!-- Header -->
     <header class="slide-header">
@@ -449,7 +375,7 @@
 
 
 
-<!-- Slide 9: Demostración del Teorema 1 -->
+<!-- Slide 11: Demostración del Teorema 1 -->
   <div class="slide" [class.active]="isCurrentSlide('demostracion')" id="demostracion">
     <!-- Header -->
     <header class="slide-header">

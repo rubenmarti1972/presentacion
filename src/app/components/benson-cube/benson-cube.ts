@@ -21,12 +21,12 @@ export class BensonCube implements AfterViewInit, OnDestroy {
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
-  private sphere!: THREE.Mesh;
+  private cube!: THREE.Mesh;
   private animationFrameId: number | null = null;
 
   ngAfterViewInit(): void {
     this.initScene();
-    this.addColorSphere();
+    this.addColorCube();
     this.startAnimation();
   }
 
@@ -46,31 +46,31 @@ export class BensonCube implements AfterViewInit, OnDestroy {
     const height = container.clientHeight || 320;
 
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x050816);
+    this.scene.background = new THREE.Color(0x020617);
 
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    this.camera.position.set(0, 0, 3);
+    this.camera.position.set(2.5, 2.5, 4);
+    this.camera.lookAt(0, 0, 0);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(width, height);
     container.appendChild(this.renderer.domElement);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambient = new THREE.AmbientLight(0xffffff, 0.7);
     this.scene.add(ambient);
 
-    const dir = new THREE.DirectionalLight(0xffffff, 1);
+    const dir = new THREE.DirectionalLight(0xffffff, 1.2);
     dir.position.set(3, 5, 5);
     this.scene.add(dir);
 
     window.addEventListener('resize', this.onWindowResize);
   }
 
-  private addColorSphere(): void {
-    const radius = 1;
-    const widthSegments = 96;
-    const heightSegments = 96;
+  private addColorCube(): void {
+    const size = 2;
+    const segments = 64;
 
-    const geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
+    const geometry = new THREE.BoxGeometry(size, size, size, segments, segments, segments);
     const position = geometry.attributes['position'] as THREE.BufferAttribute;
     const vertexCount = position.count;
 
@@ -81,42 +81,36 @@ export class BensonCube implements AfterViewInit, OnDestroy {
       const y = position.getY(i);
       const z = position.getZ(i);
 
-      // Hue: ángulo alrededor del eje z
-      let phi = Math.atan2(y, x);
-      if (phi < 0) phi += 2 * Math.PI;
-      const h = phi / (2 * Math.PI);
+      // Mapear coordenadas del cubo [-1,1] a colores RGB [0,1]
+      // X → Rojo, Y → Verde, Z → Azul
+      const r = (x + size / 2) / size; // [0, 1]
+      const g = (y + size / 2) / size; // [0, 1]
+      const b = (z + size / 2) / size; // [0, 1]
 
-      // Luminosidad: mapeamos z ∈ [-1,1] a [0,1]
-      const l = (z + 1) / 2;
-
-      // Saturación (Benson): máxima cerca del ecuador, pero con caída suave
-      const r = Math.sqrt(x * x + y * y);
-      const s = Math.pow(r, 0.8); // curva un poco más uniforme
-
-      const { r: rr, g: gg, b: bb } = this.hslToRgb(h, s, l);
-
-      colors[i * 3] = rr;
-      colors[i * 3 + 1] = gg;
-      colors[i * 3 + 2] = bb;
+      colors[i * 3] = r;
+      colors[i * 3 + 1] = g;
+      colors[i * 3 + 2] = b;
     }
 
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.MeshPhongMaterial({
       vertexColors: true,
-      shininess: 25
+      shininess: 30,
+      specular: new THREE.Color(0x333333)
     });
 
-    this.sphere = new THREE.Mesh(geometry, material);
-    this.scene.add(this.sphere);
+    this.cube = new THREE.Mesh(geometry, material);
+    this.scene.add(this.cube);
   }
 
   private startAnimation(): void {
     const animate = () => {
       this.animationFrameId = requestAnimationFrame(animate);
 
-      if (this.sphere) {
-        this.sphere.rotation.y += 0.01;
+      if (this.cube) {
+        this.cube.rotation.x += 0.005;
+        this.cube.rotation.y += 0.01;
       }
 
       this.renderer.render(this.scene, this.camera);
@@ -136,26 +130,4 @@ export class BensonCube implements AfterViewInit, OnDestroy {
     this.renderer.setSize(width, height);
   };
 
-  private hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
-    if (s === 0) {
-      return { r: l, g: l, b: l };
-    }
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    const p = 2 * l - q;
-
-    const hue2rgb = (p: number, q: number, t: number): number => {
-      if (t < 0) t += 1;
-      if (t > 1) t -= 1;
-      if (t < 1 / 6) return p + (q - p) * 6 * t;
-      if (t < 1 / 2) return q;
-      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-      return p;
-    };
-
-    const r = hue2rgb(p, q, h + 1 / 3);
-    const g = hue2rgb(p, q, h);
-    const b = hue2rgb(p, q, h - 1 / 3);
-
-    return { r, g, b };
-  }
 }
