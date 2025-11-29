@@ -2,11 +2,8 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  OnDestroy,
   ViewChild
 } from '@angular/core';
-
-import * as THREE from 'three';
 
 @Component({
   selector: 'app-maxwell-triangle',
@@ -14,141 +11,131 @@ import * as THREE from 'three';
   templateUrl: './maxwell-triangle.html',
   styleUrls: ['./maxwell-triangle.scss']
 })
-export class MaxwellTriangle implements AfterViewInit, OnDestroy {
-  @ViewChild('canvasContainer', { static: true })
-  canvasContainer!: ElementRef<HTMLDivElement>;
+export class MaxwellTriangle implements AfterViewInit {
+  @ViewChild('colorCanvas', { static: true })
+  colorCanvas!: ElementRef<HTMLCanvasElement>;
 
-  private scene!: THREE.Scene;
-  private camera!: THREE.PerspectiveCamera;
-  private renderer!: THREE.WebGLRenderer;
-  private triangle!: THREE.Mesh;
-  private animationFrameId: number | null = null;
+  private width = 420;
+  private height = 420;
 
   ngAfterViewInit(): void {
-    this.initScene();
-    this.addMaxwellTriangle();
-    this.startAnimation();
+    this.drawTriangle();
   }
 
-  ngOnDestroy(): void {
-    if (this.animationFrameId !== null) {
-      cancelAnimationFrame(this.animationFrameId);
-    }
-    if (this.renderer) {
-      this.renderer.dispose();
-    }
-  }
+  private drawTriangle(): void {
+    const canvas = this.colorCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
 
-  private initScene(): void {
-    const container = this.canvasContainer.nativeElement;
-    const width = container.clientWidth;
-    const height = container.clientHeight || 400;
+    if (!ctx) return;
 
-    this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x0a0a0a);
+    canvas.width = this.width;
+    canvas.height = this.height;
 
-    this.camera = new THREE.PerspectiveCamera(
-      45,
-      width / height,
-      0.1,
-      100
-    );
-    this.camera.position.set(0, 0, 3);
+    // Fondo oscuro suave
+    ctx.fillStyle = '#020617';
+    ctx.fillRect(0, 0, this.width, this.height);
 
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.setSize(width, height);
-    container.appendChild(this.renderer.domElement);
+    const margin = 50;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-    this.scene.add(ambientLight);
+    // Vértices del triángulo (equilátero aproximadamente)
+    const A = { x: this.width / 2, y: margin };                 // vértice superior (Rojo)
+    const B = { x: margin, y: this.height - margin };           // inferior izquierda (Verde)
+    const C = { x: this.width - margin, y: this.height - margin }; // inferior derecha (Azul)
 
-    window.addEventListener('resize', this.onWindowResize);
-  }
+    // Colores de los vértices en RGB
+    const colorA = { r: 255, g: 0, b: 0 };   // Rojo
+    const colorB = { r: 0,  g: 255, b: 0 };  // Verde
+    const colorC = { r: 0,  g: 0,   b: 255 }; // Azul
 
-  // Triángulo de color de Maxwell (1855)
-  private addMaxwellTriangle(): void {
-    const size = 1.2;
-    const geometry = new THREE.BufferGeometry();
+    // Rellenamos usando interpolación barycéntrica
+    const imageData = ctx.createImageData(this.width, this.height);
+    const data = imageData.data;
 
-    // Vértices del triángulo equilátero
-    const height = (Math.sqrt(3) / 2) * size;
-    const vertices = new Float32Array([
-      0, height * 0.666, 0,           // Top (Red)
-      -size / 2, -height * 0.333, 0,  // Bottom left (Green)
-      size / 2, -height * 0.333, 0    // Bottom right (Blue)
-    ]);
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const bary = this.barycentricCoords(x, y, A, B, C);
 
-    // Colores en los vértices (RGB)
-    const colors = new Float32Array([
-      1, 0, 0,  // Red
-      0, 1, 0,  // Green
-      0, 0, 1   // Blue
-    ]);
+        if (bary && bary.u >= 0 && bary.v >= 0 && bary.w >= 0) {
+          // Mezcla de colores según las coordenadas barycéntricas
+          const r =
+            bary.u * colorA.r +
+            bary.v * colorB.r +
+            bary.w * colorC.r;
+          const g =
+            bary.u * colorA.g +
+            bary.v * colorB.g +
+            bary.w * colorC.g;
+          const b =
+            bary.u * colorA.b +
+            bary.v * colorB.b +
+            bary.w * colorC.b;
 
-    geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    const material = new THREE.MeshBasicMaterial({
-      vertexColors: true,
-      side: THREE.DoubleSide
-    });
-
-    this.triangle = new THREE.Mesh(geometry, material);
-    this.scene.add(this.triangle);
-
-    // Agregar puntos en los vértices
-    this.addVertexLabels();
-  }
-
-  private addVertexLabels(): void {
-    const size = 1.2;
-    const height = (Math.sqrt(3) / 2) * size;
-
-    const pointGeometry = new THREE.SphereGeometry(0.03, 16, 16);
-
-    // Red point
-    const redMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    const redPoint = new THREE.Mesh(pointGeometry, redMaterial);
-    redPoint.position.set(0, height * 0.666, 0.01);
-    this.scene.add(redPoint);
-
-    // Green point
-    const greenMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const greenPoint = new THREE.Mesh(pointGeometry, greenMaterial);
-    greenPoint.position.set(-size / 2, -height * 0.333, 0.01);
-    this.scene.add(greenPoint);
-
-    // Blue point
-    const blueMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-    const bluePoint = new THREE.Mesh(pointGeometry, blueMaterial);
-    bluePoint.position.set(size / 2, -height * 0.333, 0.01);
-    this.scene.add(bluePoint);
-  }
-
-  private startAnimation(): void {
-    const animate = () => {
-      this.animationFrameId = requestAnimationFrame(animate);
-
-      if (this.triangle) {
-        this.triangle.rotation.z += 0.005;
+          const index = (y * this.width + x) * 4;
+          data[index] = r;
+          data[index + 1] = g;
+          data[index + 2] = b;
+          data[index + 3] = 255; // opacidad
+        }
       }
+    }
 
-      this.renderer.render(this.scene, this.camera);
-    };
+    ctx.putImageData(imageData, 0, 0);
 
-    animate();
+    // Dibujamos borde del triángulo
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'white';
+    ctx.beginPath();
+    ctx.moveTo(A.x, A.y);
+    ctx.lineTo(B.x, B.y);
+    ctx.lineTo(C.x, C.y);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Etiquetas de los vértices
+    ctx.font = '14px system-ui, -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.fillStyle = '#f9fafb';
+    ctx.textAlign = 'center';
+
+    ctx.fillText('R', A.x, A.y - 10);          // Rojo
+    ctx.fillText('G', B.x - 10, B.y + 18);     // Verde
+    ctx.fillText('B', C.x + 10, C.y + 18);     // Azul
   }
 
-  private onWindowResize = () => {
-    if (!this.canvasContainer || !this.camera || !this.renderer) return;
+  /**
+   * Coordenadas barycéntricas de un punto (px, py)
+   * respecto al triángulo ABC.
+   * Retorna u, v, w tales que u+v+w = 1.
+   */
+  private barycentricCoords(
+    px: number,
+    py: number,
+    A: { x: number; y: number },
+    B: { x: number; y: number },
+    C: { x: number; y: number }
+  ): { u: number; v: number; w: number } | null {
+    const x = px;
+    const y = py;
 
-    const container = this.canvasContainer.nativeElement;
-    const width = container.clientWidth;
-    const height = container.clientHeight || 400;
+    const x1 = A.x, y1 = A.y;
+    const x2 = B.x, y2 = B.y;
+    const x3 = C.x, y3 = C.y;
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+    const denom =
+      (y2 - y3) * (x1 - x3) +
+      (x3 - x2) * (y1 - y3);
 
-    this.renderer.setSize(width, height);
-  };
+    if (denom === 0) {
+      return null;
+    }
+
+    const u =
+      ((y2 - y3) * (x - x3) +
+        (x3 - x2) * (y - y3)) / denom;
+    const v =
+      ((y3 - y1) * (x - x3) +
+        (x1 - x3) * (y - y3)) / denom;
+    const w = 1 - u - v;
+
+    return { u, v, w };
+  }
 }
