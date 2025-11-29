@@ -41,7 +41,8 @@ export class App implements OnInit {
     { id: 'preguntas-didactica', title: 'Dimensión Didáctica' },
     { id: 'preguntas-social', title: 'Dimensión Social' },
     { id: 'teorema-diagonal', title: 'Inconmensurabilidad de la diagonal' },
-    { id: 'demostracion', title: 'Demostración' }
+    { id: 'demostracion', title: 'Demostración' },
+    { id: 'muchas-gracias', title: 'Muchas Gracias' }
   ];
 
   constructor() {
