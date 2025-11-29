@@ -1,37 +1,44 @@
-.model-wrapper {
+.maxwell-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1.5rem;
-  background: radial-gradient(circle at top, #1e293b 0, #020617 60%);
   border-radius: 1.5rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  background: radial-gradient(circle at top, #1f2937 0, #020617 60%);
   color: #e5e7eb;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.65);
 }
 
-.model-header {
+.maxwell-header {
   text-align: center;
   margin-bottom: 1rem;
 
-  .model-subtitle {
-    margin: 0.3rem 0 0;
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .maxwell-subtitle {
+    margin-top: 0.35rem;
     font-size: 0.9rem;
     color: #9ca3af;
   }
 }
 
-.model-canvas-container {
-  width: min(480px, 100%);
-  height: 360px;
-  margin: 0.5rem auto 0.8rem;
+.maxwell-canvas {
+  width: min(420px, 100%);
+  height: auto;
   border-radius: 1rem;
-  overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: #020617;
 }
 
-.model-caption {
+.maxwell-caption {
+  margin-top: 0.7rem;
   font-size: 0.8rem;
   text-align: center;
+  max-width: 480px;
   color: #9ca3af;
-  max-width: 520px;
 }

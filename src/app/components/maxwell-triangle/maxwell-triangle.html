@@ -1,13 +1,15 @@
-<div class="model-wrapper">
-  <div class="model-header">
-    <p class="model-subtitle">
-      Triángulo de color RGB — Primeros experimentos cuantitativos de mezcla aditiva
+<div class="maxwell-wrapper">
+  <header class="maxwell-header">
+    <h2>Triángulo de Color de James Clerk Maxwell (1855)</h2>
+    <p class="maxwell-subtitle">
+      Cada vértice representa un color primario de luz (R, G, B). Los puntos interiores son mezclas aditivas.
     </p>
-  </div>
+  </header>
 
-  <div #canvasContainer class="model-canvas-container"></div>
+  <canvas #colorCanvas class="maxwell-canvas"></canvas>
 
-  <p class="model-caption">
-    James Clerk Maxwell demostró que todos los colores visibles pueden representarse como mezclas de rojo, verde y azul en un triángulo de color (1855).
+  <p class="maxwell-caption">
+    Representación geométrica del triángulo de color de Maxwell (1855).
+    Las coordenadas barycéntricas se usan para mezclar los colores de los vértices.
   </p>
 </div>
