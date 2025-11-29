@@ -1,0 +1,67 @@
+<div class="model-wrapper">
+  <div class="model-header">
+    <p class="model-subtitle">
+      Diagrama de cromaticidad CIE 1931 — Estándar internacional del espacio de color
+    </p>
+  </div>
+
+  <div class="svg-container">
+    <svg #svgContainer viewBox="0 0 400 400" class="cie-svg">
+      <defs>
+        <!-- Gradiente del espectro visible -->
+        <linearGradient id="cieGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#8B00FF;stop-opacity:0.8" />
+          <stop offset="16.7%" style="stop-color:#0000FF;stop-opacity:0.8" />
+          <stop offset="33.3%" style="stop-color:#00FFFF;stop-opacity:0.8" />
+          <stop offset="50%" style="stop-color:#00FF00;stop-opacity:0.8" />
+          <stop offset="66.7%" style="stop-color:#FFFF00;stop-opacity:0.8" />
+          <stop offset="83.3%" style="stop-color:#FF7F00;stop-opacity:0.8" />
+          <stop offset="100%" style="stop-color:#FF0000;stop-opacity:0.8" />
+        </linearGradient>
+      </defs>
+
+      <g class="rotating-group">
+        <!-- Forma de herradura -->
+        <path
+          [attr.d]="getHorseshoePath()"
+          fill="url(#cieGradient)"
+          stroke="#fff"
+          stroke-width="3"
+          opacity="0.9"
+        />
+
+        <!-- Punto blanco iluminante D65 -->
+        <circle cx="200" cy="220" r="6" fill="white" stroke="#333" stroke-width="2"/>
+        <text x="200" y="245" text-anchor="middle" fill="#fff" font-size="12">D65</text>
+
+        <!-- Puntos de longitud de onda -->
+        @for (point of getWavelengthPoints(); track point.wl) {
+          <circle
+            [attr.cx]="point.x"
+            [attr.cy]="point.y"
+            r="5"
+            [attr.fill]="point.color"
+            stroke="#fff"
+            stroke-width="1.5"
+          />
+          <text
+            [attr.x]="point.x"
+            [attr.y]="point.y - 12"
+            text-anchor="middle"
+            fill="#fff"
+            font-size="10"
+            font-weight="bold"
+          >{{ point.wl }}</text>
+        }
+
+        <!-- Ejes -->
+        <text x="370" y="220" text-anchor="end" fill="#aaa" font-size="14" font-style="italic">x</text>
+        <text x="200" y="30" text-anchor="middle" fill="#aaa" font-size="14" font-style="italic">y</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="model-caption">
+    La Comisión Internacional de Iluminación (CIE) definió en 1931 el primer espacio de color estándar basado en mediciones de percepción humana, representado como una herradura en el plano xy.
+  </p>
+</div>

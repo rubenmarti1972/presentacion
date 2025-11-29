@@ -5,6 +5,12 @@ import { Footer } from './components/footer/footer';
 import { ColorTriangle } from './components/color-triangle/color-triangle';
 import { ColorLabChallenge } from './components/color-lab-challenge/color-lab-challenge';
 import { RungeColorSphere } from './components/runge-color-sphere/runge-color-sphere';
+import { MaxwellTriangle } from './components/maxwell-triangle/maxwell-triangle';
+import { BensonCube } from './components/benson-cube/benson-cube';
+import { OstwaldCone } from './components/ostwald-cone/ostwald-cone';
+import { HelmholtzDiagram } from './components/helmholtz-diagram/helmholtz-diagram';
+import { CieXYZ } from './components/cie-xyz/cie-xyz';
+import { MacadamEllipses } from './components/macadam-ellipses/macadam-ellipses';
 
 interface Slide {
   id: string;
@@ -13,7 +19,10 @@ interface Slide {
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, Header, Footer, ColorTriangle, ColorLabChallenge, RungeColorSphere],
+  imports: [
+    CommonModule, Header, Footer, ColorTriangle, ColorLabChallenge, RungeColorSphere,
+    MaxwellTriangle, BensonCube, OstwaldCone, HelmholtzDiagram, CieXYZ, MacadamEllipses
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -27,6 +36,12 @@ export class App implements OnInit {
     { id: 'espectro', title: 'Espectro de luz' },
     { id: 'geometria-color', title: 'Geometría del Color' },
     { id: 'runge-sphere', title: 'Esfera de Color de Runge (1810)' },
+    { id: 'maxwell', title: 'Triángulo de Color de Maxwell (1855)' },
+    { id: 'benson', title: 'Cubo de Color de Benson (1868)' },
+    { id: 'ostwald', title: 'Doble Cono de Ostwald (1916)' },
+    { id: 'helmholtz', title: 'Diagrama de Helmholtz' },
+    { id: 'cie-xyz', title: 'Espacio de Color CIE XYZ (1931)' },
+    { id: 'macadam', title: 'Elipses de MacAdam (1942)' },
     { id: 'juego-colores', title: 'Laboratorio de Mezcla de Colores' },
     { id: 'teorema-diagonal',  title: 'Inconmensurabilidad de la diagonal' },
     { id: 'demostracion',  title: 'Demostración' }
