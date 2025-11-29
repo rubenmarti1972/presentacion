@@ -291,6 +291,34 @@
   <div *ngIf="currentLevel() === 'avanzado'" class="avanzado-level">
     <h2 class="level-title">🔬 Optimización de Producción</h2>
 
+    <!-- Selector de Retos -->
+    <div class="challenge-selector">
+      <button
+        class="challenge-btn"
+        [class.active]="avanzadoCurrentChallenge === 1"
+        (click)="loadAvanzadoChallenge(1)"
+      >
+        <span class="challenge-number">1</span>
+        <span class="challenge-name">Proporciones Simples</span>
+      </button>
+      <button
+        class="challenge-btn"
+        [class.active]="avanzadoCurrentChallenge === 2"
+        (click)="loadAvanzadoChallenge(2)"
+      >
+        <span class="challenge-number">2</span>
+        <span class="challenge-name">Con Blanco (Anidado)</span>
+      </button>
+      <button
+        class="challenge-btn"
+        [class.active]="avanzadoCurrentChallenge === 3"
+        (click)="loadAvanzadoChallenge(3)"
+      >
+        <span class="challenge-number">3</span>
+        <span class="challenge-name">Volumen Máximo</span>
+      </button>
+    </div>
+
     <!-- Panel de Instrucciones -->
     <div class="challenge-instructions">
       <div class="instructions-header">

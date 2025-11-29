@@ -46,6 +46,7 @@ export class ColorLabChallenge {
   protected readonly Math = Math;
 
   constructor() {
+    this.loadAvanzadoChallenge(1); // Cargar reto 1 por defecto
     this.applyUniformTargets();
   }
 
@@ -262,6 +263,8 @@ export class ColorLabChallenge {
   protected intermedioHintIndex = 0;
 
   // ========== NIVEL UNIVERSITARIO ==========
+  protected avanzadoCurrentChallenge = 1; // 1, 2 o 3
+
   protected avanzadoInventory: { [key: string]: number } = {
     red: 500,
     blue: 400,
@@ -269,12 +272,13 @@ export class ColorLabChallenge {
     white: 200
   };
 
-  protected avanzadoOrders: Order[] = [
+  // RETO 1: Proporciones Simples
+  protected avanzadoChallenge1Orders: Order[] = [
     {
       name: 'Morado Corporativo',
       description: 'Cliente requiere 300ml de pintura morada. Proporción 2:3 de Rojo:Azul',
       volume: 300,
-      ratio: '2:3 (R:B)',
+      ratio: '2:3 (Rojo:Azul)',
       targetColor: 'rgb(138, 43, 226)',
       targetRGB: { r: 138, g: 43, b: 226 },
       requiredMix: { red: 120, blue: 180 },
@@ -285,7 +289,7 @@ export class ColorLabChallenge {
       name: 'Verde Naturaleza',
       description: 'Campaña ambiental necesita 250ml de verde. Proporción 1:1 de Amarillo:Azul',
       volume: 250,
-      ratio: '1:1 (A:B)',
+      ratio: '1:1 (Amarillo:Azul)',
       targetColor: 'rgb(50, 205, 50)',
       targetRGB: { r: 50, g: 205, b: 50 },
       requiredMix: { yellow: 125, blue: 125 },
@@ -296,7 +300,7 @@ export class ColorLabChallenge {
       name: 'Naranja Intenso',
       description: 'Señalización vial requiere 350ml de naranja. Proporción 3:2 de Rojo:Amarillo',
       volume: 350,
-      ratio: '3:2 (R:A)',
+      ratio: '3:2 (Rojo:Amarillo)',
       targetColor: 'rgb(255, 140, 0)',
       targetRGB: { r: 255, g: 140, b: 0 },
       requiredMix: { red: 210, yellow: 140 },
@@ -304,6 +308,71 @@ export class ColorLabChallenge {
       completed: false
     }
   ];
+
+  // RETO 2: Proporciones Anidadas (con Blanco)
+  protected avanzadoChallenge2Orders: Order[] = [
+    {
+      name: 'Morado Corporativo Aclarado',
+      description: '70% morado puro (2:3 Rojo:Azul) + 30% blanco. Total: 300ml',
+      volume: 300,
+      ratio: '70% Morado + 30% Blanco',
+      targetColor: 'rgb(138, 43, 226)',
+      targetRGB: { r: 138, g: 43, b: 226 },
+      requiredMix: { red: 84, blue: 126, white: 90 }, // 210ml morado (84+126) + 90ml blanco
+      mix: {},
+      completed: false
+    },
+    {
+      name: 'Verde Pastel',
+      description: '60% verde puro (1:1 Amarillo:Azul) + 40% blanco. Total: 250ml',
+      volume: 250,
+      ratio: '60% Verde + 40% Blanco',
+      targetColor: 'rgb(50, 205, 50)',
+      targetRGB: { r: 50, g: 205, b: 50 },
+      requiredMix: { yellow: 75, blue: 75, white: 100 }, // 150ml verde (75+75) + 100ml blanco
+      mix: {},
+      completed: false
+    },
+    {
+      name: 'Naranja Suave',
+      description: '80% naranja puro (3:2 Rojo:Amarillo) + 20% blanco. Total: 350ml',
+      volume: 350,
+      ratio: '80% Naranja + 20% Blanco',
+      targetColor: 'rgb(255, 140, 0)',
+      targetRGB: { r: 255, g: 140, b: 0 },
+      requiredMix: { red: 168, yellow: 112, white: 70 }, // 280ml naranja (168+112) + 70ml blanco
+      mix: {},
+      completed: false
+    }
+  ];
+
+  // RETO 3: Optimización de Máximo Volumen
+  protected avanzadoChallenge3Orders: Order[] = [
+    {
+      name: 'Morado Máximo',
+      description: 'Produce el MÁXIMO volumen de morado con proporción 2:3 (Rojo:Azul) sin agotar inventario',
+      volume: 666, // Volumen máximo posible (limitado por azul)
+      ratio: '2:3 (Rojo:Azul)',
+      targetColor: 'rgb(138, 43, 226)',
+      targetRGB: { r: 138, g: 43, b: 226 },
+      requiredMix: { red: 266, blue: 400 }, // Usar todo el azul (400ml) → 2/5*666=266 rojo, 3/5*666=400 azul
+      mix: {},
+      completed: false
+    },
+    {
+      name: 'Verde Máximo',
+      description: 'Produce el MÁXIMO volumen de verde con proporción 1:1 (Amarillo:Azul) con el inventario restante',
+      volume: 234, // Queda 234ml azul después del morado, amarillo no limita
+      ratio: '1:1 (Amarillo:Azul)',
+      targetColor: 'rgb(50, 205, 50)',
+      targetRGB: { r: 50, g: 205, b: 50 },
+      requiredMix: { yellow: 117, blue: 117 }, // 234ml restantes de azul → mitad cada uno
+      mix: {},
+      completed: false
+    }
+  ];
+
+  protected avanzadoOrders: Order[] = [];
 
   protected avanzadoActiveOrderIndex: number | null = null;
   protected avanzadoShowValidation = false;
@@ -747,22 +816,36 @@ export class ColorLabChallenge {
   }
 
   protected getAvanzadoEfficiency(): number {
-    const totalCapacity = 500 + 400 + 300 + 200; // Inventario inicial
-    const totalUsed = (500 - this.avanzadoInventory['red']) +
-                      (400 - this.avanzadoInventory['blue']) +
-                      (300 - this.avanzadoInventory['yellow']) +
-                      (200 - this.avanzadoInventory['white']);
-    return (totalUsed / totalCapacity) * 100;
+    // Eficiencia = % de pedidos completados correctamente
+    const totalOrders = this.avanzadoOrders.length;
+    const completedOrders = this.avanzadoOrders.filter(o => o.completed).length;
+    return (completedOrders / totalOrders) * 100;
+  }
+
+  protected loadAvanzadoChallenge(challengeNumber: number): void {
+    this.avanzadoCurrentChallenge = challengeNumber;
+
+    // Cargar pedidos según el reto
+    if (challengeNumber === 1) {
+      this.avanzadoOrders = JSON.parse(JSON.stringify(this.avanzadoChallenge1Orders));
+    } else if (challengeNumber === 2) {
+      this.avanzadoOrders = JSON.parse(JSON.stringify(this.avanzadoChallenge2Orders));
+    } else if (challengeNumber === 3) {
+      this.avanzadoOrders = JSON.parse(JSON.stringify(this.avanzadoChallenge3Orders));
+    }
+
+    // Resetear estado
+    this.avanzadoInventory = { red: 500, blue: 400, yellow: 300, white: 200 };
+    this.avanzadoActiveOrderIndex = null;
+    this.avanzadoShowValidation = false;
+    this.avanzadoShowComplete = false;
+
+    // Aplicar colores uniformes
+    this.applyUniformTargets();
   }
 
   protected resetAvanzadoLevel(): void {
-    this.avanzadoShowComplete = false;
-    this.avanzadoInventory = { red: 500, blue: 400, yellow: 300, white: 200 };
-    this.avanzadoOrders.forEach(o => {
-      o.completed = false;
-      o.mix = {};
-    });
-    this.avanzadoActiveOrderIndex = null;
+    this.loadAvanzadoChallenge(this.avanzadoCurrentChallenge);
   }
 
   // ========== NAVEGACIÓN DE NIVELES ==========
