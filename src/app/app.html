@@ -548,32 +548,32 @@
           <div class="schema-card">
             <h4>Modelo de Construcción Social del Conocimiento</h4>
 
-            <svg viewBox="0 0 300 300" class="cantoral-diagram">
+            <svg viewBox="0 0 400 400" class="cantoral-diagram">
               <!-- Círculo central -->
-              <circle cx="150" cy="150" r="40" class="central-circle" />
-              <text x="150" y="145" class="central-text" text-anchor="middle">Conocimiento</text>
-              <text x="150" y="165" class="central-text" text-anchor="middle">Matemático</text>
+              <circle cx="200" cy="200" r="50" class="central-circle" />
+              <text x="200" y="195" class="central-text" text-anchor="middle">Conocimiento</text>
+              <text x="200" y="215" class="central-text" text-anchor="middle">Matemático</text>
 
               <!-- Dimensión Epistemológica (arriba) -->
-              <circle cx="150" cy="50" r="35" class="dimension-circle epistemologica-circle" />
-              <text x="150" y="50" class="dimension-text" text-anchor="middle">Epistemo-</text>
-              <text x="150" y="65" class="dimension-text" text-anchor="middle">lógica</text>
-              <line x1="150" y1="110" x2="150" y2="85" class="connection-line" />
+              <circle cx="200" cy="60" r="45" class="dimension-circle epistemologica-circle" />
+              <text x="200" y="58" class="dimension-text" text-anchor="middle">Epistemo-</text>
+              <text x="200" y="74" class="dimension-text" text-anchor="middle">lógica</text>
+              <line x1="200" y1="150" x2="200" y2="105" class="connection-line" />
 
               <!-- Dimensión Cognitiva (derecha) -->
-              <circle cx="250" cy="150" r="35" class="dimension-circle cognitiva-circle" />
-              <text x="250" y="150" class="dimension-text" text-anchor="middle">Cognitiva</text>
-              <line x1="190" y1="150" x2="215" y2="150" class="connection-line" />
+              <circle cx="340" cy="200" r="45" class="dimension-circle cognitiva-circle" />
+              <text x="340" y="205" class="dimension-text" text-anchor="middle">Cognitiva</text>
+              <line x1="250" y1="200" x2="295" y2="200" class="connection-line" />
 
               <!-- Dimensión Didáctica (abajo) -->
-              <circle cx="150" cy="250" r="35" class="dimension-circle didactica-circle" />
-              <text x="150" y="250" class="dimension-text" text-anchor="middle">Didáctica</text>
-              <line x1="150" y1="190" x2="150" y2="215" class="connection-line" />
+              <circle cx="200" cy="340" r="45" class="dimension-circle didactica-circle" />
+              <text x="200" y="345" class="dimension-text" text-anchor="middle">Didáctica</text>
+              <line x1="200" y1="250" x2="200" y2="295" class="connection-line" />
 
               <!-- Dimensión Social (izquierda) -->
-              <circle cx="50" cy="150" r="35" class="dimension-circle social-circle" />
-              <text x="50" y="150" class="dimension-text" text-anchor="middle">Social</text>
-              <line x1="110" y1="150" x2="85" y2="150" class="connection-line" />
+              <circle cx="60" cy="200" r="45" class="dimension-circle social-circle" />
+              <text x="60" y="205" class="dimension-text" text-anchor="middle">Social</text>
+              <line x1="150" y1="200" x2="105" y2="200" class="connection-line" />
 
               <!-- Flechas bidireccionales -->
               <defs>
@@ -601,5 +601,54 @@
     <app-footer></app-footer>
   </div>
 
+  <!-- Slide 13: Preguntas Generadoras -->
+  <div class="slide" [class.active]="isCurrentSlide('preguntas-generadoras')" id="preguntas-generadoras">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+      <h2 class="slide-2-title">Preguntas Generadoras</h2>
+
+      <div class="preguntas-container">
+        <!-- Sobre el color -->
+        <div class="pregunta-section color-section">
+          <div class="section-icon">🎨</div>
+          <h3 class="section-title">Sobre el Color</h3>
+          <ul class="preguntas-list">
+            <li>¿Cómo pasó el color de ser solo una percepción a convertirse en un objeto representable (círculo, geometrías, modelos)?</li>
+            <li>¿Qué fundamentos físicos (luz, espectro) originan la necesidad de matematizar el color?</li>
+          </ul>
+        </div>
+
+        <!-- Sobre la proporción -->
+        <div class="pregunta-section proporcion-section">
+          <div class="section-icon">⚖️</div>
+          <h3 class="section-title">Sobre la Proporción</h3>
+          <ul class="preguntas-list">
+            <li>¿De dónde surge la idea de expresar mezclas mediante razones (2:3, 1:1)?</li>
+            <li>¿Por qué para obtener un color específico necesitamos decidir la proporción exacta de sus componentes?</li>
+            <li>¿Por qué la proporción se vuelve necesaria para reproducir y controlar un color?</li>
+          </ul>
+        </div>
+
+        <!-- Sobre la relación entre ambos -->
+        <div class="pregunta-section relacion-section">
+          <div class="section-icon">🔗</div>
+          <h3 class="section-title">Sobre la Relación entre Ambos</h3>
+          <ul class="preguntas-list">
+            <li>¿Cómo se justifica que modelos como RGB y CMYK describan colores como combinaciones proporcionales?</li>
+            <li>¿Qué transformaciones históricas llevaron a formalizar el color en términos de relaciones cuantitativas (peso, mezcla, saturación)?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
 
 </div>
