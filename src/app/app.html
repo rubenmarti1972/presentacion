@@ -488,7 +488,118 @@
   </div>
 
 
+  <!-- Slide 12: Dimensiones de Cantoral -->
+  <div class="slide" [class.active]="isCurrentSlide('cantoral-dimensiones')" id="cantoral-dimensiones">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
 
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+      <h2 class="slide-2-title">Construcción Social del Conocimiento Matemático</h2>
+
+      <div class="cantoral-layout">
+        <!-- Columna izquierda: Dimensiones -->
+        <div class="cantoral-dimensions">
+          <div class="dimension-card epistemologica">
+            <h3><span class="dimension-number">1.</span> Dimensión Epistemológica</h3>
+            <ul>
+              <li>¿De dónde surgió?</li>
+              <li>¿Cómo surgió?</li>
+              <li>¿Por qué surgió?</li>
+              <li>¿Para qué surgió?</li>
+              <li>¿Cómo es empleada en diferentes culturas?</li>
+            </ul>
+          </div>
+
+          <div class="dimension-card cognitiva">
+            <h3><span class="dimension-number">2.</span> Dimensión Cognitiva</h3>
+            <ul>
+              <li>¿Existen investigaciones que analizan esta noción?</li>
+              <li>¿Hay distintos tipos de pensamientos asociados?</li>
+              <li>¿Según quién? ¿Qué tipo?</li>
+              <li>¿Cuáles son las dificultades reportadas?</li>
+            </ul>
+          </div>
+
+          <div class="dimension-card didactica">
+            <h3><span class="dimension-number">3.</span> Dimensión Didáctica</h3>
+            <ul>
+              <li>¿Cómo vive en los libros de texto?</li>
+              <li>¿Cómo vive en los currículos?</li>
+              <li>¿Cómo se trabaja o se propone trabajar?</li>
+            </ul>
+          </div>
+
+          <div class="dimension-card social">
+            <h3><span class="dimension-number">4.</span> Dimensión Social</h3>
+            <ul>
+              <li>¿Para qué y cómo vive en diversos escenarios?</li>
+              <li>¿Qué asuntos del surgimiento prevalecen?</li>
+              <li>¿Cuáles son las prácticas matemáticas asociadas?</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Columna derecha: Esquema -->
+        <div class="cantoral-schema">
+          <div class="schema-card">
+            <h4>Modelo de Construcción Social del Conocimiento</h4>
+
+            <svg viewBox="0 0 300 300" class="cantoral-diagram">
+              <!-- Círculo central -->
+              <circle cx="150" cy="150" r="40" class="central-circle" />
+              <text x="150" y="145" class="central-text" text-anchor="middle">Conocimiento</text>
+              <text x="150" y="165" class="central-text" text-anchor="middle">Matemático</text>
+
+              <!-- Dimensión Epistemológica (arriba) -->
+              <circle cx="150" cy="50" r="35" class="dimension-circle epistemologica-circle" />
+              <text x="150" y="50" class="dimension-text" text-anchor="middle">Epistemo-</text>
+              <text x="150" y="65" class="dimension-text" text-anchor="middle">lógica</text>
+              <line x1="150" y1="110" x2="150" y2="85" class="connection-line" />
+
+              <!-- Dimensión Cognitiva (derecha) -->
+              <circle cx="250" cy="150" r="35" class="dimension-circle cognitiva-circle" />
+              <text x="250" y="150" class="dimension-text" text-anchor="middle">Cognitiva</text>
+              <line x1="190" y1="150" x2="215" y2="150" class="connection-line" />
+
+              <!-- Dimensión Didáctica (abajo) -->
+              <circle cx="150" cy="250" r="35" class="dimension-circle didactica-circle" />
+              <text x="150" y="250" class="dimension-text" text-anchor="middle">Didáctica</text>
+              <line x1="150" y1="190" x2="150" y2="215" class="connection-line" />
+
+              <!-- Dimensión Social (izquierda) -->
+              <circle cx="50" cy="150" r="35" class="dimension-circle social-circle" />
+              <text x="50" y="150" class="dimension-text" text-anchor="middle">Social</text>
+              <line x1="110" y1="150" x2="85" y2="150" class="connection-line" />
+
+              <!-- Flechas bidireccionales -->
+              <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                  <polygon points="0 0, 10 3.5, 0 7" fill="#4facfe" />
+                </marker>
+              </defs>
+            </svg>
+
+            <p class="schema-caption">
+              Las cuatro dimensiones interactúan de manera <strong>sistémica</strong> en la construcción del
+              conocimiento matemático.
+            </p>
+          </div>
+
+          <p class="cantoral-citation">
+            <strong>Cantoral, R. (2013).</strong> <em>Teoría Socioepistemológica de la Matemática Educativa.</em>
+            Barcelona: Editorial Gedisa.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
 
 
 </div>

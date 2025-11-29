@@ -780,3 +780,256 @@ app-color-triangle {
   height: 100%;
   margin-top: 2rem;
 }
+
+/* ===== Slide: Dimensiones de Cantoral ===== */
+.cantoral-layout {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.cantoral-dimensions {
+  flex: 1.2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.dimension-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  border: 3px solid;
+}
+
+.dimension-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.dimension-card.epistemologica {
+  border-color: #4facfe;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.15) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.dimension-card.cognitiva {
+  border-color: #43e97b;
+  background: linear-gradient(135deg, rgba(67, 233, 123, 0.15) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.dimension-card.didactica {
+  border-color: #fa709a;
+  background: linear-gradient(135deg, rgba(250, 112, 154, 0.15) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.dimension-card.social {
+  border-color: #a855f7;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.dimension-card h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #1e3c72;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dimension-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.dimension-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dimension-card li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.dimension-card li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #4facfe;
+  font-weight: 700;
+}
+
+.dimension-card.cognitiva li::before {
+  color: #43e97b;
+}
+
+.dimension-card.didactica li::before {
+  color: #fa709a;
+}
+
+.dimension-card.social li::before {
+  color: #a855f7;
+}
+
+.cantoral-schema {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.schema-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  padding: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.schema-card h4 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #1e3c72;
+}
+
+.cantoral-diagram {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto 1rem;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+}
+
+.central-circle {
+  fill: #ffffff;
+  stroke: #4facfe;
+  stroke-width: 3;
+  filter: drop-shadow(0 2px 8px rgba(79, 172, 254, 0.3));
+}
+
+.central-text {
+  font-size: 14px;
+  font-weight: 700;
+  fill: #1e3c72;
+}
+
+.dimension-circle {
+  stroke-width: 2.5;
+  transition: all 0.3s ease;
+}
+
+.epistemologica-circle {
+  fill: rgba(79, 172, 254, 0.2);
+  stroke: #4facfe;
+}
+
+.cognitiva-circle {
+  fill: rgba(67, 233, 123, 0.2);
+  stroke: #43e97b;
+}
+
+.didactica-circle {
+  fill: rgba(250, 112, 154, 0.2);
+  stroke: #fa709a;
+}
+
+.social-circle {
+  fill: rgba(168, 85, 247, 0.2);
+  stroke: #a855f7;
+}
+
+.dimension-text {
+  font-size: 12px;
+  font-weight: 600;
+  fill: #1e3c72;
+}
+
+.connection-line {
+  stroke: #4facfe;
+  stroke-width: 2;
+  opacity: 0.6;
+}
+
+.schema-caption {
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.cantoral-citation {
+  background: rgba(79, 172, 254, 0.1);
+  border-left: 4px solid #4facfe;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #1e3c72;
+  text-align: left;
+}
+
+.cantoral-citation strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #1e3c72;
+}
+
+.cantoral-citation em {
+  color: #374151;
+}
+
+/* Responsive para el slide de Cantoral */
+@media (max-width: 1200px) {
+  .cantoral-layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .cantoral-dimensions {
+    grid-template-columns: 1fr;
+  }
+
+  .cantoral-schema {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .dimension-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .dimension-card li {
+    font-size: 0.85rem;
+  }
+
+  .schema-card h4 {
+    font-size: 1.2rem;
+  }
+
+  .cantoral-diagram {
+    max-width: 250px;
+  }
+}

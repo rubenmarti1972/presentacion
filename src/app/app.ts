@@ -24,6 +24,7 @@ interface Slide {
 export class App implements OnInit {
   protected currentSlideId = signal<string>('intro');
 
+  // Lista de slides de la presentación
   protected readonly slides: Slide[] = [
     { id: 'intro', title: 'RGB y CMYK' },
     { id: 'circulo-cromatico', title: 'Círculo Cromático' },
@@ -34,9 +35,9 @@ export class App implements OnInit {
     { id: 'historical-20th', title: 'Modelos del Siglo XX' },
     { id: 'macadam', title: 'Elipses de MacAdam (1942)' },
     { id: 'juego-colores', title: 'Laboratorio de Mezcla de Colores' },
-    { id: 'teorema-diagonal',  title: 'Inconmensurabilidad de la diagonal' },
-    { id: 'demostracion',  title: 'Demostración' }
-
+    { id: 'teorema-diagonal', title: 'Inconmensurabilidad de la diagonal' },
+    { id: 'demostracion', title: 'Demostración' },
+    { id: 'cantoral-dimensiones', title: 'Construcción Social del Conocimiento Matemático' }
   ];
 
   constructor() {
