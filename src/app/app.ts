@@ -4,6 +4,7 @@ import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
 import { ColorTriangle } from './components/color-triangle/color-triangle';
 import { ColorLabChallenge } from './components/color-lab-challenge/color-lab-challenge';
+import { RungeColorSphere } from './components/runge-color-sphere/runge-color-sphere';
 
 interface Slide {
   id: string;
@@ -12,7 +13,7 @@ interface Slide {
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, Header, Footer, ColorTriangle, ColorLabChallenge],
+  imports: [CommonModule, Header, Footer, ColorTriangle, ColorLabChallenge, RungeColorSphere],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -25,6 +26,7 @@ export class App implements OnInit {
     { id: 'newton', title: 'Newton y el Círculo Cromático' },
     { id: 'espectro', title: 'Espectro de luz' },
     { id: 'geometria-color', title: 'Geometría del Color' },
+    { id: 'runge-sphere', title: 'Esfera de Color de Runge (1810)' },
     { id: 'juego-colores', title: 'Laboratorio de Mezcla de Colores' },
     { id: 'teorema-diagonal',  title: 'Inconmensurabilidad de la diagonal' },
     { id: 'demostracion',  title: 'Demostración' }

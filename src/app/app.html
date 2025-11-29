@@ -178,7 +178,25 @@
     <app-footer></app-footer>
   </div>
 
-  <!-- Slide 6: Laboratorio de Mezcla de Colores -->
+  <!-- Slide 6: Esfera de Color de Runge -->
+  <div class="slide" [class.active]="isCurrentSlide('runge-sphere')" id="runge-sphere">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+      <h2 class="slide-2-title">Esfera de Color de Philipp Otto Runge (1810)</h2>
+      <app-runge-color-sphere></app-runge-color-sphere>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+
+  <!-- Slide 7: Laboratorio de Mezcla de Colores -->
   <div class="slide" [class.active]="isCurrentSlide('juego-colores')" id="juego-colores">
     <!-- Header -->
     <header class="slide-header">
@@ -195,7 +213,7 @@
     <app-footer></app-footer>
   </div>
 
-  <!-- Slide 7: Teorema de la diagonal y el lado -->
+  <!-- Slide 8: Teorema de la diagonal y el lado -->
   <div class="slide" [class.active]="isCurrentSlide('teorema-diagonal')" id="teorema-diagonal">
     <!-- Header -->
     <header class="slide-header">
@@ -323,7 +341,7 @@
 
 
 
-<!-- Slide 8: Demostración del Teorema 1 -->
+<!-- Slide 9: Demostración del Teorema 1 -->
   <div class="slide" [class.active]="isCurrentSlide('demostracion')" id="demostracion">
     <!-- Header -->
     <header class="slide-header">
