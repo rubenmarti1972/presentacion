@@ -746,6 +746,29 @@
   max-width: 1000px;
   margin: 0 auto;
   display: block;
+  object-fit: contain;
+}
+
+@media (max-width: 1024px) {
+  .espectro-img {
+    max-width: 90%;
+  }
+
+  .activity-circulo-placeholder {
+    padding: 2rem;
+    width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .espectro-img {
+    max-width: 100%;
+  }
+
+  .activity-circulo-placeholder {
+    padding: 1rem;
+    width: 100%;
+  }
 }
 
 /* ===== Slide: Geometría del Color ===== */
