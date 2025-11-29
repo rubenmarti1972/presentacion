@@ -37,7 +37,8 @@ export class App implements OnInit {
     { id: 'juego-colores', title: 'Laboratorio de Mezcla de Colores' },
     { id: 'teorema-diagonal', title: 'Inconmensurabilidad de la diagonal' },
     { id: 'demostracion', title: 'Demostración' },
-    { id: 'cantoral-dimensiones', title: 'Construcción Social del Conocimiento Matemático' }
+    { id: 'cantoral-dimensiones', title: 'Construcción Social del Conocimiento Matemático' },
+    { id: 'preguntas-generadoras', title: 'Preguntas Generadoras' }
   ];
 
   constructor() {
