@@ -15,7 +15,7 @@ import * as THREE from 'three';
   styleUrls: ['./runge-color-sphere.scss']
 })
 export class RungeColorSphere implements AfterViewInit, OnDestroy {
-  @ViewChild('canvasContainer', { static: true })
+  @ViewChild('canvasContainer', { static: false })
   canvasContainer!: ElementRef<HTMLDivElement>;
 
   private scene!: THREE.Scene;
@@ -25,6 +25,7 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
   private animationFrameId: number | null = null;
 
   ngAfterViewInit(): void {
+    console.log('[Runge] AfterViewInit called');
     this.initScene();
     this.addColorSphere();
     this.startAnimation();
@@ -41,9 +42,23 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
 
   // Inicializa escena, cámara y renderer
   private initScene(): void {
+    if (!this.canvasContainer) {
+      console.error('[Runge] Canvas container not found');
+      return;
+    }
+
     const container = this.canvasContainer.nativeElement;
-    const width = container.clientWidth || 400;
-    const height = container.clientHeight || 300;
+    let width = container.clientWidth;
+    let height = container.clientHeight;
+
+    // Si el contenedor no tiene dimensiones, usar defaults razonables
+    if (width === 0 || height === 0) {
+      console.warn('[Runge] Container has zero dimensions, using defaults');
+      width = 400;
+      height = 300;
+    }
+
+    console.log('[Runge] Container dimensions:', { width, height });
 
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x020617);
@@ -70,6 +85,11 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
 
     // Ajustar al hacer resize
     window.addEventListener('resize', this.onWindowResize);
+
+    // Ajustar tamaño después de un pequeño delay para asegurar que el contenedor tenga dimensiones
+    setTimeout(() => {
+      this.onWindowResize();
+    }, 100);
   }
 
   // Crear la esfera de color inspirada en Runge (1810)
@@ -145,12 +165,15 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
 
     const container = this.canvasContainer.nativeElement;
     const width = container.clientWidth;
-    const height = container.clientHeight || 400;
+    const height = container.clientHeight;
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
-
-    this.renderer.setSize(width, height);
+    // Solo actualizar si tenemos dimensiones válidas
+    if (width > 0 && height > 0) {
+      console.log('[Runge] Resizing to:', { width, height });
+      this.camera.aspect = width / height;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(width, height);
+    }
   };
 
   /**
