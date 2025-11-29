@@ -601,8 +601,8 @@
     <app-footer></app-footer>
   </div>
 
-  <!-- Slide 13: Preguntas Generadoras -->
-  <div class="slide" [class.active]="isCurrentSlide('preguntas-generadoras')" id="preguntas-generadoras">
+  <!-- Slide 13: Preguntas sobre Representaciones Mentales -->
+  <div class="slide" [class.active]="isCurrentSlide('preguntas-representaciones')" id="preguntas-representaciones">
     <!-- Header -->
     <header class="slide-header">
       <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
@@ -611,37 +611,125 @@
 
     <!-- Content -->
     <div class="slide-content slide-2-content">
-      <h2 class="slide-2-title">Preguntas Generadoras</h2>
+      <h2 class="slide-2-title">Preguntas generadoras sobre cómo los estudiantes construyen el sentido del color y la proporción</h2>
 
       <div class="preguntas-container">
-        <!-- Sobre el color -->
+        <!-- Sobre las representaciones mentales del color -->
         <div class="pregunta-section color-section">
-          <div class="section-icon">🎨</div>
-          <h3 class="section-title">Sobre el Color</h3>
+          <h3 class="section-title">Sobre las representaciones mentales del color:</h3>
           <ul class="preguntas-list">
-            <li>¿Cómo pasó el color de ser solo una percepción a convertirse en un objeto representable (círculo, geometrías, modelos)?</li>
-            <li>¿Qué fundamentos físicos (luz, espectro) originan la necesidad de matematizar el color?</li>
+            <li>¿Cómo construyen los estudiantes la idea de color cuando lo ven representado en círculos, triángulos o escalas digitales?</li>
+            <li>¿Qué significa para ellos "mover" tono, saturación o luminosidad al manipular un modelo?</li>
           </ul>
         </div>
 
-        <!-- Sobre la proporción -->
+        <!-- Sobre la construcción de la proporción -->
         <div class="pregunta-section proporcion-section">
-          <div class="section-icon">⚖️</div>
-          <h3 class="section-title">Sobre la Proporción</h3>
+          <h3 class="section-title">Sobre la construcción de la proporción:</h3>
           <ul class="preguntas-list">
-            <li>¿De dónde surge la idea de expresar mezclas mediante razones (2:3, 1:1)?</li>
-            <li>¿Por qué para obtener un color específico necesitamos decidir la proporción exacta de sus componentes?</li>
-            <li>¿Por qué la proporción se vuelve necesaria para reproducir y controlar un color?</li>
+            <li>¿Cómo interpretan la relación entre cantidades al mezclar colores (2:3, 1:1)?</li>
+            <li>¿Qué ideas intuitivas traen sobre "más", "menos", "mitad" o "equilibrio de mezcla"?</li>
           </ul>
         </div>
 
-        <!-- Sobre la relación entre ambos -->
+        <!-- Sobre las dificultades típicas -->
         <div class="pregunta-section relacion-section">
-          <div class="section-icon">🔗</div>
-          <h3 class="section-title">Sobre la Relación entre Ambos</h3>
+          <h3 class="section-title">Sobre las dificultades típicas:</h3>
           <ul class="preguntas-list">
-            <li>¿Por qué para obtener un color específico necesitamos decidir la proporción exacta de sus componentes?</li>
-            <li>¿Qué transformaciones históricas llevaron a formalizar el color en términos de relaciones cuantitativas (peso, mezcla, saturación)?</li>
+            <li>¿Qué provoca que algunos estudiantes confundan cantidad con intensidad al mezclar colores?</li>
+            <li>¿Qué retos cognitivos enfrentan al anticipar el color resultante antes de realizar la mezcla?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+
+  <!-- Slide 14: Preguntas sobre Enseñanza -->
+  <div class="slide" [class.active]="isCurrentSlide('preguntas-ensenanza')" id="preguntas-ensenanza">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+      <h2 class="slide-2-title">Preguntas generadoras sobre cómo se enseña el color y la proporción</h2>
+
+      <div class="preguntas-container">
+        <!-- Sobre los recursos y representaciones -->
+        <div class="pregunta-section color-section">
+          <h3 class="section-title">Sobre los recursos y representaciones:</h3>
+          <ul class="preguntas-list">
+            <li>¿Cómo aparece la mezcla de colores y las proporciones en los materiales didácticos (libros, apps, simuladores)?</li>
+            <li>¿Qué modelos favorecen mejor la comprensión: círculos cromáticos, triángulos, espacios RGB/CMYK o mezcladores interactivos?</li>
+          </ul>
+        </div>
+
+        <!-- Sobre las prácticas de enseñanza -->
+        <div class="pregunta-section proporcion-section">
+          <h3 class="section-title">Sobre las prácticas de enseñanza:</h3>
+          <ul class="preguntas-list">
+            <li>¿Qué experiencias permiten que los estudiantes comprendan la proporcionalidad al mezclar colores (manipulativos, simulaciones, tareas abiertas)?</li>
+            <li>¿Cómo se puede integrar la mezcla de colores para fortalecer la noción de razón, equivalencia y función lineal?</li>
+          </ul>
+        </div>
+
+        <!-- Sobre las oportunidades de aprendizaje -->
+        <div class="pregunta-section relacion-section">
+          <h3 class="section-title">Sobre las oportunidades de aprendizaje:</h3>
+          <ul class="preguntas-list">
+            <li>¿Qué tipo de retroalimentación ayuda a que los estudiantes relacionen "lo que mezclan" con "el resultado obtenido"?</li>
+            <li>¿Cómo se diseñan tareas que articulen color y proporción como un saber significativo, no solo procedimental?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </div>
+
+  <!-- Slide 15: Preguntas sobre Función Social -->
+  <div class="slide" [class.active]="isCurrentSlide('preguntas-funcion-social')" id="preguntas-funcion-social">
+    <!-- Header -->
+    <header class="slide-header">
+      <img src="assets/logo-fundapromat.png" alt="Fundapromat Logo" class="logo">
+      <h1 class="header-title">Color y proporciones</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="slide-content slide-2-content">
+      <h2 class="slide-2-title">Preguntas generadoras sobre el color, la proporción y su función en la vida social</h2>
+
+      <div class="preguntas-container">
+        <!-- Sobre los usos sociales del color -->
+        <div class="pregunta-section color-section">
+          <h3 class="section-title">Sobre los usos sociales del color:</h3>
+          <ul class="preguntas-list">
+            <li>¿Cómo influyen los colores en decisiones cotidianas (señalética, diseño, publicidad, marcas)?</li>
+            <li>¿De qué manera la psicología del color afecta percepciones como calma, alerta, confianza o urgencia?</li>
+          </ul>
+        </div>
+
+        <!-- Sobre la proporcionalidad como saber ciudadano -->
+        <div class="pregunta-section proporcion-section">
+          <h3 class="section-title">Sobre la proporcionalidad como saber ciudadano:</h3>
+          <ul class="preguntas-list">
+            <li>¿En qué situaciones sociales necesitamos manejar proporciones (recetas, mezclas, compras, finanzas, medidas)?</li>
+            <li>¿Por qué la proporcionalidad es un aprendizaje transversal desde la primera infancia hasta la universidad?</li>
+          </ul>
+        </div>
+
+        <!-- Sobre la construcción social del color y la proporción -->
+        <div class="pregunta-section relacion-section">
+          <h3 class="section-title">Sobre la construcción social del color y la proporción:</h3>
+          <ul class="preguntas-list">
+            <li>¿Cómo distintas culturas definen, valoran o interpretan los colores y sus combinaciones?</li>
+            <li>¿Qué prácticas colectivas han llevado a estandarizar colores y mezclas (CMYK, Pantone, calibración, impresión)?</li>
           </ul>
         </div>
       </div>
