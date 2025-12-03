@@ -110,19 +110,23 @@ export class RungeColorSphere implements AfterViewInit, OnDestroy {
       const y = positionAttr.getY(i);
       const z = positionAttr.getZ(i);
 
-      // Cálculo geométrico similar al Python:
-      // Hue: ángulo alrededor del eje z
-      let phi = Math.atan2(y, x); // [-π, π]
+      // Cálculo geométrico para orientación correcta de Runge:
+      // Blanco arriba (y=+1), Negro abajo (y=-1), círculo cromático en ecuador
+
+      // Hue: ángulo alrededor del eje Y (vertical)
+      let phi = Math.atan2(z, x); // [-π, π]
       if (phi < 0) {
         phi += 2 * Math.PI;      // [0, 2π]
       }
       const h = phi / (2 * Math.PI); // [0,1]
 
-      // Lightness: depende de z ([-1,1] → [0,1])
-      const l = (z + 1) / 2;
+      // Lightness: depende de y ([-1,1] → [0,1])
+      // y = +1 (arriba) → blanco (l=1)
+      // y = -1 (abajo) → negro (l=0)
+      const l = (y + 1) / 2;
 
       // Saturación: máxima en el ecuador, mínima en polos
-      const r = Math.sqrt(x * x + y * y); // [0,1] en esfera unitaria
+      const r = Math.sqrt(x * x + z * z); // distancia del eje vertical
       const s = Math.pow(r, 0.7); // curva suavizada para mejor visibilidad
 
       const { r: rr, g: gg, b: bb } = this.hslToRgb(h, s, l);
