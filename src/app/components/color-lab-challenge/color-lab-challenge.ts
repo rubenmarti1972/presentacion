@@ -598,6 +598,12 @@ export class ColorLabChallenge {
     this.intermedioMixAmounts[color] = Math.max(0, this.intermedioMixAmounts[color] + delta);
   }
 
+  protected onIntermedioAmountChange(color: string, value: any): void {
+    // Asegurar que el valor sea un número válido
+    const numValue = Number(value);
+    this.intermedioMixAmounts[color] = isNaN(numValue) || numValue < 0 ? 0 : Math.floor(numValue);
+  }
+
   protected resetIntermedio(): void {
     this.intermedioMixAmounts = { red: 0, blue: 0, yellow: 0, white: 0 };
     this.intermedioShowValidation = false;

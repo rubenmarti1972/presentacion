@@ -228,6 +228,7 @@
             <button class="control-btn" (click)="adjustIntermedioAmount(color, -1)">-1</button>
             <input
               [(ngModel)]="intermedioMixAmounts[color]"
+              (ngModelChange)="onIntermedioAmountChange(color, $event)"
               type="number"
               min="0"
               class="amount-input"
