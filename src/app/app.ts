@@ -33,7 +33,7 @@ export class App implements OnInit {
     { id: 'geometria-color', title: 'Geometría del Color' },
     { id: 'historical-19th', title: 'Modelos del Siglo XIX' },
     { id: 'historical-20th', title: 'Modelos del Siglo XX' },
-    { id: 'macadam', title: 'Elipses de MacAdam (1942)' },
+    //{ id: 'macadam', title: 'Elipses de MacAdam (1942)' },
     { id: 'juego-colores', title: 'Laboratorio de Mezcla de Colores' },
     { id: 'cantoral-dimensiones', title: 'Construcción Social del Conocimiento Matemático' },
     { id: 'preguntas-epistemologica', title: 'Dimensión Epistemológica' },
