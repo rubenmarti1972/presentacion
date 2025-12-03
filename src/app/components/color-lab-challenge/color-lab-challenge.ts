@@ -418,19 +418,28 @@ export class ColorLabChallenge {
   protected getInicialMixedColor(): string {
     if (this.inicialSelectedBottles.length === 0) return 'rgb(240, 240, 240)';
 
+    // Contar cantidades por color
     const totals = this.inicialSelectedBottles.reduce(
       (acc, bottle) => {
-        const key = bottle.name.toLowerCase();
-        if (key.includes('rojo')) acc.red += bottle.amount;
-        if (key.includes('amarillo')) acc.yellow += bottle.amount;
-        if (key.includes('azul')) acc.blue += bottle.amount;
-        if (key.includes('blanco')) acc.white += bottle.amount;
+        const nameLower = bottle.name.toLowerCase();
+        if (nameLower.includes('rojo')) {
+          acc.red += bottle.amount;
+        } else if (nameLower.includes('amarillo')) {
+          acc.yellow += bottle.amount;
+        } else if (nameLower.includes('azul')) {
+          acc.blue += bottle.amount;
+        } else if (nameLower.includes('blanco')) {
+          acc.white += bottle.amount;
+        }
         return acc;
       },
       { red: 0, yellow: 0, blue: 0, white: 0 }
     );
 
-    return this.mixPigmentsToCss(totals);
+    console.log('Inicial Mixed Color amounts:', totals);
+    const color = this.mixPigmentsToCss(totals);
+    console.log('Inicial Mixed Color result:', color);
+    return color;
   }
 
   protected getInicialTotalVolume(): number {
@@ -464,34 +473,45 @@ export class ColorLabChallenge {
       return;
     }
 
-    // Contar cantidades por color
-    const amounts: { [key: string]: number } = {};
-    this.inicialSelectedBottles.forEach(bottle => {
-      const colorKey = bottle.name.toLowerCase().replace('í', 'i');
-      amounts[colorKey] = (amounts[colorKey] || 0) + bottle.amount;
-    });
-
-    // Mapeo de nombres
-    const nameMap: { [key: string]: string } = {
-      'rojo': 'red',
-      'azul': 'blue',
-      'amarillo': 'yellow',
-      'blanco': 'white'
+    // Contar cantidades por color basándose en los nombres de las botellas
+    const amounts: { [key: string]: number } = {
+      red: 0,
+      blue: 0,
+      yellow: 0,
+      white: 0
     };
+
+    this.inicialSelectedBottles.forEach(bottle => {
+      const nameLower = bottle.name.toLowerCase();
+      if (nameLower.includes('rojo')) {
+        amounts.red += bottle.amount;
+      } else if (nameLower.includes('azul')) {
+        amounts.blue += bottle.amount;
+      } else if (nameLower.includes('amarillo')) {
+        amounts.yellow += bottle.amount;
+      } else if (nameLower.includes('blanco')) {
+        amounts.white += bottle.amount;
+      }
+    });
 
     // Verificar cantidades requeridas
     let isCorrect = true;
+    const tolerance = 5; // Tolerancia de 5ml
+
     for (const [key, required] of Object.entries(mission.requiredBottles)) {
-      const spanishKey = Object.keys(nameMap).find(k => nameMap[k] === key) || key;
-      const actual = amounts[spanishKey] || 0;
-      if (Math.abs(actual - required) > 5) {
+      const actual = amounts[key] || 0;
+      if (Math.abs(actual - required) > tolerance) {
         isCorrect = false;
+        console.log(`Color ${key}: esperado ${required}ml, actual ${actual}ml`);
         break;
       }
     }
 
     if (isCorrect) {
-      this.inicialShowSuccess = true;
+      // Asegurar que el popup se muestre
+      setTimeout(() => {
+        this.inicialShowSuccess = true;
+      }, 100);
     } else {
       Swal.fire({
         icon: 'warning',
