@@ -420,9 +420,9 @@
         <div class="mix-configuration">
           <h4>Configurar Mezcla</h4>
           <div class="config-inputs">
-            <div class="config-row" *ngFor="let colorId of ['red', 'blue', 'yellow']">
+            <div class="config-row" *ngFor="let colorId of ['red', 'blue', 'yellow', 'white']">
               <div class="config-label">
-                <span>{{ colorId === 'red' ? 'Rojo' : colorId === 'blue' ? 'Azul' : 'Amarillo' }}</span>
+                <span>{{ colorId === 'red' ? 'Rojo' : colorId === 'blue' ? 'Azul' : colorId === 'yellow' ? 'Amarillo' : 'Blanco' }}</span>
               </div>
 
               <div class="config-controls">
